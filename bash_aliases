@@ -6,6 +6,7 @@ alias v='cd /Users/ben/Sites/dev.acnestudios.com/tools/vagrant'
 alias t='cd /Users/ben/Sites/dev.acnestudios.com/public/app/design/frontend/enterprise/acnewhite/template/'
 alias l='cd /Users/ben/Sites/dev.acnestudios.com/public/app/design/frontend/enterprise/acnewhite/layout/'
 alias s='cd /Users/ben/Sites/dev.acnestudios.com/public/skin'
+alias c='cd /Users/ben/Sites/dev.acnestudios.com/public/app/code/'
 
 alias vu='vagrant up'
 alias vh='vagrant halt'
@@ -26,3 +27,4 @@ alias ra='. ~/.bash_aliases'
 alias ip='curl icanhazip.com'
 
 alias ffs='sudo !!'
+alias vim='/usr/local/Cellar/macvim/7.3-63/bin/mvim -v'
