@@ -1,13 +1,6 @@
 alias df='df -h'
 alias du='du -d 1 -h'
 
-alias dr='cd /Users/ben/Sites/dev.acnestudios.com/'
-alias v='cd /Users/ben/Sites/dev.acnestudios.com/tools/vagrant'
-alias t='cd /Users/ben/Sites/dev.acnestudios.com/public/app/design/frontend/enterprise/acnewhite/template/'
-alias l='cd /Users/ben/Sites/dev.acnestudios.com/public/app/design/frontend/enterprise/acnewhite/layout/'
-alias s='cd /Users/ben/Sites/dev.acnestudios.com/public/skin'
-alias c='cd /Users/ben/Sites/dev.acnestudios.com/public/app/code/'
-
 alias vu='vagrant up'
 alias vh='vagrant halt'
 alias vr='vagrant reload'
@@ -26,5 +19,7 @@ alias rb='. ~/.bashrc'
 alias ra='. ~/.bash_aliases'
 alias ip='curl icanhazip.com'
 
-alias ffs='sudo !!'
-alias vim='/usr/local/Cellar/macvim/7.3-63/bin/mvim -v'
+alias vim='mvim -v'
+alias cleandl='find . -mtime +30 -exec rm -rf "{}" \;'
+alias getcom='curl -s https://getcomposer.org/installer | php'
+alias com='php composer.phar'

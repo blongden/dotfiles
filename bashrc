@@ -4,12 +4,7 @@ LIGHT_GREEN="\[\033[1;32m\]"
 DARK_GRAY="\[\033[1;30m\]"
 COLOR_NONE="\[\e[0m\]"
 
-PATH=/usr/local/bin/:$PATH:/Users/ben/pear/bin
-
-#coreutils from homebrew
-if [ -f /usr/local/Cellar/coreutils/8.14/aliases ]; then
-    source /usr/local/Cellar/coreutils/8.14/aliases
-fi
+PATH=/usr/local/php5/bin/:/usr/local/bin/:$PATH:/Users/ben/pear/bin:/usr/texbin/
 
 if [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
     source /usr/local/etc/bash_completion.d/git-completion.bash
@@ -17,10 +12,8 @@ fi
 
 # enable color support of ls and also add handy aliases
 if [ "$TERM" != "dumb" ]; then
-    [ -e "$HOME/.dircolors" ] && DIR_COLORS="$HOME/.dircolors"
-    [ -e "$DIR_COLORS" ] || DIR_COLORS=""
-    eval "`gdircolors -b $DIR_COLORS`"
-    alias ls='gls -ltr --color=auto -ltr'
+    export LSCOLORS=ExfxcxdxCxegedabagacad
+    alias ls='ls -ltrGF'
 fi
 
 if [ -f ~/.bash_aliases ]; then
@@ -28,3 +21,9 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 export PS1="$DARK_GRAY[$LIGHT_BLUE\w$DARK_GRAY]\n$DARK_GRAY[\A]$LIGHT_GREEN\$(__git_ps1)$DARK_GRAY\$$COLOR_NONE "
+export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+export EDITOR=vim

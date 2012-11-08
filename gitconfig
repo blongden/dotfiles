@@ -1,3 +1,9 @@
 [user]
 	name = Ben Longden
-	email = ben@ibuildings.com
+	email = ben@nocarrier.co.uk
+[github]
+	user = blongden
+[core]
+	excludesfile = /Users/ben/.gitignore-global
+[alias]
+	lg = log --decorate --color --date=relative
