@@ -20,10 +20,16 @@ if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
 fi
 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
+
 export PS1="$DARK_GRAY[$LIGHT_BLUE\w$DARK_GRAY]\n$DARK_GRAY[\A]$LIGHT_GREEN\$(__git_ps1)$DARK_GRAY\$$COLOR_NONE "
 export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+source "`brew --prefix`/etc/grc.bashrc"
 
 export EDITOR=vim
