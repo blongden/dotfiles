@@ -23,3 +23,5 @@ alias vim='mvim -v'
 alias cleandl='find . -mtime +30 -exec rm -rf "{}" \;'
 alias getcom='curl -s https://getcomposer.org/installer | php'
 alias com='php composer.phar'
+
+alias pz='cd ~/Development/PZ/'
