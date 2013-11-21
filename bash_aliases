@@ -25,3 +25,12 @@ alias getcom='curl -s https://getcomposer.org/installer | php'
 alias com='php composer.phar'
 
 alias pz='cd ~/Development/PZ/'
+
+alias locate='mdfind'
+
+alias specwatch='watchmedo shell-command --recursive --command="bin/phpspec"'
+
+hl() {
+    highlight -O rtf $1 --line-numbers --font-size 36 --font Inconsolata --style solarized-light -W -J 65 -j 3 | pbcopy
+}
+

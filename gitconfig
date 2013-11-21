@@ -7,3 +7,5 @@
 	excludesfile = /Users/ben/.gitignore-global
 [alias]
 	lg = log --decorate --color --date=relative
+[push]
+	default = simple
