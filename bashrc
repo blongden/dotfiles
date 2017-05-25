@@ -4,7 +4,7 @@ LIGHT_GREEN="\[\033[1;32m\]"
 DARK_GRAY="\[\033[1;30m\]"
 COLOR_NONE="\[\e[0m\]"
 
-PATH=~/Development/fdrop-php:/Users/ben/Skeletons/bin:/usr/local/php5/bin:/usr/local/bin:/usr/local/sbin:/Users/ben/pear/bin:/usr/local/share/npm/bin:/usr/local/texlive/2012basic/bin/universal-darwin:$PATH
+PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PATH
 
 if [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
     source /usr/local/etc/bash_completion.d/git-completion.bash
