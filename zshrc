@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=/usr/local/opt/php@7.1/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/ben/.oh-my-zsh
@@ -88,8 +88,6 @@ source $ZSH/oh-my-zsh.sh
 
 # eval "$(docker-machine env dinghy)"
 
-alias ssh-tunnel-enable='echo -n > ~/.ssh/config && cat ~/.ssh/*.config > ~/.ssh/config'
-alias ssh-tunnel-disable='echo -n > ~/.ssh/config && cat ~/.ssh/hosts.*.config > ~/.ssh/config'
 alias ip='curl canhazip.com'
 alias df='df -h'
 alias du='du -d 1 -h'
@@ -102,3 +100,29 @@ if [ -f '/Users/ben/Downloads/google-cloud-sdk/path.zsh.inc' ]; then source '/Us
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/ben/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/ben/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+function konto {
+    kubectl -n antelope-pp exec `kubectl -n antelope-pp get pods | grep $1 | cut -d' ' -f1 | head -n1` -it -- script /dev/null -c bash
+}
+
+function kport {
+    kubectl -n antelope-pp port-forward `kubectl -n antelope-pp get pods | grep $1 | cut -d' ' -f1 | head -n1` $2
+}
+
+function kexec {
+    for x in $(kubectl -n antelope-pp get pods | grep $1 | cut -d' ' -f1); do
+        kubectl -n antelope-pp exec $x -t -- ${@:2}
+    done;
+}
+
+function klog {
+    for x in $(kubectl -n antelope-pp get pods | grep $1 | cut -d' ' -f1); do
+        kubectl -n antelope-pp logs $x -f
+    done;
+}
+alias kg='kubectl -n antelope-pp get'
+
+function git-mirror {
+    git pull origin master
+    git push gitlab master
+}
