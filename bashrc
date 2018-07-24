@@ -32,3 +32,5 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 source "`brew --prefix`/etc/grc.bashrc"
 
 export EDITOR=vim
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

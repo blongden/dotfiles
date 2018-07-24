@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=/usr/local/opt/php@7.1/bin:$PATH
+export PATH=/usr/local/bin/:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/ben/.oh-my-zsh
@@ -12,7 +12,7 @@ ZSH_THEME="gianu"
 DEFAULT_USER="ben"
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -126,3 +126,5 @@ function git-mirror {
     git pull origin master
     git push gitlab master
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
