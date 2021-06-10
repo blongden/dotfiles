@@ -1,29 +1,31 @@
+[init]
+        templatedir = /Users/ben.longden/.acn-security-tools/git-template
 [user]
-	name = Ben Longden
-	email = blongden@inviqa.com
-	signingkey = BFF8E9D3
+        name = Ben Longden
+        email = ben.longden@infinityworks.com
+        signingkey = BFF8E9D3
 [github]
-	user = blongden
+        user = blongden
 [core]
-	excludesfile = /opt/boxen/config/git/gitignore
-	editor = /usr/bin/vim
-	pager = diff-so-fancy | less --tabs=4 -RFX
+        excludesfile = /opt/boxen/config/git/gitignore
+        editor = /usr/bin/vim
+        pager = diff-so-fancy | less --tabs=4 -RFX
 [alias]
-    lg = log --graph --pretty=format:'%Cred%h%Creset %C(blue)%G?%Creset %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit  --date=relative
-    com = checkout master
-    cod = checkout develop
-    pso = push origin
-    plo = pill origin
+        lg = log --graph --pretty=format:'%Cred%h%Creset %C(blue)%G?%Creset %C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit  --date=relative
+        com = checkout master
+        cod = checkout develop
+        pso = push origin
+        plo = pill origin
 [push]
-	default = simple
-
+        default = simple
+        
 [hub]
-protocol = https
-
+        protocol = https
+        
 [credential]
 [rerere]
-	enabled = true
+        enabled = true
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
+        clean = git-lfs clean %f
+        smudge = git-lfs smudge %f
+        required = true
