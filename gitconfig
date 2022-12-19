@@ -1,5 +1,6 @@
 [init]
         templatedir = /Users/ben.longden/.acn-security-tools/git-template
+        defaultBranch = main
 [user]
         name = Ben Longden
         email = ben.longden@infinityworks.com
