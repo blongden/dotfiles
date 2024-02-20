@@ -6,16 +6,24 @@ alt - j : yabai -m window --focus south || yabai -m window --focus stack.next ||
 alt - k : yabai -m window --focus north || yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 alt - l : yabai -m window --focus east
 
+# Stacking windows
+alt - s : yabai -m space --layout stack
+alt - t : yabai -m space --layout bsp
+alt - f : yabai -m space --layout float
+
+# move windows between spaces
+shift + lctrl + alt - l : yabai -m window --space next
+shift + lctrl + alt - h : yabai -m window --space prev
+shift + lctrl + alt - 1 : yabai -m window --space 1
+shift + lctrl + alt - 2 : yabai -m window --space 2
+shift + lctrl + alt - 3 : yabai -m window --space 3
+shift + lctrl + alt - 4 : yabai -m window --space 4
+
 # Moving windows
 shift + alt - h : yabai -m window --warp west
 shift + alt - j : yabai -m window --warp south
 shift + alt - k : yabai -m window --warp north
 shift + alt - l : yabai -m window --warp east
-
-# Stacking windows
-shift + alt - s : yabai -m space --layout stack
-shift + alt - t : yabai -m space --layout bsp
-shift + alt - f : yabai -m space --layout float
 
 # Make window native fullscreen
 alt - f         : yabai -m window --toggle zoom-fullscreen
@@ -28,14 +36,11 @@ lctrl + alt - e : yabai -m space --balance
 lctrl + alt - g : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # can't use these because we can't disable SIP :(
+# space control configured at the OS - lctrl + alt + h/l/1/2/3/4
 #lctrl + alt - h : yabai -m space --focus prev || yabai -m space --focus last
 #lctrl + alt - l : yabai -m space --focus next || yabai -m space --focus first
 #lctrl + alt - c : yabai -m space --create
 #lctrl + alt - x : yabai -m space --destroy
-
-# move windows between spaces
-shift + lctrl + alt - l : yabai -m window --space next
-shift + lctrl + alt - h : yabai -m window --space prev
 
 # Rotate windows clockwise and anticlockwise
 alt - r         : yabai -m space --rotate 270
