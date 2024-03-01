@@ -36,5 +36,5 @@ vendor.tags
 tmtagsHistory
 *.sublime-project
 *.sublime-workspace
-
+.vscode
 tags
