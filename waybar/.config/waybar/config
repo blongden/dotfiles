@@ -6,7 +6,7 @@
 
     "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "sway/window"],
     "modules-center": [],
-    "modules-right": ["custom/updates", "cpu", "memory", "temperature", "disk", "network", "custom/tailscale", "pulseaudio", "backlight", "battery", "custom/weather", "tray", "clock"],
+    "modules-right": ["custom/updates", "cpu", "memory", "temperature", "disk", "network", "bluetooth", "custom/tailscale", "pulseaudio", "backlight", "battery", "custom/weather", "tray", "clock"],
 
     "sway/workspaces": {
         "disable-scroll": false,
@@ -99,6 +99,20 @@
         "tooltip-format": "{ifname}   {ipaddr}\n {bandwidthDownBits}    {bandwidthUpBits}",
         "tooltip-format-wifi": "{essid}  ({signalStrength}%)\n{ifname}   {ipaddr}\n {bandwidthDownBits}    {bandwidthUpBits}",
         "on-click": "nm-connection-editor"
+    },
+
+    "bluetooth": {
+        "format": "",
+        "format-disabled": "",
+        "format-off": "",
+        "format-connected": " {num_connections}",
+        "format-connected-battery": " {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}\nno devices connected",
+        "tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}   {device_battery_percentage}%",
+        "on-click": "blueman-manager",
+        "on-click-right": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && bluetoothctl power off || bluetoothctl power on'"
     },
 
     "pulseaudio": {

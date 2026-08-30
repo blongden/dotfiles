@@ -41,6 +41,7 @@ xdg-desktop-portal-wlr
 
 # --- hardware controls used by keybinds / waybar ---
 brightnessctl        # backlight keys + waybar module
+blueman              # blueman-manager GUI for the waybar bluetooth module (--no-install-recommends)
 pipewire-pulse       # provides pactl (volume keys, waybar)
 pulseaudio-utils     # pactl if not pulled by pipewire-pulse
 network-manager-gnome # nm-applet (tray)
