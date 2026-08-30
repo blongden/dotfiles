@@ -57,7 +57,7 @@ alias du='du -d 1 -h'
 alias cleandl='find . -mtime +30 -exec rm -rf "{}" \;'
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 function maybe_create_env {
   EXE='python3'
@@ -78,8 +78,6 @@ function maybe_create_env {
 alias pyenv="maybe_create_env&&python -V"
 alias pyt="pip install --upgrade pip&&pip install pytest&&pip freeze > requirements.txt&&pytest"
 
-# added by Snowflake SnowSQL installer v1.2
-export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
 export PATH="${GOPATH:-$HOME/go}/bin:/usr/local/sbin:$PATH"
 
 alias zzz='echo mem | sudo tee /sys/power/state'

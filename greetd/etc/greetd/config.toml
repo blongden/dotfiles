@@ -1,21 +1,24 @@
-# greetd + tuigreet — Wayland replacement for the LightDM GTK greeter.
-# System file: install to /etc/greetd/config.toml (not stow-managed; /etc is root).
-#   sudo install -m600 -o root -g root greetd/etc/greetd/config.toml /etc/greetd/config.toml
+# greetd — Wayland login for the sway box. Install by hand (/etc is root):
+#   sudo install -m600 -o root -g root greetd/etc/greetd/config.toml    /etc/greetd/config.toml
+#   sudo install -m644 -o root -g root greetd/etc/greetd/sway-config    /etc/greetd/sway-config
+#   sudo install -m644 -o root -g root greetd/etc/greetd/regreet.toml   /etc/greetd/regreet.toml
+#   sudo install -m644 -o root -g root greetd/etc/greetd/regreet.css    /etc/greetd/regreet.css
+#   sudo install -m644 -o root -g root greetd/usr/lib/tmpfiles.d/regreet.conf /usr/lib/tmpfiles.d/regreet.conf
+#   sudo cp ~/Pictures/Backdrops/1614877.jpg /etc/greetd/backdrop.jpg   # _greetd-readable copy
+#   sudo systemd-tmpfiles --create /usr/lib/tmpfiles.d/regreet.conf     # /var/{lib,log}/regreet
+#   regreet binary: built from source -> /usr/local/bin/regreet (see README step 4)
 #
-# Translated from the old /etc/lightdm/lightdm-gtk-greeter.conf:
-#   clock-format = %H:%M  ·  %a %d %b   -> --time --time-format
-#   Adwaita-dark + DejaVu Sans Mono     -> tuigreet is a dark console UI; --theme sets accents
-#   indicators host/clock/session/power -> --time + built-in session menu + power keys
-#   position = 50% 62%                  -> tuigreet centres itself; padding tunes the feel
-#   background = lightdm-nerd.png       -> dropped (a console UI has no image layer)
+# Active greeter: ReGreet (GTK4), hosted by a throwaway sway so it inherits the
+# GB keyboard + caps:escape + a wallpaper. Debian greeter user is `_greetd`;
+# greetd.service runs on VT 7 (Conflicts=getty@tty7).
 #
-# Debian notes: greeter user is `_greetd`; greetd.service runs on VT 7
-# (Conflicts=getty@tty7). If tuigreet can't draw, add `_greetd` to the
-# `video` and `input` groups.
+# FALLBACK — if ReGreet fails at boot, from a TTY put this line back as the
+# default_session command and `systemctl restart greetd`:
+#   tuigreet --remember --remember-session --asterisks --time --time-format '%H:%M  ·  %a %d %b' --sessions /usr/share/wayland-sessions --cmd sway --window-padding 2 --theme 'border=black;text=white;prompt=cyan;time=cyan;action=white;button=cyan;container=black;input=white'
 
 [terminal]
 vt = 7
 
 [default_session]
-command = "tuigreet --remember --remember-session --asterisks --time --time-format '%H:%M  ·  %a %d %b' --sessions /usr/share/wayland-sessions --cmd sway --window-padding 2 --theme 'border=black;text=white;prompt=cyan;time=cyan;action=white;button=cyan;container=black;input=white'"
+command = "sway --config /etc/greetd/sway-config"
 user = "_greetd"

@@ -1,0 +1,49 @@
+/* ReGreet — /etc/greetd/regreet.css.  Tomorrow Night accents over Adwaita-dark.
+ * Conservative: tints entries/buttons/accent, lets Adwaita-dark carry the rest.
+ * (hex inlined — GTK4's parser was unhappy with the @define-color block) */
+
+window {
+  background-color: #1d1f21;
+  color: #c5c8c6;
+  font-family: "Iosevka Nerd Font", "Iosevka", monospace;
+}
+
+entry {
+  background-color: #282a2e;
+  color: #c5c8c6;
+  border: 1px solid #373b41;
+  border-radius: 4px;
+  padding: 8px 10px;
+  caret-color: #f0c674;
+}
+
+entry:focus-within {
+  border-color: #f0c674;
+}
+
+button {
+  background-image: none;
+  background-color: #282a2e;
+  color: #c5c8c6;
+  border: 1px solid #373b41;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #373b41;
+}
+
+button.suggested-action {
+  background-color: #f0c674;
+  color: #1d1f21;
+  border-color: #f0c674;
+}
+
+dropdown > button {
+  background-color: #282a2e;
+  color: #c5c8c6;
+}
+
+label {
+  color: #c5c8c6;
+}

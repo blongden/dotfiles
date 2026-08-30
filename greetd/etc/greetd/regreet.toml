@@ -1,0 +1,33 @@
+# ReGreet config — /etc/greetd/regreet.toml (install by hand, /etc is root).
+# Greeter binary built from source: ~/.local/bin has nothing; it's at
+# /usr/local/bin/regreet (see README step 4). Hosted by sway via
+# /etc/greetd/sway-config.
+
+# keep the user + session pickers (don't blindly reuse the last login)
+skip_selection = false
+
+[background]
+# a copy readable by the _greetd user; the real wallpapers live under
+# ~/Pictures/Backdrops which _greetd cannot read
+path = "/etc/greetd/backdrop.jpg"
+fit = "Cover"
+
+[GTK]
+application_prefer_dark_theme = true
+cursor_theme_name = "Adwaita"
+icon_theme_name = "Adwaita"
+theme_name = "Adwaita"                 # GTK4 Adwaita is built into libgtk-4
+font_name = "Iosevka Nerd Font 14"
+cursor_blink = true
+
+[commands]
+reboot = ["systemctl", "reboot"]
+poweroff = ["systemctl", "poweroff"]
+
+[appearance]
+greeting_msg = "buddy"
+
+[widget.clock]
+format = "%H:%M  ·  %a %d %b"
+resolution = "1s"
+label_width = 220

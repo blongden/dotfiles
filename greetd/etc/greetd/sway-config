@@ -1,0 +1,25 @@
+# sway config for the greetd greeter session (hosts ReGreet).
+# Installed by hand to /etc/greetd/sway-config — see README step 4.
+# Kept deliberately minimal: just enough to draw ReGreet with the right
+# keyboard, scale and wallpaper, then exit when the login completes.
+
+# GB layout + caps:escape, matching the real session
+input "type:keyboard" {
+    xkb_layout "gb"
+    xkb_options "caps:escape"
+}
+
+# eDP-1 is the 1080p laptop panel; keep it 1:1. The 4K dock (DP-2) is
+# handled by kanshi in the real session — at the greeter it just mirrors
+# the default, which is fine for a login screen.
+output eDP-1 scale 1
+
+# wallpaper — a copy readable by the _greetd user (real one lives under
+# ~/Pictures/Backdrops, which _greetd can't read)
+output * bg /etc/greetd/backdrop.jpg fill
+
+seat * hide_cursor 8000
+xwayland disable
+
+# run the greeter; when it exits (successful login), tear down this sway
+exec "GTK_THEME=Adwaita:dark regreet; swaymsg exit"
