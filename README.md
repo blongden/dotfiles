@@ -17,7 +17,7 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 | `theme` | `~/.config/tinted-theming/tinty/` | tinty config + `fanout.sh`; one base16 palette → kitty, tmux, nvim, waybar, wofi, sway borders, herdr, dunst, swaylock. `tinty apply <scheme>` to switch. kitty/tmux/nvim via upstream templates + an `include`/`source`; the rest written by `fanout.sh` from tinty's `$TINTY_SCHEME_PALETTE_*` env vars |
 | `kanshi` | `~/.config/kanshi/` | output profiles (docked = DP-2 4K@30) |
 | `swaylock` `gammastep` | `~/.config/{swaylock,gammastep}/` | gammastep off by default |
-| `greetd` | `/etc/greetd/config.toml` | **not stowed** (root-owned); tuigreet greeter, install by hand (step 4) |
+| `greetd` | `/etc/greetd/{config.toml,sway-config,regreet.toml,regreet.css}` + tmpfiles | **not stowed** (root-owned), install by hand (step 4). ReGreet (GTK4) hosted by a throwaway sway for GB keyboard + wallpaper; tuigreet command kept in config.toml's header as fallback |
 | `herdr` | `~/.config/herdr/config.toml` | multiplexer for coding agents; `--no-folding` (dir holds runtime state) |
 | `desktop` | `~/.config/mimeapps.list`, `~/.local/share/applications/*.desktop` | chromium as default browser; custom launchers (screenshot, sway-keybindings, yazi, mc, downloads); `code`/`discord`/`Claude` overrides add `--ozone-platform-hint=auto` for native Wayland; `--no-folding` |
 
@@ -49,6 +49,12 @@ curl -fsSL https://github.com/tinted-theming/tinty/releases/latest/download/tint
   | tar xz -C /tmp && install -m755 /tmp/tinty ~/.local/bin/tinty
 tinty install && tinty apply base16-tomorrow-night      # clones templates, themes everything
 
+# ReGreet — greetd greeter (GTK4). Not in Debian; build from source.
+#   build deps: cargo cage libgtk-4-dev libadwaita-1-dev  (in packages.txt)
+git clone --depth 1 https://github.com/rharish101/ReGreet /tmp/ReGreet \
+  && ( cd /tmp/ReGreet && cargo build --release ) \
+  && sudo install -m755 /tmp/ReGreet/target/release/regreet /usr/local/bin/regreet
+
 # Tailscale (Tailscale's own apt repo, not Debian; drives the waybar module)
 curl -fsSL https://tailscale.com/install.sh | sh
 sudo tailscale set --operator=$USER                 # non-root `tailscale` CLI
@@ -56,12 +62,20 @@ sudo tailscale up --accept-routes                   # opens a browser to log in
 #   subnet routes / exit node live on the homeassistant node (HA OS add-on
 #   a0d7b954_tailscale), approved in the login.tailscale.com admin console.
 
-# 4. greetd + tuigreet greeter (system files, not stow-managed)
-sudo install -m600 -o root -g root greetd/etc/greetd/config.toml /etc/greetd/config.toml
+# 4. greetd + ReGreet greeter (system files, not stow-managed)
+sudo install -m600 -o root -g root greetd/etc/greetd/config.toml    /etc/greetd/config.toml
+sudo install -m644 -o root -g root greetd/etc/greetd/sway-config    /etc/greetd/sway-config
+sudo install -m644 -o root -g root greetd/etc/greetd/regreet.toml   /etc/greetd/regreet.toml
+sudo install -m644 -o root -g root greetd/etc/greetd/regreet.css    /etc/greetd/regreet.css
+sudo install -m644 -o root -g root greetd/usr/lib/tmpfiles.d/regreet.conf /usr/lib/tmpfiles.d/regreet.conf
+sudo cp ~/Pictures/Backdrops/1614877.jpg /etc/greetd/backdrop.jpg && sudo chmod 644 /etc/greetd/backdrop.jpg
+sudo systemd-tmpfiles --create /usr/lib/tmpfiles.d/regreet.conf   # /var/{lib,log}/regreet, owned by _greetd
 sudo systemctl disable lightdm.service 2>/dev/null || true
 sudo rm -f /etc/systemd/system/display-manager.service
 sudo systemctl enable greetd.service            # claims display-manager.service
-#   If tuigreet can't draw: sudo usermod -aG video,input _greetd
+#   Fallback: config.toml's header has the tuigreet command — from a TTY,
+#   swap it back into default_session and `systemctl restart greetd`.
+#   If sway/ReGreet can't draw: sudo usermod -aG video,input _greetd
 ```
 
 Pick the session (sway is the default) at the tuigreet greeter on VT 7. Don't
