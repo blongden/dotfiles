@@ -12,8 +12,22 @@
 model="${WHISPER_MODEL:-$HOME/.local/share/whisper/ggml-small.en.bin}"
 wav="${XDG_RUNTIME_DIR:-/tmp}/dictate.wav"
 pidf="${XDG_RUNTIME_DIR:-/tmp}/dictate.pid"
+lock="${XDG_RUNTIME_DIR:-/tmp}/dictate.lock"
 
-notify() { notify-send -a dictate -t "${2:-2000}" "$1"; }
+# Serialise invocations: a fast double-press (or key-repeat) must not let two
+# stop branches transcribe and type the same WAV. mkdir is atomic.
+if ! mkdir "$lock" 2>/dev/null; then
+    exit 0
+fi
+trap 'rmdir "$lock" 2>/dev/null' EXIT
+
+# x-canonical-private-synchronous: each dictate toast replaces the previous
+# one instead of stacking (honoured by dunst and mako).
+notify() {
+    notify-send -a dictate -t "${2:-2000}" \
+        -h string:x-canonical-private-synchronous:dictate \
+        -h string:x-dunst-stack-tag:dictate "$1"
+}
 
 # ---- stop branch: a recording is in progress ----
 if [ -f "$pidf" ] && kill -0 "$(cat "$pidf")" 2>/dev/null; then
@@ -23,7 +37,10 @@ if [ -f "$pidf" ] && kill -0 "$(cat "$pidf")" 2>/dev/null; then
     sleep 0.2
     notify "  transcribing…" 1500
 
-    text=$(whisper-cli -m "$model" -f "$wav" -l en -nt -np -otxt -of "$wav" 2>/dev/null; cat "$wav.txt" 2>/dev/null)
+    # whisper-cli prints the transcription to stdout *and* (-otxt) to the file;
+    # silence stdout and read only the file, or every result lands doubled.
+    whisper-cli -m "$model" -f "$wav" -l en -nt -np -otxt -of "$wav" >/dev/null 2>&1
+    text=$(cat "$wav.txt" 2>/dev/null)
     rm -f "$wav" "$wav.txt"
 
     # tidy: collapse whitespace, trim

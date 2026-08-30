@@ -43,7 +43,11 @@ client.urgent           #a54242  #1d1f21  #c5c8c6  #a54242   #a54242
 client.placeholder      #000000  #1d1f21  #c5c8c6  #000000   #1d1f21
 client.background       #1d1f21
 
-output * bg $wallpaper fill
+# Wallpaper is managed by Azote (writes ~/.azotebg, which runs swaybg).
+# sway's built-in `output bg` is drawn internally and would cover swaybg, so
+# it's only a solid-colour base for the moment before ~/.azotebg runs.
+output * bg #1d1f21 solid_color
+exec_always --no-startup-id [ -x "$HOME/.azotebg" ] && "$HOME/.azotebg"
 
 ### Input #################################################################
 input "type:keyboard" {
@@ -80,7 +84,7 @@ bindsym $mod+Shift+d exec $runner
 bindsym $mod+p exec cliphist list | wofi --dmenu | cliphist decode | wl-copy
 bindsym $mod+o exec ~/.config/sway/winswitch.sh
 bindsym $mod+slash exec ~/.config/sway/keybinds.sh
-bindsym $mod+grave exec ~/.config/sway/dictate.sh
+bindsym --no-repeat $mod+grave exec ~/.config/sway/dictate.sh
 bindsym $mod+m exec $yazi
 bindsym $mod+Shift+m exec $files
 
@@ -174,7 +178,7 @@ bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
 
 ### Window rules ########################################################
 # Xwayland apps match on [class=...]; native Wayland apps on [app_id=...].
-for_window [app_id="scratchpad"] border pixel 1, move scratchpad
+for_window [app_id="scratchpad"] border pixel 1, resize set width 60 ppt height 70 ppt, move position center, move scratchpad
 for_window [app_id="screensaver"] fullscreen enable, border none, inhibit_idle none
 for_window [app_id="galculator"] floating enable
 for_window [app_id="pavucontrol"] floating enable

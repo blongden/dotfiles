@@ -1,23 +1,34 @@
 # Custom keys prepended to yazi's defaults.
 # HEIC/HEIF → PNG or JPG, either saved alongside or put on the clipboard.
-# Works on the selection if any, else the hovered file.
+# This yazi passes paths via template params: %s = selected, %h = hovered.
+# save gets "%s %h" so it works on the selection, or the hovered file when
+# nothing is selected (heic2img de-dupes and ignores non-HEIC args).
+# Absolute path: yazi's `shell` inherits sway's PATH (lightdm-launched, no
+# ~/.local/bin), so a bare `heic2img` gives "not found" / exit 127.
 
+# Type-aware Enter: normal open, but a conversion menu when the file is HEIC.
+[[mgr.prepend_keymap]]
+on   = "<Enter>"
+run  = "plugin heic-menu"
+desc = "Open — or HEIC conversion menu"
+
+# Quick keys (work on the selection, or the hovered file if nothing selected).
 [[mgr.prepend_keymap]]
 on   = "C"
-run  = 'shell "heic2img save png $@"'
+run  = 'shell -- "$HOME/.local/bin/heic2img" save png %s %h'
 desc = "HEIC → PNG (save alongside)"
 
 [[mgr.prepend_keymap]]
 on   = "<C-y>"
-run  = 'shell "heic2img clip png $0"'
-desc = "HEIC → PNG (to clipboard)"
+run  = 'shell -- "$HOME/.local/bin/heic2img" clip png %h'
+desc = "HEIC → PNG (hovered → clipboard)"
 
 [[mgr.prepend_keymap]]
 on   = "J"
-run  = 'shell "heic2img save jpg $@"'
+run  = 'shell -- "$HOME/.local/bin/heic2img" save jpg %s %h'
 desc = "HEIC → JPG (save alongside)"
 
 [[mgr.prepend_keymap]]
-on   = "<C-j>"
-run  = 'shell "heic2img clip jpg $0"'
-desc = "HEIC → JPG (to clipboard)"
+on   = "<C-p>"
+run  = 'shell -- "$HOME/.local/bin/heic2img" clip jpg %h'
+desc = "HEIC → JPG (hovered → clipboard)"

@@ -100,6 +100,6 @@ rules = [
   { mime = "audio/*", fg = "#b294bb" },
   { mime = "inode/x-empty", fg = "#cc6666" },
   { mime = "application/{zip,gzip,x-tar,x-bzip,x-bzip2,x-7z-compressed,x-rar,xz}", fg = "#8abeb7" },
-  { name = "*", fg = "#c5c8c6" },
-  { name = "*/", fg = "#81a2be" },
+  { url = "*", fg = "#c5c8c6" },
+  { url = "*/", fg = "#81a2be" },
 ]

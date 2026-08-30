@@ -3,7 +3,8 @@
 #   save  — write <name>.<ext> next to each HEIC/HEIF input
 #   clip  — convert the first input and put the image on the Wayland clipboard
 # Bound in yazi (~/.config/yazi/keymap.toml):
-#   C = png save   Ctrl+y = png clip   J = jpg save   Ctrl+j = jpg clip
+#   C = png save   Ctrl+y = png clip   J = jpg save   Ctrl+p = jpg clip
+# yazi passes "%s %h" to save, so args can repeat; save de-dupes below.
 
 app=heic2img
 mode=$1
@@ -21,8 +22,10 @@ is_heic() { case $1 in *.[Hh][Ee][Ii][Cc] | *.[Hh][Ee][Ii][Ff] | *.[Hh][Ii][Ff])
 
 case $mode in
   save)
-    n=0 skipped=0
+    n=0 skipped=0 seen=":"
     for f in "$@"; do
+        case $seen in *":$f:"*) continue ;; esac   # skip repeats (%s %h overlap)
+        seen="$seen$f:"
         if ! is_heic "$f"; then skipped=$((skipped + 1)); continue; fi
         # shellcheck disable=SC2086
         if magick "$f" $extra "${f%.*}.$fmt" 2>/dev/null; then n=$((n + 1)); fi
