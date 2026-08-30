@@ -156,10 +156,14 @@ button {
   border-radius: 4px;
 }
 button:hover { background-color: #$LINE; }
-button.suggested-action {
-  background-color: #$YELLOW;
-  color: #$BG;
+button.suggested-action,
+button.suggested-action:hover {
+  background-color: #$BG2;
   border-color: #$YELLOW;
+}
+button.suggested-action label {
+  color: #$YELLOW;
+  font-weight: bold;
 }
 dropdown > button { background-color: #$BG2; color: #$FG; }
 label { color: #$FG; }

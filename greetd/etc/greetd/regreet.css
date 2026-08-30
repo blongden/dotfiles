@@ -26,10 +26,14 @@ button {
   border-radius: 4px;
 }
 button:hover { background-color: #373b41; }
-button.suggested-action {
-  background-color: #f0c674;
-  color: #1d1f21;
+button.suggested-action,
+button.suggested-action:hover {
+  background-color: #282a2e;
   border-color: #f0c674;
+}
+button.suggested-action label {
+  color: #f0c674;
+  font-weight: bold;
 }
 dropdown > button { background-color: #282a2e; color: #c5c8c6; }
 label { color: #c5c8c6; }

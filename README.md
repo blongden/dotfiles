@@ -68,7 +68,7 @@ sudo install -m644 -o root -g root greetd/etc/greetd/sway-config    /etc/greetd/
 sudo install -m644 -o root -g root greetd/etc/greetd/regreet.toml   /etc/greetd/regreet.toml
 sudo install -m644 -o root -g root greetd/etc/greetd/regreet.css    /etc/greetd/regreet.css
 sudo install -m644 -o root -g root greetd/usr/lib/tmpfiles.d/regreet.conf /usr/lib/tmpfiles.d/regreet.conf
-sudo cp ~/Pictures/Backdrops/1614877.jpg /etc/greetd/backdrop.jpg && sudo chmod 644 /etc/greetd/backdrop.jpg
+sudo cp ~/Pictures/Backdrops/11131112.jpg /etc/greetd/backdrop.jpg && sudo chmod 644 /etc/greetd/backdrop.jpg
 sudo systemd-tmpfiles --create /usr/lib/tmpfiles.d/regreet.conf   # /var/{lib,log}/regreet, owned by _greetd
 sudo systemctl disable lightdm.service 2>/dev/null || true
 sudo rm -f /etc/systemd/system/display-manager.service

@@ -4,7 +4,7 @@
 #   sudo install -m644 -o root -g root greetd/etc/greetd/regreet.toml   /etc/greetd/regreet.toml
 #   sudo install -m644 -o root -g root greetd/etc/greetd/regreet.css    /etc/greetd/regreet.css
 #   sudo install -m644 -o root -g root greetd/usr/lib/tmpfiles.d/regreet.conf /usr/lib/tmpfiles.d/regreet.conf
-#   sudo cp ~/Pictures/Backdrops/1614877.jpg /etc/greetd/backdrop.jpg   # _greetd-readable copy
+#   sudo cp ~/Pictures/Backdrops/11131112.jpg /etc/greetd/backdrop.jpg   # _greetd-readable copy
 #   sudo systemd-tmpfiles --create /usr/lib/tmpfiles.d/regreet.conf     # /var/{lib,log}/regreet
 #   regreet binary: built from source -> /usr/local/bin/regreet (see README step 4)
 #
