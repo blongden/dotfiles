@@ -14,7 +14,7 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 | `sway` | `~/.config/sway/` | config + `*.sh` helpers + `screensaver-art/` |
 | `waybar` `wofi` | `~/.config/{waybar,wofi}/` | Tomorrow Night, Iosevka Nerd Font; `rofimoji` (apt) drives wofi for the `$mod+.` emoji picker |
 | `dunst` | `~/.config/dunst/dunstrc` | Tomorrow Night; self-contained (dunst reads one config, no merge) |
-| `theme` | `~/.config/tinted-theming/tinty/` | tinty config + `fanout.sh`; one base16 palette → all apps. `tinty apply <scheme>` to switch. kitty via upstream template + `include tinty-colors.conf`; the rest written by `fanout.sh` from tinty's `$TINTY_SCHEME_PALETTE_*` env vars |
+| `theme` | `~/.config/tinted-theming/tinty/` | tinty config + `fanout.sh`; one base16 palette → kitty, tmux, nvim, waybar, wofi, sway borders, herdr, dunst, swaylock. `tinty apply <scheme>` to switch. kitty/tmux/nvim via upstream templates + an `include`/`source`; the rest written by `fanout.sh` from tinty's `$TINTY_SCHEME_PALETTE_*` env vars |
 | `kanshi` | `~/.config/kanshi/` | output profiles (docked = DP-2 4K@30) |
 | `swaylock` `gammastep` | `~/.config/{swaylock,gammastep}/` | gammastep off by default |
 | `greetd` | `/etc/greetd/config.toml` | **not stowed** (root-owned); tuigreet greeter, install by hand (step 4) |
