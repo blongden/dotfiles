@@ -28,8 +28,8 @@ repl() {
         $0 ~ s { print; print new; skip=1; next }
         $0 ~ e { skip=0; print; next }
         !skip  { print }
-    ' "$_f" > "$_tmp" && mv "$_tmp" "$_f"
-}
+    ' "$_f" > "$_tmp" && cat "$_tmp" > "$_f" && rm -f "$_tmp"
+}   # cat >, not mv — mv would replace a stow symlink with a plain file
 
 # ---- waybar + wofi : GTK CSS @define-color block ---------------------------
 css_block() {
@@ -123,7 +123,7 @@ if [ -f "$dunst_rc" ]; then
             }
             print
         }
-    ' "$dunst_rc" > "$_tmp" && mv "$_tmp" "$dunst_rc"
+    ' "$dunst_rc" > "$_tmp" && cat "$_tmp" > "$dunst_rc" && rm -f "$_tmp"
 fi
 
 # ---- reloads -----------------------------------------------------------
