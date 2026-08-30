@@ -13,6 +13,7 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 | `kitty` | `~/.config/kitty/kitty.conf` | Tomorrow Night theme appended |
 | `sway` | `~/.config/sway/` | config + `*.sh` helpers + `screensaver-art/` |
 | `waybar` `wofi` | `~/.config/{waybar,wofi}/` | Tomorrow Night, Iosevka Nerd Font; `rofimoji` (apt) drives wofi for the `$mod+.` emoji picker |
+| `dunst` | `~/.config/dunst/dunstrc` | Tomorrow Night; self-contained (dunst reads one config, no merge) |
 | `kanshi` | `~/.config/kanshi/` | output profiles (docked = DP-2 4K@30) |
 | `swaylock` `gammastep` | `~/.config/{swaylock,gammastep}/` | gammastep off by default |
 | `greetd` | `/etc/greetd/config.toml` | **not stowed** (root-owned); tuigreet greeter, install by hand (step 4) |
@@ -29,7 +30,7 @@ sudo apt install --no-install-recommends $(grep -vE '^\s*#|^\s*$' packages.txt)
 # 2. dotfiles
 git clone git@github.com:blongden/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow zsh git tmux nvim kitty sway waybar wofi kanshi swaylock gammastep
+stow zsh git tmux nvim kitty sway waybar wofi dunst kanshi swaylock gammastep
 stow --no-folding herdr desktop
 
 # 3. by-hand pieces (not in apt)
