@@ -49,6 +49,8 @@ kdeconnect           # clipboard / notifications / file share with the phone (au
 mc                   # midnight commander ($mod+Shift+m; twin-pane option)
 libheif-examples     # heif-convert  (HEIC -> JPG)
 heif-gdk-pixbuf      # HEIC support for gdk-pixbuf apps (image viewers, file dialogs)
+imagemagick          # `magick` — used by heic2img (HEIC -> png/jpg, incl. to clipboard)
+swayimg              # Wayland image viewer (default for HEIC/HEIF; heif via libheif)
 ffmpegthumbnailer    # yazi: video thumbnails
 fd-find              # yazi: file finding (symlink ~/.local/bin/fd -> fdfind)
 fzf                  # yazi: fuzzy jump

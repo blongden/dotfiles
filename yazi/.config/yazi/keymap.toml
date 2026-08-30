@@ -1,0 +1,23 @@
+# Custom keys prepended to yazi's defaults.
+# HEIC/HEIF → PNG or JPG, either saved alongside or put on the clipboard.
+# Works on the selection if any, else the hovered file.
+
+[[mgr.prepend_keymap]]
+on   = "C"
+run  = 'shell "heic2img save png $@"'
+desc = "HEIC → PNG (save alongside)"
+
+[[mgr.prepend_keymap]]
+on   = "<C-y>"
+run  = 'shell "heic2img clip png $0"'
+desc = "HEIC → PNG (to clipboard)"
+
+[[mgr.prepend_keymap]]
+on   = "J"
+run  = 'shell "heic2img save jpg $@"'
+desc = "HEIC → JPG (save alongside)"
+
+[[mgr.prepend_keymap]]
+on   = "<C-j>"
+run  = 'shell "heic2img clip jpg $0"'
+desc = "HEIC → JPG (to clipboard)"

@@ -13,6 +13,9 @@ x-scheme-handler/claude-cli=claude-code-url-handler.desktop
 x-scheme-handler/about=chromium.desktop
 x-scheme-handler/unknown=chromium.desktop
 inode/directory=yazi.desktop
+image/heic=swayimg.desktop
+image/heif=swayimg.desktop
+image/x-heic=swayimg.desktop
 
 [Added Associations]
 x-scheme-handler/http=chromium.desktop;

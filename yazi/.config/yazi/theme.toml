@@ -1,0 +1,105 @@
+# Tomorrow Night for yazi — matches kitty / waybar / wofi / mc.
+#   bg #1d1f21  bg2 #282a2e  line #373b41  fg #c5c8c6  dim #707880  comment #969896
+#   red #cc6666  orange #de935f  yellow #f0c674  green #b5bd68
+#   aqua #8abeb7  blue #81a2be  purple #b294bb
+
+[mgr]
+cwd = { fg = "#8abeb7" }
+
+hovered         = { fg = "#1d1f21", bg = "#81a2be" }
+preview_hovered = { underline = true }
+
+find_keyword  = { fg = "#f0c674", italic = true }
+find_position = { fg = "#b294bb", bg = "reset", italic = true }
+
+marker_copied   = { fg = "#b5bd68", bg = "#b5bd68" }
+marker_cut      = { fg = "#cc6666", bg = "#cc6666" }
+marker_marked   = { fg = "#8abeb7", bg = "#8abeb7" }
+marker_selected = { fg = "#f0c674", bg = "#f0c674" }
+
+tab_active   = { fg = "#1d1f21", bg = "#c5c8c6" }
+tab_inactive = { fg = "#c5c8c6", bg = "#373b41" }
+tab_width    = 1
+
+border_symbol = "│"
+border_style  = { fg = "#707880" }
+
+syntect_theme = ""
+
+[mode]
+normal_main = { fg = "#1d1f21", bg = "#81a2be", bold = true }
+normal_alt  = { fg = "#81a2be", bg = "#282a2e" }
+select_main = { fg = "#1d1f21", bg = "#b5bd68", bold = true }
+select_alt  = { fg = "#b5bd68", bg = "#282a2e" }
+unset_main  = { fg = "#1d1f21", bg = "#b294bb", bold = true }
+unset_alt   = { fg = "#b294bb", bg = "#282a2e" }
+
+[status]
+separator_open   = ""
+separator_close  = ""
+separator_style  = { fg = "#373b41", bg = "#373b41" }
+overall          = { fg = "#c5c8c6", bg = "#282a2e" }
+progress_label   = { fg = "#c5c8c6", bold = true }
+progress_normal  = { fg = "#81a2be", bg = "#373b41" }
+progress_error   = { fg = "#cc6666", bg = "#373b41" }
+
+perm_type  = { fg = "#81a2be" }
+perm_read  = { fg = "#f0c674" }
+perm_write = { fg = "#cc6666" }
+perm_exec  = { fg = "#b5bd68" }
+perm_sep   = { fg = "#707880" }
+
+[pick]
+border   = { fg = "#81a2be" }
+active   = { fg = "#f0c674", bold = true }
+inactive = {}
+
+[input]
+border   = { fg = "#81a2be" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+[confirm]
+border      = { fg = "#81a2be" }
+title       = { fg = "#81a2be" }
+content     = {}
+list        = {}
+btn_yes     = { fg = "#1d1f21", bg = "#b5bd68" }
+btn_no      = { fg = "#1d1f21", bg = "#cc6666" }
+
+[tasks]
+border  = { fg = "#81a2be" }
+title   = {}
+hovered = { fg = "#f0c674", underline = true }
+
+[notify]
+title_info  = { fg = "#8abeb7" }
+title_warn  = { fg = "#f0c674" }
+title_error = { fg = "#cc6666" }
+
+[which]
+mask            = { bg = "#282a2e" }
+cand            = { fg = "#8abeb7" }
+rest            = { fg = "#707880" }
+desc            = { fg = "#c5c8c6" }
+separator       = "  "
+separator_style = { fg = "#707880" }
+
+[help]
+on      = { fg = "#f0c674" }
+run     = { fg = "#8abeb7" }
+desc    = { fg = "#c5c8c6" }
+hovered = { bg = "#373b41", bold = true }
+footer  = { fg = "#1d1f21", bg = "#c5c8c6" }
+
+[filetype]
+rules = [
+  { mime = "image/*", fg = "#f0c674" },
+  { mime = "video/*", fg = "#b294bb" },
+  { mime = "audio/*", fg = "#b294bb" },
+  { mime = "inode/x-empty", fg = "#cc6666" },
+  { mime = "application/{zip,gzip,x-tar,x-bzip,x-bzip2,x-7z-compressed,x-rar,xz}", fg = "#8abeb7" },
+  { name = "*", fg = "#c5c8c6" },
+  { name = "*/", fg = "#81a2be" },
+]

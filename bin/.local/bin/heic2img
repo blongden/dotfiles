@@ -1,0 +1,49 @@
+#!/bin/sh
+# heic2img <save|clip> <png|jpg> FILE...
+#   save  — write <name>.<ext> next to each HEIC/HEIF input
+#   clip  — convert the first input and put the image on the Wayland clipboard
+# Bound in yazi (~/.config/yazi/keymap.toml):
+#   C = png save   Ctrl+y = png clip   J = jpg save   Ctrl+j = jpg clip
+
+app=heic2img
+mode=$1
+fmt=$2
+[ $# -ge 3 ] || { notify-send -a "$app" "usage: $app <save|clip> <png|jpg> FILE..."; exit 1; }
+shift 2
+
+case $fmt in
+  png) mime=image/png ;  extra= ;;
+  jpg|jpeg) fmt=jpg; mime=image/jpeg ; extra="-quality 92" ;;
+  *) notify-send -a "$app" "unknown format '$fmt'"; exit 1 ;;
+esac
+
+is_heic() { case $1 in *.[Hh][Ee][Ii][Cc] | *.[Hh][Ee][Ii][Ff] | *.[Hh][Ii][Ff]) return 0 ;; *) return 1 ;; esac; }
+
+case $mode in
+  save)
+    n=0 skipped=0
+    for f in "$@"; do
+        if ! is_heic "$f"; then skipped=$((skipped + 1)); continue; fi
+        # shellcheck disable=SC2086
+        if magick "$f" $extra "${f%.*}.$fmt" 2>/dev/null; then n=$((n + 1)); fi
+    done
+    msg="$n converted to ${fmt}"
+    [ "$skipped" -gt 0 ] && msg="$msg · $skipped skipped (not HEIC)"
+    notify-send -a "$app" "$msg"
+    ;;
+  clip)
+    f=$1
+    if ! is_heic "$f"; then notify-send -a "$app" "Not a HEIC/HEIF file" "$(basename "$f")"; exit 1; fi
+    # shellcheck disable=SC2086
+    if magick "$f" $extra "$fmt:-" 2>/dev/null | wl-copy --type "$mime"; then
+        notify-send -a "$app" "${fmt} copied to clipboard" "$(basename "$f")"
+    else
+        notify-send -a "$app" "Conversion failed" "$(basename "$f")"
+        exit 1
+    fi
+    ;;
+  *)
+    notify-send -a "$app" "unknown mode '$mode'"
+    exit 1
+    ;;
+esac

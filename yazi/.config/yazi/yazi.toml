@@ -1,0 +1,11 @@
+# yazi — behaviour. Theme is in theme.toml, keys in keymap.toml.
+
+[opener]
+image = [
+  { run = 'swayimg "$@"', desc = "swayimg", orphan = true, for = "linux" },
+]
+
+[open]
+prepend_rules = [
+  { mime = "image/*", use = "image" },
+]
