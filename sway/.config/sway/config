@@ -17,6 +17,7 @@ set $locker ~/.config/sway/lock.sh
 set $shot ~/.config/sway/screenshot.sh
 set $herdr kitty --class herdr -e herdr
 set $files kitty --class mc -e mc --skin modarin256-defbg
+set $yazi kitty --class yazi -e yazi
 set $wallpaper ~/Pictures/Backdrops/1614877.jpg
 
 ### Appearance #############################################################
@@ -81,6 +82,7 @@ bindsym $mod+o exec ~/.config/sway/winswitch.sh
 bindsym $mod+slash exec ~/.config/sway/keybinds.sh
 bindsym $mod+grave exec ~/.config/sway/dictate.sh
 bindsym $mod+m exec $files
+bindsym $mod+Shift+m exec $yazi
 
 # border style (was $mod+u / y / n in i3)
 bindsym $mod+u border none

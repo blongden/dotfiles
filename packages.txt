@@ -51,6 +51,10 @@ thunar               # GUI file manager (thumbnails for photos/video; not the de
 tumbler              # thumbnails for thunar (images, video, HEIC)
 libheif-examples     # heif-convert  (HEIC -> JPG)
 heif-gdk-pixbuf      # view HEIC in gdk-pixbuf apps (thunar previews etc.)
+ffmpegthumbnailer    # yazi: video thumbnails
+fd-find              # yazi: file finding (symlink ~/.local/bin/fd -> fdfind)
+fzf                  # yazi: fuzzy jump
+zoxide               # yazi: frecency jump
 
 # --- voice to text (push-to-talk dictation, $mod+grave) ---
 whisper.cpp          # whisper-cli local transcription (models: ~/.local/share/whisper/ggml-*.bin)
@@ -68,5 +72,6 @@ pipx                 # then: pipx install terminaltexteffects   (provides `tte`)
 
 # --- NOT in apt, install by hand (see README.md) ---
 #   herdr            -> github.com/herdrdev/herdr releases, binary into ~/.local/bin
+#   yazi + ya        -> github.com/sxyazi/yazi releases (x86_64-unknown-linux-gnu.zip) into ~/.local/bin
 #   Iosevka Nerd Font -> ~/.local/share/fonts/iosevka_nerd_font.ttf  (waybar/wofi/kitty)
 #   vim-plug         -> curl into ~/.config/nvim/autoload/plug.vim
