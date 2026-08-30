@@ -13,6 +13,7 @@ pactl set-sink-volume @DEFAULT_SINK@ 20%
 nm-applet --indicator &
 mate-power-manager &
 dunst &
+kdeconnect-indicator &          # phone pairing: clipboard, notifications, file share
 
 # Optional warm night tint (you didn't run redshift before, so off by default).
 # Enable by editing ~/.config/gammastep/config.ini and uncommenting:
