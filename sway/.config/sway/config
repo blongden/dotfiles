@@ -82,6 +82,8 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec $menu
 bindsym $mod+Shift+d exec $runner
 bindsym $mod+p exec cliphist list | wofi --dmenu | cliphist decode | wl-copy
+bindsym $mod+period exec rofimoji --selector wofi --action type
+bindsym $mod+Shift+period exec rofimoji --selector wofi --action copy
 bindsym $mod+o exec ~/.config/sway/winswitch.sh
 bindsym $mod+slash exec ~/.config/sway/keybinds.sh
 bindsym --no-repeat $mod+grave exec ~/.config/sway/dictate.sh

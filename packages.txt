@@ -22,6 +22,7 @@ kanshi               # output profiles (replaces autorandr)
 # --- bar / launcher / notifications ---
 waybar
 wofi                 # launcher (drun/run/dmenu)
+rofimoji             # emoji / symbol picker via wofi ($mod+. type, $mod+Shift+. copy)
 wmenu                # sway default $menu fallback
 dunst                # notifications (also herdr's "system" toast target)
 fonts-font-awesome   # waybar glyph fallback

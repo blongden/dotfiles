@@ -12,7 +12,7 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 | `zsh` `git` `tmux` `nvim` | `~/.zshrc`, `~/.gitconfig`, `~/.config/git/ignore`, `~/.tmux.conf`, `~/.config/nvim/init.vim` | |
 | `kitty` | `~/.config/kitty/kitty.conf` | Tomorrow Night theme appended |
 | `sway` | `~/.config/sway/` | config + `*.sh` helpers + `screensaver-art/` |
-| `waybar` `wofi` | `~/.config/{waybar,wofi}/` | Tomorrow Night, Iosevka Nerd Font |
+| `waybar` `wofi` | `~/.config/{waybar,wofi}/` | Tomorrow Night, Iosevka Nerd Font; `rofimoji` (apt) drives wofi for the `$mod+.` emoji picker |
 | `kanshi` | `~/.config/kanshi/` | output profiles (docked = DP-2 4K@30) |
 | `swaylock` `gammastep` | `~/.config/{swaylock,gammastep}/` | gammastep off by default |
 | `greetd` | `/etc/greetd/config.toml` | **not stowed** (root-owned); tuigreet greeter, install by hand (step 4) |
