@@ -31,9 +31,10 @@ done; }
 
 kitty --class scratchpad &
 
+# ws1: kitty running herdr, with Claude Code started in its first pane
 swaymsg workspace number 1
-kitty &
-wait_for kitty
+~/.config/sway/herdr-claude.sh &
+wait_for herdr
 
 swaymsg workspace number 2
 chromium &
