@@ -6,7 +6,7 @@
 
     "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "sway/window"],
     "modules-center": [],
-    "modules-right": ["custom/updates", "cpu", "memory", "temperature", "disk", "network", "pulseaudio", "backlight", "battery", "custom/weather", "tray", "clock"],
+    "modules-right": ["custom/updates", "cpu", "memory", "temperature", "disk", "network", "custom/tailscale", "pulseaudio", "backlight", "battery", "custom/weather", "tray", "clock"],
 
     "sway/workspaces": {
         "disable-scroll": false,
@@ -49,6 +49,16 @@
         "on-click": "kitty --title 'weather' sh -c 'curl -s \"https://wttr.in/${WEATHER_LOCATION}\"; echo; printf \"[press a key to close] \"; read x'",
         "on-click-right": "pkill -RTMIN+9 waybar",
         "signal": 9
+    },
+
+    "custom/tailscale": {
+        "format": "{}",
+        "return-type": "json",
+        "interval": 10,
+        "exec": "~/.config/waybar/scripts/tailscale.sh",
+        "on-click": "~/.config/waybar/scripts/tailscale.sh toggle-exit",
+        "on-click-right": "kitty --title 'tailscale' sh -c 'tailscale status; echo; printf \"[press a key to close] \"; read x'",
+        "signal": 10
     },
 
     "cpu": {
