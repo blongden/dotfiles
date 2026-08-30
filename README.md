@@ -17,7 +17,7 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 | `swaylock` `gammastep` | `~/.config/{swaylock,gammastep}/` | gammastep off by default |
 | `greetd` | `/etc/greetd/config.toml` | **not stowed** (root-owned); tuigreet greeter, install by hand (step 4) |
 | `herdr` | `~/.config/herdr/config.toml` | multiplexer for coding agents; `--no-folding` (dir holds runtime state) |
-| `desktop` | `~/.config/mimeapps.list`, `~/.local/share/applications/{screenshot,sway-keybindings}.desktop` | chromium as default browser; `--no-folding` |
+| `desktop` | `~/.config/mimeapps.list`, `~/.local/share/applications/*.desktop` | chromium as default browser; custom launchers (screenshot, sway-keybindings, yazi, mc, downloads); `code`/`discord`/`Claude` overrides add `--ozone-platform-hint=auto` for native Wayland; `--no-folding` |
 
 ## Rebuild on a new machine
 
