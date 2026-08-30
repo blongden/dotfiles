@@ -6,7 +6,7 @@
 
     "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "sway/window"],
     "modules-center": [],
-    "modules-right": ["custom/updates", "cpu", "memory", "temperature", "disk", "network", "pulseaudio", "backlight", "battery", "tray", "clock"],
+    "modules-right": ["custom/updates", "cpu", "memory", "temperature", "disk", "network", "pulseaudio", "backlight", "battery", "custom/weather", "tray", "clock"],
 
     "sway/workspaces": {
         "disable-scroll": false,
@@ -39,6 +39,16 @@
         "on-click": "kitty --title 'apt · upgradable' sh -c 'apt list --upgradable 2>/dev/null; echo; printf \"[press a key to close] \"; read x'",
         "on-click-right": "kitty --title 'apt · full-upgrade' sh -c 'sudo apt update && sudo apt full-upgrade; echo; printf \"[done — press a key] \"; read x'; pkill -RTMIN+8 waybar",
         "signal": 8
+    },
+
+    "custom/weather": {
+        "format": "{}",
+        "return-type": "json",
+        "interval": 900,
+        "exec": "~/.config/waybar/scripts/weather.sh",
+        "on-click": "kitty --title 'weather' sh -c 'curl -s \"https://wttr.in/${WEATHER_LOCATION}\"; echo; printf \"[press a key to close] \"; read x'",
+        "on-click-right": "pkill -RTMIN+9 waybar",
+        "signal": 9
     },
 
     "cpu": {

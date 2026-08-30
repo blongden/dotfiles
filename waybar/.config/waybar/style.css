@@ -73,8 +73,16 @@ tooltip label { color: #c5c8c6; }
 
 /* ── right ────────────────────────────────────────── */
 #cpu, #memory, #temperature, #disk, #network,
-#pulseaudio, #backlight, #battery, #tray, #clock, #custom-updates {
+#pulseaudio, #backlight, #battery, #tray, #clock,
+#custom-updates, #custom-weather {
     padding: 0 10px;
+}
+
+#custom-weather          { color: #8abeb7; }
+#custom-weather.offline  { color: #707880; }
+#custom-weather.alert {
+    color: #1d1f21;
+    background: #cc6666;
 }
 
 #custom-updates.updated  { color: #707880; }
