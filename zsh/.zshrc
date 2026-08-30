@@ -51,6 +51,7 @@ source $ZSH/oh-my-zsh.sh
 # eval "$(docker-machine env dinghy)"
 
 alias ip='curl canhazip.com'
+alias mc='mc --skin modarin256-defbg'
 alias df='df -h'
 alias du='du -d 1 -h'
 alias cleandl='find . -mtime +30 -exec rm -rf "{}" \;'

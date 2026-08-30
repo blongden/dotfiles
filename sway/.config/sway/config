@@ -16,6 +16,7 @@ set $runner ~/.config/sway/wofi-toggle.sh --show run
 set $locker ~/.config/sway/lock.sh
 set $shot ~/.config/sway/screenshot.sh
 set $herdr kitty --class herdr -e herdr
+set $files kitty --class mc -e mc --skin modarin256-defbg
 set $wallpaper ~/Pictures/Backdrops/1614877.jpg
 
 ### Appearance #############################################################
@@ -79,6 +80,7 @@ bindsym $mod+p exec cliphist list | wofi --dmenu | cliphist decode | wl-copy
 bindsym $mod+o exec ~/.config/sway/winswitch.sh
 bindsym $mod+slash exec ~/.config/sway/keybinds.sh
 bindsym $mod+grave exec ~/.config/sway/dictate.sh
+bindsym $mod+m exec $files
 
 # border style (was $mod+u / y / n in i3)
 bindsym $mod+u border none

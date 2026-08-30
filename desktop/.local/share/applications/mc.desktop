@@ -1,0 +1,13 @@
+[Desktop Entry]
+# Local override of /usr/share/applications/mc.desktop — force it into a kitty
+# window with our skin, and register it as the folder handler.
+Type=Application
+Name=Midnight Commander
+GenericName=File Manager
+Comment=Two-pane terminal file manager
+Icon=mc
+Exec=kitty --class mc -e mc --skin modarin256-defbg %f
+Terminal=false
+Categories=System;
+MimeType=inode/directory;
+Keywords=file;manager;browser;mc;midnight;commander;
