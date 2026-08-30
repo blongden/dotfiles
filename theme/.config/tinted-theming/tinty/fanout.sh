@@ -126,6 +126,50 @@ if [ -f "$dunst_rc" ]; then
     ' "$dunst_rc" > "$_tmp" && cat "$_tmp" > "$dunst_rc" && rm -f "$_tmp"
 fi
 
+# ---- ReGreet greeter : dotfiles copy is user-owned; /etc needs root ----
+# Rewrites ~/dotfiles/greetd/etc/greetd/regreet.css between markers, then
+# tries a passwordless push to /etc. Add this to sudoers for the push to
+# work unattended (visudo -f /etc/sudoers.d/greetd-css):
+#   ben ALL=(root) NOPASSWD: /usr/bin/install -m644 /home/ben/dotfiles/greetd/etc/greetd/regreet.css /etc/greetd/regreet.css
+greeter_css="$HOME/dotfiles/greetd/etc/greetd/regreet.css"
+greeter_block() {
+    cat <<EOF
+window {
+  background-color: #$BG;
+  color: #$FG;
+  font-family: "Iosevka Nerd Font", "Iosevka", monospace;
+}
+entry {
+  background-color: #$BG2;
+  color: #$FG;
+  border: 1px solid #$LINE;
+  border-radius: 4px;
+  padding: 8px 10px;
+  caret-color: #$YELLOW;
+}
+entry:focus-within { border-color: #$YELLOW; }
+button {
+  background-image: none;
+  background-color: #$BG2;
+  color: #$FG;
+  border: 1px solid #$LINE;
+  border-radius: 4px;
+}
+button:hover { background-color: #$LINE; }
+button.suggested-action {
+  background-color: #$YELLOW;
+  color: #$BG;
+  border-color: #$YELLOW;
+}
+dropdown > button { background-color: #$BG2; color: #$FG; }
+label { color: #$FG; }
+EOF
+}
+if [ -f "$greeter_css" ]; then
+    greeter_block | repl "$greeter_css" '/\* tinty:start \*/' '/\* tinty:end \*/'
+    sudo -n install -m644 "$greeter_css" /etc/greetd/regreet.css 2>/dev/null || true
+fi
+
 # ---- reloads -----------------------------------------------------------
 pkill -SIGUSR2 waybar        2>/dev/null || true
 swaymsg reload               >/dev/null 2>&1 || true
