@@ -46,11 +46,9 @@ policykit-1-gnome    # polkit auth agent
 kdeconnect           # clipboard / notifications / file share with the phone (autostart.sh)
 
 # --- files / images ---
-mc                   # midnight commander (default folder handler; $mod+m)
-thunar               # GUI file manager (thumbnails for photos/video; not the default)
-tumbler              # thumbnails for thunar (images, video, HEIC)
+mc                   # midnight commander ($mod+Shift+m; twin-pane option)
 libheif-examples     # heif-convert  (HEIC -> JPG)
-heif-gdk-pixbuf      # view HEIC in gdk-pixbuf apps (thunar previews etc.)
+heif-gdk-pixbuf      # HEIC support for gdk-pixbuf apps (image viewers, file dialogs)
 ffmpegthumbnailer    # yazi: video thumbnails
 fd-find              # yazi: file finding (symlink ~/.local/bin/fd -> fdfind)
 fzf                  # yazi: fuzzy jump

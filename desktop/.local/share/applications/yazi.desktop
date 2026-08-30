@@ -1,0 +1,13 @@
+[Desktop Entry]
+# Folder handler — opens yazi in a kitty window (yazi is a TUI, no native
+# .desktop ships with the prebuilt binary).
+Type=Application
+Name=Files
+GenericName=File Manager
+Comment=yazi terminal file manager
+Icon=system-file-manager
+Exec=kitty --class yazi -e yazi %f
+Terminal=false
+Categories=System;
+MimeType=inode/directory;
+Keywords=file;manager;browser;yazi;files;

@@ -81,8 +81,8 @@ bindsym $mod+p exec cliphist list | wofi --dmenu | cliphist decode | wl-copy
 bindsym $mod+o exec ~/.config/sway/winswitch.sh
 bindsym $mod+slash exec ~/.config/sway/keybinds.sh
 bindsym $mod+grave exec ~/.config/sway/dictate.sh
-bindsym $mod+m exec $files
-bindsym $mod+Shift+m exec $yazi
+bindsym $mod+m exec $yazi
+bindsym $mod+Shift+m exec $files
 
 # border style (was $mod+u / y / n in i3)
 bindsym $mod+u border none
