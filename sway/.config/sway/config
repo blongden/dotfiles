@@ -200,11 +200,13 @@ for_window [window_role="pop-up"] floating enable
 for_window [window_role="dialog"] floating enable
 for_window [urgent=latest] focus
 
-# ws3: Discord + Proton Mail (Chromium --app windows), always stacked there
-assign     [app_id="^chrome-discord\.com__app-Default$"]  $ws3
-assign     [app_id="^chrome-mail\.proton\.me__-Default$"] $ws3
-for_window [app_id="^chrome-discord\.com__app-Default$"]  layout stacking
-for_window [app_id="^chrome-mail\.proton\.me__-Default$"] layout stacking
+# ws3: Discord + Proton Mail + WhatsApp (Chromium --app windows), always stacked there
+assign     [app_id="^chrome-discord\.com__app-Default$"]   $ws3
+assign     [app_id="^chrome-mail\.proton\.me__-Default$"]  $ws3
+assign     [app_id="^chrome-web\.whatsapp\.com__-Default$"] $ws3
+for_window [app_id="^chrome-discord\.com__app-Default$"]   layout stacking
+for_window [app_id="^chrome-mail\.proton\.me__-Default$"]  layout stacking
+for_window [app_id="^chrome-web\.whatsapp\.com__-Default$"] layout stacking
 
 ### System control ######################################################
 bindsym $mod+Shift+c reload

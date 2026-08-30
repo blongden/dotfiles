@@ -47,6 +47,8 @@ wait_for 'chrome-discord.com__app-Default'
 swaymsg layout stacking
 chromium --app='https://mail.proton.me/' &
 wait_for 'chrome-mail.proton.me__-Default'
+chromium --app='https://web.whatsapp.com/' &
+wait_for 'chrome-web.whatsapp.com__-Default'
 
 # start the session focused on the terminal
 swaymsg workspace number 1
