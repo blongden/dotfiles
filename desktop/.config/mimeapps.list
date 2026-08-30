@@ -12,6 +12,7 @@ application/x-extension-xht=chromium.desktop
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
 x-scheme-handler/about=chromium.desktop
 x-scheme-handler/unknown=chromium.desktop
+inode/directory=thunar.desktop
 
 [Added Associations]
 x-scheme-handler/http=chromium.desktop;

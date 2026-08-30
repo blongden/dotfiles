@@ -45,6 +45,17 @@ policykit-1-gnome    # polkit auth agent
 # --- phone integration ---
 kdeconnect           # clipboard / notifications / file share with the phone (autostart.sh)
 
+# --- files / images ---
+thunar               # GUI file manager (folder handler; browse ~/Downloads)
+tumbler              # thumbnails for thunar (images, video, HEIC)
+libheif-examples     # heif-convert  (HEIC -> JPG)
+heif-gdk-pixbuf      # view HEIC in gdk-pixbuf apps (thunar previews etc.)
+
+# --- voice to text (push-to-talk dictation, $mod+grave) ---
+whisper.cpp          # whisper-cli local transcription (models: ~/.local/share/whisper/ggml-*.bin)
+wtype                # type transcribed text into the focused window (Wayland)
+wayland-utils        # wayland-info (protocol inspection)
+
 # --- terminal ---
 kitty
 

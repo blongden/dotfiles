@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Downloads
+Comment=Open the Downloads folder
+Icon=folder-download
+Exec=thunar /home/ben/Downloads
+Terminal=false
+Categories=Utility;
+Keywords=downloads;files;folder;kdeconnect;received;phone;
