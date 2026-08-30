@@ -1,10 +1,25 @@
 /* waybar — Tomorrow Night, monospace / terminal vibe
- *   bg  #1d1f21   bg2 #282a2e   line #373b41
- *   fg  #c5c8c6   dim #707880
- *   red #cc6666  green #b5bd68  yellow #f0c674  blue #81a2be
- *   purple #b294bb  aqua #8abeb7  orange #de935f
+ *   bg  @bg   bg2 @bg2   line @line
+ *   fg  @fg   dim @dim
+ *   red @red  green @green  yellow @yellow  blue @blue
+ *   purple @purple  aqua @aqua  orange @orange
  */
 
+
+/* tinty:start — rewritten by ~/.config/tinted-theming/tinty/fanout.sh */
+@define-color bg     #1d1f21;
+@define-color bg2    #282a2e;
+@define-color line   #373b41;
+@define-color dim    #969896;
+@define-color fg     #c5c8c6;
+@define-color red    #cc6666;
+@define-color orange #de935f;
+@define-color yellow #f0c674;
+@define-color green  #b5bd68;
+@define-color aqua   #8abeb7;
+@define-color blue   #81a2be;
+@define-color purple #b294bb;
+/* tinty:end */
 * {
     font-family: "Iosevka Nerd Font", "Iosevka", "Font Awesome 6 Free", monospace;
     font-size: 13px;
@@ -13,17 +28,17 @@
 }
 
 window#waybar {
-    background: #1d1f21;
-    color: #c5c8c6;
-    border-bottom: 2px solid #373b41;
+    background: @bg;
+    color: @fg;
+    border-bottom: 2px solid @line;
 }
 
 tooltip {
-    background: #1d1f21;
-    border: 1px solid #373b41;
+    background: @bg;
+    border: 1px solid @line;
     border-radius: 6px;
 }
-tooltip label { color: #c5c8c6; }
+tooltip label { color: @fg; }
 
 /* ── left ─────────────────────────────────────────── */
 #workspaces { margin-left: 2px; }
@@ -31,44 +46,44 @@ tooltip label { color: #c5c8c6; }
 #workspaces button {
     padding: 0 9px;
     margin: 0;
-    color: #707880;
+    color: @dim;
     background: transparent;
     border-bottom: 2px solid transparent;
     border-radius: 0;
 }
 #workspaces button:hover {
-    color: #c5c8c6;
-    background: #282a2e;
+    color: @fg;
+    background: @bg2;
     box-shadow: none;
     text-shadow: none;
 }
-#workspaces button.visible { color: #c5c8c6; }
+#workspaces button.visible { color: @fg; }
 #workspaces button.focused {
-    color: #f0c674;
-    background: #282a2e;
-    border-bottom: 2px solid #f0c674;
+    color: @yellow;
+    background: @bg2;
+    border-bottom: 2px solid @yellow;
 }
 #workspaces button.urgent {
-    color: #1d1f21;
-    background: #cc6666;
+    color: @bg;
+    background: @red;
 }
 
 #mode {
     padding: 0 10px;
-    color: #1d1f21;
-    background: #f0c674;
+    color: @bg;
+    background: @yellow;
     font-style: italic;
 }
 
 #scratchpad {
     padding: 0 10px;
-    color: #8abeb7;
+    color: @aqua;
 }
-#scratchpad.empty { color: #707880; }
+#scratchpad.empty { color: @dim; }
 
 #window {
     padding: 0 12px;
-    color: #969896;
+    color: @dim;
 }
 
 /* ── right ────────────────────────────────────────── */
@@ -78,40 +93,40 @@ tooltip label { color: #c5c8c6; }
     padding: 0 10px;
 }
 
-#custom-tailscale           { color: #b5bd68; }
-#custom-tailscale.exit-node { color: #f0c674; }
-#custom-tailscale.offline   { color: #707880; }
+#custom-tailscale           { color: @green; }
+#custom-tailscale.exit-node { color: @yellow; }
+#custom-tailscale.offline   { color: @dim; }
 
-#bluetooth              { color: #81a2be; }
-#bluetooth.connected    { color: #8abeb7; }
+#bluetooth              { color: @blue; }
+#bluetooth.connected    { color: @aqua; }
 #bluetooth.disabled,
-#bluetooth.off          { color: #707880; }
+#bluetooth.off          { color: @dim; }
 
-#custom-weather          { color: #8abeb7; }
-#custom-weather.offline  { color: #707880; }
+#custom-weather          { color: @aqua; }
+#custom-weather.offline  { color: @dim; }
 #custom-weather.alert {
-    color: #1d1f21;
-    background: #cc6666;
+    color: @bg;
+    background: @red;
 }
 
-#custom-updates.updated  { color: #707880; }
-#custom-updates.pending  { color: #f0c674; }
+#custom-updates.updated  { color: @dim; }
+#custom-updates.pending  { color: @yellow; }
 #custom-updates.security {
-    color: #1d1f21;
-    background: #cc6666;
+    color: @bg;
+    background: @red;
 }
 
-#cpu         { color: #b5bd68; }
-#memory      { color: #8abeb7; }
-#temperature { color: #de935f; }
-#disk        { color: #b294bb; }
-#network     { color: #81a2be; }
-#pulseaudio  { color: #8abeb7; }
-#backlight   { color: #f0c674; }
-#battery     { color: #b5bd68; }
+#cpu         { color: @green; }
+#memory      { color: @aqua; }
+#temperature { color: @orange; }
+#disk        { color: @purple; }
+#network     { color: @blue; }
+#pulseaudio  { color: @aqua; }
+#backlight   { color: @yellow; }
+#battery     { color: @green; }
 
 #clock {
-    color: #f0c674;
+    color: @yellow;
     font-weight: 700;
     padding-right: 14px;
 }
@@ -122,11 +137,11 @@ tooltip label { color: #c5c8c6; }
 
 /* ── state colours ────────────────────────────────── */
 #cpu.warning, #memory.warning, #temperature.warning, #battery.warning {
-    color: #f0c674;
+    color: @yellow;
 }
 #cpu.critical, #memory.critical, #temperature.critical, #battery.critical {
-    color: #cc6666;
+    color: @red;
 }
-#battery.charging { color: #b5bd68; }
-#battery.critical:not(.charging) { color: #cc6666; }
-#pulseaudio.muted, #network.disconnected { color: #707880; }
+#battery.charging { color: @green; }
+#battery.critical:not(.charging) { color: @red; }
+#pulseaudio.muted, #network.disconnected { color: @dim; }

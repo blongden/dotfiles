@@ -15,13 +15,15 @@ onboarding = false
 name = "one-dark"
 
 [theme.custom]
-sidebar_bg    = "#1d1f21"   # sidebar / agent panel background
-panel_bg      = "reset"     # keep pane contents on kitty's own background
-active_row_bg = "#282a2e"   # focused sidebar row
-selection_bg  = "#373b41"   # visual selection / highlight
-accent        = "#f0c674"   # Tomorrow Night yellow — matches waybar's focused-workspace accent
+panel_bg = "reset"   # keep pane contents on kitty's own background
+# tinty:start — rewritten by ~/.config/tinted-theming/tinty/fanout.sh
+sidebar_bg    = "#1d1f21"
+active_row_bg = "#282a2e"
+selection_bg  = "#373b41"
+accent        = "#f0c674"
 red           = "#cc6666"
 green         = "#b5bd68"
+# tinty:end
 
 [ui]
 # Accent for highlights, borders, navigate-mode UI.

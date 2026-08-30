@@ -73,9 +73,9 @@
 
 [urgency_low]
     background = "#1d1f21"
-    foreground = "#707880"
+    foreground = "#969896"
     frame_color = "#373b41"
-    highlight = "#707880"
+    highlight = "#969896"
     timeout = 8
     default_icon = dialog-information
 

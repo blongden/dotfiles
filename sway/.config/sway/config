@@ -34,14 +34,16 @@ gaps outer 2
 smart_gaps on
 smart_borders on
 
-# Tomorrow-Night palette, matching the old i3 client.* colors
+### tinty:start — rewritten by ~/.config/tinted-theming/tinty/fanout.sh
+# window border colours — managed by tinty
 #                       border   bg       text     indicator child_border
-client.focused          #81a2be  #1d1f21  #c5c8c6  #81a2be   #81a2be
-client.focused_inactive #5f819d  #1d1f21  #c5c8c6  #5f819d   #5f819d
+client.focused          #81a2be  #1d1f21  #c5c8c6  #8abeb7   #81a2be
+client.focused_inactive #81a2be  #1d1f21  #c5c8c6  #81a2be   #373b41
 client.unfocused        #373b41  #1d1f21  #969896  #373b41   #373b41
-client.urgent           #a54242  #1d1f21  #c5c8c6  #a54242   #a54242
+client.urgent           #cc6666  #1d1f21  #c5c8c6  #cc6666   #cc6666
 client.placeholder      #000000  #1d1f21  #c5c8c6  #000000   #1d1f21
 client.background       #1d1f21
+### tinty:end
 
 # Wallpaper is managed by Azote (writes ~/.azotebg, which runs swaybg).
 # sway's built-in `output bg` is drawn internally and would cover swaybg, so

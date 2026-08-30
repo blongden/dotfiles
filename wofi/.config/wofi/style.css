@@ -1,10 +1,25 @@
 /* wofi — terminal / monospace vibe, matched to waybar
- *   bg  #1d1f21   bg2 #282a2e   line #373b41
- *   fg  #c5c8c6   dim #707880
- *   red #cc6666  green #b5bd68  yellow #f0c674  blue #81a2be
- *   purple #b294bb  aqua #8abeb7  orange #de935f
+ *   bg  @bg   bg2 @bg2   line @line
+ *   fg  @fg   dim @dim
+ *   red @red  green @green  yellow @yellow  blue @blue
+ *   purple @purple  aqua @aqua  orange @orange
  */
 
+
+/* tinty:start — rewritten by ~/.config/tinted-theming/tinty/fanout.sh */
+@define-color bg     #1d1f21;
+@define-color bg2    #282a2e;
+@define-color line   #373b41;
+@define-color dim    #969896;
+@define-color fg     #c5c8c6;
+@define-color red    #cc6666;
+@define-color orange #de935f;
+@define-color yellow #f0c674;
+@define-color green  #b5bd68;
+@define-color aqua   #8abeb7;
+@define-color blue   #81a2be;
+@define-color purple #b294bb;
+/* tinty:end */
 * {
     font-family: "Iosevka Nerd Font", "Iosevka", monospace;
     font-size: 13px;
@@ -12,11 +27,11 @@
 }
 
 #window {
-    background-color: #1d1f21;
-    border: 1px solid #373b41;
-    border-top: 2px solid #f0c674;   /* accent, like waybar's edge */
+    background-color: @bg;
+    border: 1px solid @line;
+    border-top: 2px solid @yellow;   /* accent, like waybar's edge */
     border-radius: 3px;
-    color: #c5c8c6;
+    color: @fg;
 }
 
 #outer-box {
@@ -29,19 +44,19 @@
     margin: 0 0 10px 0;
     padding: 6px 8px;
     border: none;
-    border-bottom: 2px solid #373b41;
+    border-bottom: 2px solid @line;
     border-radius: 0;
-    background-color: #1d1f21;
-    color: #c5c8c6;
-    caret-color: #f0c674;
+    background-color: @bg;
+    color: @fg;
+    caret-color: @yellow;
 }
 #input:focus {
     border: none;
-    border-bottom: 2px solid #f0c674;
+    border-bottom: 2px solid @yellow;
     box-shadow: none;
     outline: none;
 }
-#input image { color: #b294bb; }
+#input image { color: @purple; }
 
 #scroll { margin: 0; border: none; }
 #inner-box { margin: 0; }
@@ -55,14 +70,14 @@
     background-color: transparent;
 }
 #entry image { margin-right: 10px; }
-#text { color: #c5c8c6; }
+#text { color: @fg; }
 
 #entry:selected {
-    background-color: #282a2e;
-    border-left: 2px solid #f0c674;
+    background-color: @bg2;
+    border-left: 2px solid @yellow;
 }
 #entry:selected #text {
-    color: #f0c674;
+    color: @yellow;
     font-weight: 700;
 }
 #entry:nth-child(even):not(:selected) {
