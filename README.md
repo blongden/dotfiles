@@ -15,6 +15,7 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 | `waybar` `wofi` | `~/.config/{waybar,wofi}/` | Tomorrow Night, Iosevka Nerd Font |
 | `kanshi` | `~/.config/kanshi/` | output profiles (docked = DP-2 4K@30) |
 | `swaylock` `gammastep` | `~/.config/{swaylock,gammastep}/` | gammastep off by default |
+| `greetd` | `/etc/greetd/config.toml` | **not stowed** (root-owned); tuigreet greeter, install by hand (step 4) |
 | `herdr` | `~/.config/herdr/config.toml` | multiplexer for coding agents; `--no-folding` (dir holds runtime state) |
 | `desktop` | `~/.config/mimeapps.list`, `~/.local/share/applications/{screenshot,sway-keybindings}.desktop` | chromium as default browser; `--no-folding` |
 
@@ -41,12 +42,17 @@ mkdir -p ~/.local/share/fonts                                      # Iosevka Ner
 curl -fsSL -o ~/.config/nvim/autoload/plug.vim --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# 4. LightDM greeter (optional cosmetic; system files, not stow-managed)
-#   /etc/lightdm/lightdm-gtk-greeter.conf  +  /usr/share/backgrounds/lightdm-nerd.png
+# 4. greetd + tuigreet greeter (system files, not stow-managed)
+sudo install -m600 -o root -g root greetd/etc/greetd/config.toml /etc/greetd/config.toml
+sudo systemctl disable lightdm.service 2>/dev/null || true
+sudo rm -f /etc/systemd/system/display-manager.service
+sudo systemctl enable greetd.service            # claims display-manager.service
+#   If tuigreet can't draw: sudo usermod -aG video,input _greetd
 ```
 
-Pick the sway or i3 session at the LightDM greeter. Don't hot-switch i3 ⇄ sway
-without a reboot (the systemd user manager caches `XDG_CURRENT_DESKTOP`).
+Pick the session (sway is the default) at the tuigreet greeter on VT 7. Don't
+hot-switch i3 ⇄ sway without a reboot (the systemd user manager caches
+`XDG_CURRENT_DESKTOP`).
 
 ## Editing
 

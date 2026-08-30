@@ -1,0 +1,21 @@
+# greetd + tuigreet — Wayland replacement for the LightDM GTK greeter.
+# System file: install to /etc/greetd/config.toml (not stow-managed; /etc is root).
+#   sudo install -m600 -o root -g root greetd/etc/greetd/config.toml /etc/greetd/config.toml
+#
+# Translated from the old /etc/lightdm/lightdm-gtk-greeter.conf:
+#   clock-format = %H:%M  ·  %a %d %b   -> --time --time-format
+#   Adwaita-dark + DejaVu Sans Mono     -> tuigreet is a dark console UI; --theme sets accents
+#   indicators host/clock/session/power -> --time + built-in session menu + power keys
+#   position = 50% 62%                  -> tuigreet centres itself; padding tunes the feel
+#   background = lightdm-nerd.png       -> dropped (a console UI has no image layer)
+#
+# Debian notes: greeter user is `_greetd`; greetd.service runs on VT 7
+# (Conflicts=getty@tty7). If tuigreet can't draw, add `_greetd` to the
+# `video` and `input` groups.
+
+[terminal]
+vt = 7
+
+[default_session]
+command = "tuigreet --remember --remember-session --asterisks --time --time-format '%H:%M  ·  %a %d %b' --sessions /usr/share/wayland-sessions --cmd sway --window-padding 2 --theme 'border=black;text=white;prompt=cyan;time=cyan;action=white;button=cyan;container=black;input=white'"
+user = "_greetd"

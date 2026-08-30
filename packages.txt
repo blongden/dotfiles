@@ -5,6 +5,10 @@
 # --- deploy tooling ---
 stow
 
+# --- display manager / greeter ---
+greetd               # minimal Wayland login manager (replaces lightdm)
+tuigreet             # console greeter for greetd; config at /etc/greetd/config.toml
+
 # --- compositor + core session ---
 sway
 swaybg               # wallpaper (output * bg)
