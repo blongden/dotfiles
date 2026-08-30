@@ -9,7 +9,7 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 
 | package | deploys | notes |
 |---|---|---|
-| `zsh` `git` `tmux` `nvim` | `~/.zshrc`, `~/.gitconfig`, `~/.config/git/ignore`, `~/.tmux.conf`, `~/.config/nvim/init.vim` | |
+| `zsh` `git` `tmux` `nvim` | `~/.zshrc`, `~/.zshenv`, `~/.gitconfig`, `~/.config/git/ignore`, `~/.tmux.conf`, `~/.config/nvim/init.vim` | `.zshenv` keeps tool history/state out of `$HOME` (XDG) |
 | `kitty` | `~/.config/kitty/kitty.conf` | Tomorrow Night theme appended |
 | `sway` | `~/.config/sway/` | config + `*.sh` helpers + `screensaver-art/` |
 | `waybar` `wofi` | `~/.config/{waybar,wofi}/` | Tomorrow Night, Iosevka Nerd Font; `rofimoji` (apt) drives wofi for the `$mod+.` emoji picker |
