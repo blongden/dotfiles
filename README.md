@@ -42,6 +42,13 @@ mkdir -p ~/.local/share/fonts                                      # Iosevka Ner
 curl -fsSL -o ~/.config/nvim/autoload/plug.vim --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+# Tailscale (Tailscale's own apt repo, not Debian; drives the waybar module)
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale set --operator=$USER                 # non-root `tailscale` CLI
+sudo tailscale up --accept-routes                   # opens a browser to log in
+#   subnet routes / exit node live on the homeassistant node (HA OS add-on
+#   a0d7b954_tailscale), approved in the login.tailscale.com admin console.
+
 # 4. greetd + tuigreet greeter (system files, not stow-managed)
 sudo install -m600 -o root -g root greetd/etc/greetd/config.toml /etc/greetd/config.toml
 sudo systemctl disable lightdm.service 2>/dev/null || true
