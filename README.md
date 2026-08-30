@@ -14,6 +14,7 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 | `sway` | `~/.config/sway/` | config + `*.sh` helpers + `screensaver-art/` |
 | `waybar` `wofi` | `~/.config/{waybar,wofi}/` | Tomorrow Night, Iosevka Nerd Font; `rofimoji` (apt) drives wofi for the `$mod+.` emoji picker |
 | `dunst` | `~/.config/dunst/dunstrc` | Tomorrow Night; self-contained (dunst reads one config, no merge) |
+| `theme` | `~/.config/tinted-theming/tinty/` | tinty config + `fanout.sh`; one base16 palette → all apps. `tinty apply <scheme>` to switch. kitty via upstream template + `include tinty-colors.conf`; the rest written by `fanout.sh` from tinty's `$TINTY_SCHEME_PALETTE_*` env vars |
 | `kanshi` | `~/.config/kanshi/` | output profiles (docked = DP-2 4K@30) |
 | `swaylock` `gammastep` | `~/.config/{swaylock,gammastep}/` | gammastep off by default |
 | `greetd` | `/etc/greetd/config.toml` | **not stowed** (root-owned); tuigreet greeter, install by hand (step 4) |
@@ -30,7 +31,7 @@ sudo apt install --no-install-recommends $(grep -vE '^\s*#|^\s*$' packages.txt)
 # 2. dotfiles
 git clone git@github.com:blongden/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow zsh git tmux nvim kitty sway waybar wofi dunst kanshi swaylock gammastep
+stow zsh git tmux nvim kitty sway waybar wofi dunst theme kanshi swaylock gammastep
 stow --no-folding herdr desktop
 
 # 3. by-hand pieces (not in apt)
@@ -42,6 +43,11 @@ mkdir -p ~/.local/share/fonts                                      # Iosevka Ner
 #   copy iosevka_nerd_font.ttf into ~/.local/share/fonts/ then: fc-cache -f
 curl -fsSL -o ~/.config/nvim/autoload/plug.vim --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# tinty — one-palette theming (prebuilt binary, not in Debian). After stow:
+curl -fsSL https://github.com/tinted-theming/tinty/releases/latest/download/tinty-x86_64-unknown-linux-musl.tar.gz \
+  | tar xz -C /tmp && install -m755 /tmp/tinty ~/.local/bin/tinty
+tinty install && tinty apply base16-tomorrow-night      # clones templates, themes everything
 
 # Tailscale (Tailscale's own apt repo, not Debian; drives the waybar module)
 curl -fsSL https://tailscale.com/install.sh | sh

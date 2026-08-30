@@ -1,0 +1,18 @@
+# tinty — one palette, fanned out to every app.
+#   switch:  tinty apply base16-<name>     (tinty list  /  tinty gallery)
+#   reapply: tinty init                    (run at login, see sway autostart)
+#
+# Upstream templates handle kitty/tmux/nvim. Everything else (waybar, wofi,
+# dunst, sway borders, herdr, swaylock) is written by fanout.sh from the
+# TINTY_SCHEME_PALETTE_* env vars tinty exports to the global hook.
+
+default-scheme = "base16-tomorrow-night"
+shell = "sh -c '{}'"
+
+hooks = ["~/.config/tinted-theming/tinty/fanout.sh"]
+
+[[items]]
+name = "kitty"
+path = "https://github.com/tinted-theming/tinted-terminal"
+themes-dir = "themes/kitty"
+hook = "cp -f \"$TINTY_THEME_FILE_PATH\" ~/.config/kitty/tinty-colors.conf && kill -SIGUSR1 $(pgrep -x kitty) 2>/dev/null || true"
