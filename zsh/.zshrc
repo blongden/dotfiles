@@ -80,7 +80,7 @@ alias pyt="pip install --upgrade pip&&pip install pytest&&pip freeze > requireme
 
 # added by Snowflake SnowSQL installer v1.2
 export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
-export PATH="$HOME/go/bin:/usr/local/sbin:$PATH"
+export PATH="${GOPATH:-$HOME/go}/bin:/usr/local/sbin:$PATH"
 
 alias zzz='echo mem | sudo tee /sys/power/state'
 alias ssh='kitten ssh'

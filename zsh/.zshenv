@@ -20,3 +20,8 @@ export WGETRC="$XDG_CONFIG_HOME/wgetrc"                     # holds hsts-file=
 export GOPATH="$XDG_DATA_HOME/go"
 export DOCKER_CONFIG="$XDG_CONFIG_HOME/docker"
 export TERRAFORM_D="$XDG_DATA_HOME/terraform.d"
+
+# zsh's own state
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${HOST}"
+mkdir -p "${HISTFILE%/*}" "${ZSH_COMPDUMP%/*}"
