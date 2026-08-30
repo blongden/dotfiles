@@ -1,0 +1,19 @@
+# wofi — launcher defaults. Styling lives in style.css.
+show=drun
+prompt=λ
+width=560
+height=420
+lines=10
+columns=1
+location=center
+insensitive=true
+allow_images=true
+allow_markup=true
+image_size=24
+no_actions=true
+hide_scroll=true
+gtk_dark=true
+term=kitty
+key_expand=Tab
+key_up=Ctrl-k
+key_down=Ctrl-j

@@ -1,0 +1,303 @@
+# ~/.config/sway/config
+# Ported from ~/.config/i3/config on 2026-08-30. i3 config left untouched.
+# Reload: $mod+Shift+c   Docs: man 5 sway
+
+### Variables ###############################################################
+set $mod Mod4
+# Home-row direction keys, like vim / sway default
+set $left h
+set $down j
+set $up k
+set $right l
+set $term kitty
+set $browser chromium
+set $menu ~/.config/sway/wofi-toggle.sh --show drun
+set $runner ~/.config/sway/wofi-toggle.sh --show run
+set $locker ~/.config/sway/lock.sh
+set $shot ~/.config/sway/screenshot.sh
+set $herdr kitty --class herdr -e herdr
+set $wallpaper ~/Pictures/Backdrops/1614877.jpg
+
+### Appearance #############################################################
+font pango:URWGothic-Book 11
+
+default_border pixel 1
+default_floating_border normal
+hide_edge_borders none
+title_align left
+
+# modest gaps for the tiled look; set both to 0 to disable
+gaps inner 6
+gaps outer 2
+smart_gaps on
+smart_borders on
+
+# Tomorrow-Night palette, matching the old i3 client.* colors
+#                       border   bg       text     indicator child_border
+client.focused          #81a2be  #1d1f21  #c5c8c6  #81a2be   #81a2be
+client.focused_inactive #5f819d  #1d1f21  #c5c8c6  #5f819d   #5f819d
+client.unfocused        #373b41  #1d1f21  #969896  #373b41   #373b41
+client.urgent           #a54242  #1d1f21  #c5c8c6  #a54242   #a54242
+client.placeholder      #000000  #1d1f21  #c5c8c6  #000000   #1d1f21
+client.background       #1d1f21
+
+output * bg $wallpaper fill
+
+### Input #################################################################
+input "type:keyboard" {
+    xkb_layout "gb"
+    xkb_model "pc105"
+    xkb_options "caps:escape"
+}
+
+input "type:touchpad" {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+    scroll_method two_finger
+    click_method clickfinger
+    middle_emulation enabled
+}
+
+focus_follows_mouse yes
+floating_modifier $mod normal
+workspace_auto_back_and_forth yes
+
+### Outputs / multi-monitor ###############################################
+# Handled by kanshi (~/.config/kanshi/config). Plug in the dock, run
+#   swaymsg -t get_outputs
+# then fill in the real name in the kanshi docked profile.
+
+### Key bindings #########################################################
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $browser --new-window
+bindsym $mod+t exec $herdr
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec $menu
+bindsym $mod+Shift+d exec $runner
+bindsym $mod+p exec cliphist list | wofi --dmenu | cliphist decode | wl-copy
+bindsym $mod+o exec ~/.config/sway/winswitch.sh
+bindsym $mod+slash exec ~/.config/sway/keybinds.sh
+
+# border style (was $mod+u / y / n in i3)
+bindsym $mod+u border none
+bindsym $mod+y border pixel 1
+bindsym $mod+n border normal
+
+# focus (sway default: h=left j=down k=up l=right)
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# workspace back-and-forth
+bindsym $mod+Tab workspace back_and_forth
+bindsym $mod+Shift+Tab move container to workspace back_and_forth; workspace back_and_forth
+
+# splits / layout (sway default: $mod+b splith, $mod+v splitv)
+bindsym $mod+b split h; exec notify-send 'tile horizontally'
+bindsym $mod+v split v; exec notify-send 'tile vertically'
+bindsym $mod+q split toggle
+bindsym $mod+f fullscreen toggle
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+Shift+s sticky toggle
+bindsym $mod+a focus parent
+
+# scratchpad
+bindsym $mod+minus scratchpad show
+# bindsym $mod+Shift+minus move scratchpad
+
+# cycle workspaces
+bindsym $mod+Ctrl+Right workspace next
+bindsym $mod+Ctrl+Left workspace prev
+
+### Workspaces ###########################################################
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+
+bindsym $mod+Ctrl+1 move container to workspace $ws1
+bindsym $mod+Ctrl+2 move container to workspace $ws2
+bindsym $mod+Ctrl+3 move container to workspace $ws3
+bindsym $mod+Ctrl+4 move container to workspace $ws4
+bindsym $mod+Ctrl+5 move container to workspace $ws5
+bindsym $mod+Ctrl+6 move container to workspace $ws6
+bindsym $mod+Ctrl+7 move container to workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8
+
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+
+### Window rules ########################################################
+# Xwayland apps match on [class=...]; native Wayland apps on [app_id=...].
+for_window [app_id="scratchpad"] border pixel 1, move scratchpad
+for_window [app_id="screensaver"] fullscreen enable, border none, inhibit_idle none
+for_window [app_id="galculator"] floating enable
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="org.pulseaudio.pavucontrol"] floating enable
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [app_id="blueman-manager"] floating enable
+for_window [app_id="1Password"] floating enable
+for_window [class="1Password"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Galculator"] floating enable border pixel 1
+for_window [class="GParted"] floating enable border normal
+for_window [class="Lxappearance"] floating enable sticky enable border normal
+for_window [class="Simple-scan"] floating enable border normal
+for_window [class="(?i)System-config-printer.py"] floating enable border normal
+for_window [class="(?i)virtualbox"] floating enable border normal
+for_window [title="alsamixer"] floating enable border pixel 1
+for_window [title="File Transfer*"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="dialog"] floating enable
+for_window [urgent=latest] focus
+
+# ws3: Discord + Proton Mail (Chromium --app windows), always stacked there
+assign     [app_id="^chrome-discord\.com__app-Default$"]  $ws3
+assign     [app_id="^chrome-mail\.proton\.me__-Default$"] $ws3
+for_window [app_id="^chrome-discord\.com__app-Default$"]  layout stacking
+for_window [app_id="^chrome-mail\.proton\.me__-Default$"] layout stacking
+
+### System control ######################################################
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r reload
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes, exit' 'swaymsg exit'
+
+set $mode_system (l)ock  (e)xit  (s)uspend  (h)ibernate  (r)eboot  (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec $locker, mode "default"
+    bindsym s exec systemctl suspend, mode "default"
+    bindsym e exec swaymsg exit, mode "default"
+    bindsym h exec systemctl hibernate, mode "default"
+    bindsym r exec systemctl reboot, mode "default"
+    bindsym Shift+s exec systemctl poweroff, mode "default"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+0 mode "$mode_system"
+bindsym Ctrl+Delete exec $locker
+
+### Resize mode ########################################################
+mode "resize" {
+    bindsym $left resize shrink width 5 px or 5 ppt
+    bindsym $down resize grow height 5 px or 5 ppt
+    bindsym $up resize shrink height 5 px or 5 ppt
+    bindsym $right resize grow width 5 px or 5 ppt
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+### Gaps mode #########################################################
+set $mode_gaps Gaps: (o)uter  (i)nner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift+ +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift+ +|-|0 (global)
+mode "$mode_gaps" {
+    bindsym o mode "$mode_gaps_outer"
+    bindsym i mode "$mode_gaps_inner"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+    bindsym plus  gaps inner current plus 5
+    bindsym minus gaps inner current minus 5
+    bindsym 0     gaps inner current set 0
+    bindsym Shift+plus  gaps inner all plus 5
+    bindsym Shift+minus gaps inner all minus 5
+    bindsym Shift+0     gaps inner all set 0
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+    bindsym plus  gaps outer current plus 5
+    bindsym minus gaps outer current minus 5
+    bindsym 0     gaps outer current set 0
+    bindsym Shift+plus  gaps outer all plus 5
+    bindsym Shift+minus gaps outer all minus 5
+    bindsym Shift+0     gaps outer all set 0
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+### Media / hardware keys #############################################
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%
+bindsym --locked XF86AudioMute        exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioMicMute     exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym --locked XF86MonBrightnessUp   exec brightnessctl set +5%
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86TouchpadOn  input "type:touchpad" events enabled
+bindsym XF86TouchpadOff input "type:touchpad" events disabled
+
+### Screenshots ######################################################
+bindsym Print              exec ~/.config/sway/screenshot-menu.sh
+bindsym $mod+Print         exec $shot window
+bindsym Shift+Print        exec $shot region
+bindsym Ctrl+Print         exec $shot full-clip
+bindsym Ctrl+$mod+Print    exec $shot window-clip
+bindsym Ctrl+Shift+Print   exec $shot region-clip
+bindsym $mod+Shift+Print   exec $shot region-edit
+bindsym $mod+Ctrl+Shift+Print exec $shot full-edit
+
+### Status bar ######################################################
+bar {
+    swaybar_command waybar
+}
+
+### Autostart ######################################################
+exec autotiling
+exec kanshi
+exec wl-paste --watch cliphist store
+exec ~/.config/sway/autostart.sh
+
+### Idle / lock ####################################################
+# xdg-desktop-portal and the systemd/dbus environment import are handled
+# by /etc/sway/config.d/50-systemd-user.conf (included below).
+# exec_always (not exec) so `swaymsg reload` re-applies timeout changes.
+exec_always "$HOME/.config/sway/idle.sh"
+
+include /etc/sway/config.d/*

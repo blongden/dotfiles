@@ -1,0 +1,70 @@
+/* wofi — terminal / monospace vibe, matched to waybar
+ *   bg  #1d1f21   bg2 #282a2e   line #373b41
+ *   fg  #c5c8c6   dim #707880
+ *   red #cc6666  green #b5bd68  yellow #f0c674  blue #81a2be
+ *   purple #b294bb  aqua #8abeb7  orange #de935f
+ */
+
+* {
+    font-family: "Iosevka Nerd Font", "Iosevka", monospace;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+#window {
+    background-color: #1d1f21;
+    border: 1px solid #373b41;
+    border-top: 2px solid #f0c674;   /* accent, like waybar's edge */
+    border-radius: 3px;
+    color: #c5c8c6;
+}
+
+#outer-box {
+    margin: 0;
+    padding: 10px;
+}
+
+/* prompt + search field: flat, underlined, no pill */
+#input {
+    margin: 0 0 10px 0;
+    padding: 6px 8px;
+    border: none;
+    border-bottom: 2px solid #373b41;
+    border-radius: 0;
+    background-color: #1d1f21;
+    color: #c5c8c6;
+    caret-color: #f0c674;
+}
+#input:focus {
+    border: none;
+    border-bottom: 2px solid #f0c674;
+    box-shadow: none;
+    outline: none;
+}
+#input image { color: #b294bb; }
+
+#scroll { margin: 0; border: none; }
+#inner-box { margin: 0; }
+
+/* result rows: square, blocky, left accent bar on selection */
+#entry {
+    margin: 0;
+    padding: 6px 10px;
+    border-radius: 0;
+    border-left: 2px solid transparent;
+    background-color: transparent;
+}
+#entry image { margin-right: 10px; }
+#text { color: #c5c8c6; }
+
+#entry:selected {
+    background-color: #282a2e;
+    border-left: 2px solid #f0c674;
+}
+#entry:selected #text {
+    color: #f0c674;
+    font-weight: 700;
+}
+#entry:nth-child(even):not(:selected) {
+    background-color: rgba(255, 255, 255, 0.015);
+}

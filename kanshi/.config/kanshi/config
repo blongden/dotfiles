@@ -1,0 +1,19 @@
+# kanshi — output profiles, replaces autorandr.
+# List current outputs with:  swaymsg -t get_outputs
+# The docked profile mirrors the old autorandr "office" layout
+# (external 4K stacked above the internal 1080p panel).
+#
+# Dock note (2026-08-30): the USB-C dock negotiates DisplayPort Alt Mode
+# with only 2 lanes @ HBR2, so DP-2 (Dell U2723QE) tops out at 3840x2160@30.
+# 4K@60 would need a 4-lane alt mode (USB 2 only) or DSC. See session notes.
+
+profile laptop {
+    output eDP-1 enable mode 1920x1080 position 0,0 scale 1
+}
+
+# DP-2 (4K panel) sits physically to the LEFT of the laptop, bottom edges aligned
+# (eDP-1 y = 2160 - 1080). Swap the x values to put it on the right instead.
+profile docked {
+    output DP-2  enable mode 3840x2160@30Hz position 0,0       scale 1
+    output eDP-1 enable mode 1920x1080      position 3840,1080 scale 1
+}

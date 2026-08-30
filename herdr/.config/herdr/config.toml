@@ -1,0 +1,58 @@
+# herdr configuration — https://herdr.dev
+# Full annotated defaults: `herdr --default-config`
+# Validate after edits:    `herdr config check`
+# Live-reload a running server: `herdr server reload-config`  (or prefix+Shift+r)
+
+# ── Theme ────────────────────────────────────────────────────────────────
+# No built-in Tomorrow Night, so use one-dark as the base (closest dark grey)
+# and override the chrome tokens with the Tomorrow Night palette already used
+# by waybar / wofi:
+#   bg #1d1f21  bg2 #282a2e  line #373b41  fg #c5c8c6  dim #707880
+#   red #cc6666  green #b5bd68  yellow #f0c674  blue #81a2be
+#   purple #b294bb  aqua #8abeb7  orange #de935f
+[theme]
+name = "one-dark"
+
+[theme.custom]
+sidebar_bg    = "#1d1f21"   # sidebar / agent panel background
+panel_bg      = "reset"     # keep pane contents on kitty's own background
+active_row_bg = "#282a2e"   # focused sidebar row
+selection_bg  = "#373b41"   # visual selection / highlight
+accent        = "#f0c674"   # Tomorrow Night yellow — matches waybar's focused-workspace accent
+red           = "#cc6666"
+green         = "#b5bd68"
+
+[ui]
+# Accent for highlights, borders, navigate-mode UI.
+accent = "#f0c674"
+
+# ── Sound ────────────────────────────────────────────────────────────────
+# Chime when an agent in a *background* workspace changes state: the "request"
+# sound (needs attention / approval / question) and the "done" sound (unseen
+# background work finished). Built-in sounds unless a custom mp3 is set.
+[ui.sound]
+enabled = true
+# path         = "sounds/notification.mp3"  # all sound notifications
+# done_path    = "sounds/done.mp3"          # only "finished"
+# request_path = "sounds/request.mp3"       # only "needs attention"
+
+# Per-agent overrides: default | on | off
+# [ui.sound.agents]
+# droid = "off"
+
+# ── Desktop notifications (dunst) ────────────────────────────────────────
+# "system" hands the popup to the OS notification service directly — that's
+# dunst here (org.freedesktop.Notifications). Fires on the same background
+# agent state changes as the sound above.
+[ui.toast]
+delivery = "system"
+# delay_seconds = 1   # debounce before a popup is shown
+
+# In-app toast placement (only used when delivery = "herdr"):
+# [ui.toast.herdr]
+# position = "bottom-right"
+
+# "Copied to clipboard" popups (separate from agent state changes):
+# [ui.toast.clipboard]
+# enabled = true
+# position = "bottom-center"

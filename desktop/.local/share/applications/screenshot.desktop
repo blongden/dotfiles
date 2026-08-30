@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Screenshot
+Comment=Capture a region, window, or the full screen
+Icon=applets-screenshooter
+Exec=/home/ben/.config/sway/screenshot-menu.sh
+Terminal=false
+Categories=Utility;
+Keywords=screenshot;capture;grab;snip;grim;satty;

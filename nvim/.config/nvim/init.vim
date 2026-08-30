@@ -36,6 +36,10 @@ call plug#begin("~/.vim/plugged")
  Plug 'neoclide/coc.nvim', {'branch': 'release'}
  Plug 'vim-airline/vim-airline'
  Plug 'vim-airline/vim-airline-themes'
+ Plug 'evanleck/vim-svelte'
+ Plug 'pangloss/vim-javascript'
+ Plug 'HerringtonDarkholme/yats.vim'
+ Plug 'LokiChaos/vim-tintin'
 call plug#end()
 
 color dracula

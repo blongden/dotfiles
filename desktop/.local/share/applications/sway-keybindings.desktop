@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Keybindings
+Comment=Search the current sway keybindings
+Icon=preferences-desktop-keyboard-shortcuts
+Exec=/home/ben/.config/sway/keybinds.sh
+Terminal=false
+Categories=Utility;
+Keywords=keys;keybinds;keybindings;shortcuts;hotkeys;cheatsheet;sway;

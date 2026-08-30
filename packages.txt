@@ -1,0 +1,57 @@
+# Debian testing (trixie/forky-sid). Packages for the sway/Wayland desktop.
+# Install:  sudo apt update && sudo apt install --no-install-recommends $(grep -vE '^\s*#|^\s*$' packages.txt)
+# then deploy configs with stow (see README.md).
+
+# --- deploy tooling ---
+stow
+
+# --- compositor + core session ---
+sway
+swaybg               # wallpaper (output * bg)
+swayidle             # idle -> lock / dpms
+swaylock             # screen locker
+xwayland             # X11 client support
+autotiling           # dynamic split direction (python3-i3ipc dep)
+python3-i3ipc        # used by autotiling + ~/.config/sway/winswitch.sh
+kanshi               # output profiles (replaces autorandr)
+
+# --- bar / launcher / notifications ---
+waybar
+wofi                 # launcher (drun/run/dmenu)
+wmenu                # sway default $menu fallback
+dunst                # notifications (also herdr's "system" toast target)
+fonts-font-awesome   # waybar glyph fallback
+
+# --- screenshots / clipboard ---
+grim
+slurp
+swappy               # annotate (screenshot.sh edit modes)
+wl-clipboard         # wl-copy / wl-paste
+cliphist             # clipboard history ($mod+p)
+
+# --- portals (screen-share, file pickers) ---
+xdg-desktop-portal
+xdg-desktop-portal-gtk
+xdg-desktop-portal-wlr
+
+# --- hardware controls used by keybinds / waybar ---
+brightnessctl        # backlight keys + waybar module
+pipewire-pulse       # provides pactl (volume keys, waybar)
+pulseaudio-utils     # pactl if not pulled by pipewire-pulse
+network-manager-gnome # nm-applet (tray)
+mate-power-manager   # power tray + battery
+policykit-1-gnome    # polkit auth agent
+
+# --- terminal ---
+kitty
+
+# --- browser ---
+chromium             # default browser + ws2/ws3 --app windows
+
+# --- screensaver engine ---
+pipx                 # then: pipx install terminaltexteffects   (provides `tte`)
+
+# --- NOT in apt, install by hand (see README.md) ---
+#   herdr            -> github.com/herdrdev/herdr releases, binary into ~/.local/bin
+#   Iosevka Nerd Font -> ~/.local/share/fonts/iosevka_nerd_font.ttf  (waybar/wofi/kitty)
+#   vim-plug         -> curl into ~/.config/nvim/autoload/plug.vim

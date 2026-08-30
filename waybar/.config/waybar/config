@@ -1,0 +1,140 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 28,
+    "spacing": 0,
+
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "sway/window"],
+    "modules-center": [],
+    "modules-right": ["custom/updates", "cpu", "memory", "temperature", "disk", "network", "pulseaudio", "backlight", "battery", "tray", "clock"],
+
+    "sway/workspaces": {
+        "disable-scroll": false,
+        "format": "{index}"
+    },
+
+    "sway/mode": {
+        "format": "{}"
+    },
+
+    "sway/scratchpad": {
+        "format": " {count}",
+        "show-empty": false,
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
+    },
+
+    "sway/window": {
+        "format": "{title}",
+        "max-length": 70,
+        "icon": false,
+        "tooltip": false
+    },
+
+    "custom/updates": {
+        "format": "{}",
+        "return-type": "json",
+        "interval": 1800,
+        "exec": "~/.config/waybar/scripts/updates.sh",
+        "on-click": "kitty --title 'apt · upgradable' sh -c 'apt list --upgradable 2>/dev/null; echo; printf \"[press a key to close] \"; read x'",
+        "on-click-right": "kitty --title 'apt · full-upgrade' sh -c 'sudo apt update && sudo apt full-upgrade; echo; printf \"[done — press a key] \"; read x'; pkill -RTMIN+8 waybar",
+        "signal": 8
+    },
+
+    "cpu": {
+        "interval": 2,
+        "format": " {usage}%",
+        "states": { "warning": 70, "critical": 92 },
+        "on-click": "kitty --title sysmon sh -c 'btop || htop || top'"
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": " {percentage}%",
+        "tooltip-format": "{used:0.1f} / {total:0.1f} GiB   (swap {swapPercentage}%)",
+        "states": { "warning": 78, "critical": 92 }
+    },
+
+    "temperature": {
+        "hwmon-path-abs": "/sys/devices/platform/coretemp.0/hwmon",
+        "input-filename": "temp1_input",
+        "interval": 5,
+        "critical-threshold": 90,
+        "format": " {temperatureC}°C",
+        "format-critical": " {temperatureC}°C"
+    },
+
+    "disk": {
+        "path": "/",
+        "interval": 60,
+        "format": " {percentage_used}%",
+        "tooltip-format": "{used} used of {total} on {path}  ({free} free)"
+    },
+
+    "network": {
+        "interval": 5,
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": " {ifname}",
+        "format-disconnected": " off",
+        "tooltip-format": "{ifname}   {ipaddr}\n {bandwidthDownBits}    {bandwidthUpBits}",
+        "tooltip-format-wifi": "{essid}  ({signalStrength}%)\n{ifname}   {ipaddr}\n {bandwidthDownBits}    {bandwidthUpBits}",
+        "on-click": "nm-connection-editor"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": " muted",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-icons": { "default": ["", "", ""], "headphone": "" },
+        "scroll-step": 2,
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "on-scroll-up": "wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 2%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": " {percent}%",
+        "on-scroll-up": "brightnessctl set +5%",
+        "on-scroll-down": "brightnessctl set 5%-"
+    },
+
+    "battery": {
+        "interval": 30,
+        "states": { "warning": 25, "critical": 10 },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip-format": "{timeTo}   ({power} W)"
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    },
+
+    "clock": {
+        "interval": 30,
+        "format": " {:%a %d %b   %H:%M}",
+        "format-alt": " {:%H:%M:%S   W%V   %Z}",
+        "tooltip-format": "<span size='large' color='#f0c674'>{:%A %e %B %Y}</span>\n<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "left",
+            "format": {
+                "months":   "<span color='#f0c674'><b>{}</b></span>",
+                "days":     "<span color='#c5c8c6'>{}</span>",
+                "weeks":    "<span color='#8abeb7'>{}</span>",
+                "weekdays": "<span color='#81a2be'><b>{}</b></span>",
+                "today":    "<span color='#cc6666'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    }
+}

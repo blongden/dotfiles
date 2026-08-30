@@ -1,0 +1,9 @@
+# herdr runtime state — only config.toml is tracked
+herdr/.config/herdr/*.log
+herdr/.config/herdr/*.sock
+herdr/.config/herdr/session.json
+herdr/.config/herdr/.plugins.lock
+
+# editor / OS
+*.swp
+.DS_Store

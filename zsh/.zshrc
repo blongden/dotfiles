@@ -80,3 +80,17 @@ alias pyt="pip install --upgrade pip&&pip install pytest&&pip freeze > requireme
 # added by Snowflake SnowSQL installer v1.2
 export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
 export PATH="$HOME/go/bin:/usr/local/sbin:$PATH"
+
+alias zzz='echo mem | sudo tee /sys/power/state'
+alias ssh='kitten ssh'
+
+alias mud="docker start bold_galileo;cd $HOME/Dev/muddev;source evenv/bin/activate;cd aman"
+
+# amiga cross compiler
+export VBCC=/opt/vbcc
+export PATH="$VBCC/bin:$PATH"
+export NDK=/home/ben/Dev/Amiga/NDK3.2
+export NDK_INC=$NDK/Include/include_h
+export NDK_LIB=$NDK/Include/linker_libs
+
+export PATH="$HOME/.local/bin:$PATH"
