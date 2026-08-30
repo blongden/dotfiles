@@ -16,3 +16,15 @@ name = "kitty"
 path = "https://github.com/tinted-theming/tinted-terminal"
 themes-dir = "themes/kitty"
 hook = "cp -f \"$TINTY_THEME_FILE_PATH\" ~/.config/kitty/tinty-colors.conf && kill -SIGUSR1 $(pgrep -x kitty) 2>/dev/null || true"
+
+[[items]]
+name = "tmux"
+path = "https://github.com/tinted-theming/tinted-tmux"
+themes-dir = "colors"
+hook = "cp -f \"$TINTY_THEME_FILE_PATH\" ~/.config/tmux/tinty.conf && tmux source-file ~/.tmux.conf >/dev/null 2>&1 || true"
+
+[[items]]
+name = "vim"
+path = "https://github.com/tinted-theming/tinted-vim"
+themes-dir = "colors"
+hook = "mkdir -p ~/.config/nvim/colors && cp -f \"$TINTY_THEME_FILE_PATH\" ~/.config/nvim/colors/tinty.vim"

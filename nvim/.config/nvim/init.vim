@@ -26,7 +26,6 @@ set backupdir=~/.cache/vim " Directory to store backup files.
 set omnifunc=syntaxcomplete#Complete
 
 call plug#begin("~/.vim/plugged")
- Plug 'dracula/vim'
  Plug 'ryanoasis/vim-devicons'
  Plug 'SirVer/ultisnips'
  Plug 'honza/vim-snippets'
@@ -42,6 +41,10 @@ call plug#begin("~/.vim/plugged")
  Plug 'LokiChaos/vim-tintin'
 call plug#end()
 
-color dracula
+" Colours: managed by tinty. ~/.config/nvim/colors/tinty.vim is rewritten by
+" `tinty apply <scheme>` (see dotfiles/theme/). Restart nvim to pick up a switch.
+set termguicolors
+silent! colorscheme tinty
+let g:airline_theme = 'base16'
 
 let g:UltiSnipsEditSplit="vertical"

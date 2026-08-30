@@ -131,6 +131,6 @@ pkill -SIGUSR2 waybar        2>/dev/null || true
 swaymsg reload               >/dev/null 2>&1 || true
 dunstctl reload              2>/dev/null || true
 herdr server reload-config   >/dev/null 2>&1 || true
-tmux source-file "$HOME/.tmux.conf" 2>/dev/null || true
+# kitty / tmux / nvim each have their own [[items]] hook
 
 echo "    ok  bg=#$BG fg=#$FG accent=#$YELLOW"
