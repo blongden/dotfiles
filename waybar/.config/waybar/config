@@ -6,7 +6,7 @@
 
     "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "sway/window"],
     "modules-center": [],
-    "modules-right": ["custom/claude", "custom/updates", "cpu", "memory", "temperature", "disk", "network", "bluetooth", "custom/tailscale", "pulseaudio", "backlight", "battery", "custom/weather", "tray", "clock"],
+    "modules-right": ["custom/wattson", "custom/claude", "custom/updates", "cpu", "memory", "temperature", "disk", "network", "bluetooth", "custom/tailscale", "pulseaudio", "backlight", "battery", "custom/weather", "tray", "clock"],
 
     "sway/workspaces": {
         "disable-scroll": false,
@@ -69,6 +69,16 @@
         "on-click": "kitty --title 'claude · usage' sh -c '~/.config/waybar/scripts/claude-usage.sh --report; echo; printf \"[press a key to close] \"; read x'; pkill -RTMIN+11 waybar",
         "on-click-right": "~/.config/waybar/scripts/claude-usage.sh --refresh; pkill -RTMIN+11 waybar",
         "signal": 11
+    },
+
+    "custom/wattson": {
+        "format": "{}",
+        "return-type": "json",
+        "interval": 300,
+        "exec": "~/.config/waybar/scripts/wattson.sh",
+        "on-click": "kitty --title 'wattson · energy' sh -c '~/.config/waybar/scripts/wattson.sh --report; echo; printf \"[press a key to close] \"; read x'; pkill -RTMIN+12 waybar",
+        "on-click-right": "~/.config/waybar/scripts/wattson.sh --refresh; pkill -RTMIN+12 waybar",
+        "signal": 12
     },
 
     "cpu": {

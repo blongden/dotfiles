@@ -89,9 +89,20 @@ tooltip label { color: @fg; }
 /* ── right ────────────────────────────────────────── */
 #cpu, #memory, #temperature, #disk, #network, #bluetooth,
 #pulseaudio, #backlight, #battery, #tray, #clock,
-#custom-updates, #custom-weather, #custom-tailscale, #custom-claude {
+#custom-updates, #custom-weather, #custom-tailscale, #custom-claude, #custom-wattson {
     padding: 0 10px;
 }
+
+#custom-wattson         { color: @aqua; }   /* .ok — 10–25p */
+#custom-wattson.neg     { color: @purple; } /* rate below zero — paid to import */
+#custom-wattson.cheap   { color: @green; }  /* under 10p */
+#custom-wattson.high    { color: @yellow; } /* 25–35p */
+#custom-wattson.peak {
+    color: @bg;
+    background: @red;
+}
+#custom-wattson.stale,
+#custom-wattson.error   { color: @dim; }
 
 #custom-tailscale           { color: @green; }
 #custom-tailscale.exit-node { color: @yellow; }
