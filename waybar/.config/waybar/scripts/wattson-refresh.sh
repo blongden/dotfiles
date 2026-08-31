@@ -1,16 +1,17 @@
 #!/bin/sh
 # Boundary-aligned refresh for the waybar custom/wattson module.
 #
-# Octopus Agile rates change on the hour and half-hour. This sleeps until a few
-# seconds past the next :00/:30, forces wattson.sh to re-fetch, and signals
-# waybar to redraw. The module's `interval` in the waybar config is only a slow
-# fallback for when this isn't running.
+# Octopus Agile rates change on the hour and half-hour. This sleeps until ~30s
+# past the next :00/:30 (giving Wattson's server-side price roll time to land),
+# forces wattson.sh to re-fetch, and signals waybar to redraw. The module's
+# `interval` in the waybar config is only a slow fallback for when this isn't
+# running.
 #
 # Autostarted (guarded) from hyprland.lua and ~/.config/sway/autostart.sh.
 # Single-instance via flock; stop it by killing the pid in
 # $XDG_RUNTIME_DIR/wattson-refresh.pid.
 
-grace=5            # seconds past the boundary before fetching
+grace=30           # seconds past the boundary before fetching (server roll lag)
 signal=12          # waybar `signal` for custom/wattson  -> SIGRTMIN+12
 script="$(dirname "$0")/wattson.sh"
 

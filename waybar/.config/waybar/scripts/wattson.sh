@@ -6,8 +6,8 @@
 #   --refresh  force a fetch, rewrite cache, print JSON
 #   --report   force a fetch, print a human-readable breakdown (click popup)
 #
-# wattson-refresh.sh does a --refresh + `pkill -RTMIN+12 waybar` a few seconds
-# past each boundary; the waybar `interval` is only a slow fallback.
+# wattson-refresh.sh does a --refresh + `pkill -RTMIN+12 waybar` ~30s past each
+# boundary; the waybar `interval` is only a slow fallback.
 #
 # Config (NOT tracked in dotfiles) — ~/.config/wattson/waybar.env, chmod 600:
 #   WATTSON_API=https://api.askwattson.uk
