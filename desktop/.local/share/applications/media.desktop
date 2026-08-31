@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Media
+Comment=Browse ~/Media (also served to the TV over DLNA by minidlna)
+Icon=folder-videos
+Exec=kitty --class yazi -e yazi /home/ben/Media
+Terminal=false
+Categories=AudioVideo;Utility;
+Keywords=media;video;movies;tv;outlander;dlna;
