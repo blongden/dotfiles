@@ -21,5 +21,20 @@ output * bg /etc/greetd/backdrop.jpg fill
 seat * hide_cursor 8000
 xwayland disable
 
-# run the greeter; when it exits (successful login), tear down this sway
-exec "GTK_THEME=Adwaita:dark regreet; swaymsg exit"
+# run the greeter; when it exits (successful login), tear down this sway.
+# GTK_DEBUG=no-portals: THE fix for the "backdrop shows, ~76s pause, then form"
+# delay. GTK_USE_PORTAL is a GTK3-only var — GTK 4.22's libgtk-4.so.1 has no
+# such string, so the old GTK_USE_PORTAL=0 here was a no-op. In this displayless
+# _greetd sway there is no session portal, so GTK4 tries to reach
+# org.freedesktop.portal.Desktop (Settings interface, for theme/color-scheme),
+# D-Bus can't activate xdg-desktop-portal for _greetd, and GTK4 burns ~3×25s of
+# activation timeouts before first paint. Measured: greeter PAM session
+# 19:40:45 -> regreet first log line 19:42:02 (~76s). GTK_DEBUG=no-portals maps
+# to gtk_disable_portals() and skips all of it.
+# NO_AT_BRIDGE=1 / GTK_A11Y=none: skip AT-SPI bus probing (NO_AT_BRIDGE is
+# ignored by GTK4; GTK_A11Y=none is the one that works).
+# GSK_RENDERER=gl: kept as a safe renderer for a static login form (GTK 4.22
+# defaults to Vulkan; GL avoids cold Vulkan device init). Not the bottleneck —
+# drop it to retest once the portal fix is confirmed.
+# LANG: silence the regreet "Could not determine system locale" probe.
+exec "GTK_THEME=Adwaita:dark GTK_DEBUG=no-portals NO_AT_BRIDGE=1 GTK_A11Y=none GSK_RENDERER=gl LANG=en_GB.UTF-8 regreet; swaymsg exit"
