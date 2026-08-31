@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Screensaver
+Comment=Start the terminal screensaver now
+Icon=preferences-desktop-screensaver
+Exec=/home/ben/.config/screensaver/screensaver.sh start
+Terminal=false
+Categories=Utility;
+Keywords=screensaver;idle;tte;ascii;bbs;

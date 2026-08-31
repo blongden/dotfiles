@@ -37,4 +37,4 @@
                         `"""
         
              d e b i a n   G N U / L i n u x
-               forky / sid  .  buddy  .  sway
+               forky / sid  .  buddy  .  hyprland

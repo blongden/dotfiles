@@ -4,7 +4,7 @@
   |                                                          |
   |     booting .....................................  OK    |
   |     mounting /dev/nvme0n1p2 on /   ..............  OK    |
-  |     starting sway / wayland session .............  OK    |
+  |     starting hyprland / wayland session .........  OK    |
   |     bringing up net0 (chromium autostart) .......  OK    |
   |                                                          |
   |          _,met$$$$$gg.                                    |
@@ -14,7 +14,7 @@
   |  ',$$P       ,ggs.     `$$b:                              |
   |  `d$$'     ,$P"'   .    $$$      node ...... buddy         |
   |   $$P      d$'     ,    $$P      kernel .... 6.16-amd64    |
-  |   $$:      $$.   -    ,d$$'      wm ........ sway 1.12     |
+  |   $$:      $$.   -    ,d$$'      wm .... hyprland 0.56   |
   |   $$;      Y$b._   _,d$P'        shell ..... zsh           |
   |   Y$$.    `.`"Y$$$$P"'           uptime .... 42 days       |
   |   `$$b      "-.__                                         |
