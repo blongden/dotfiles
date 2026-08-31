@@ -47,7 +47,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("dunst")
     hl.exec_cmd("wl-paste --type text  --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
-    hl.exec_cmd("hypridle")   -- idle: screensaver @5min, dpms off @15min (~/.config/hypr/hypridle.conf)
+    hl.exec_cmd("hypridle")   -- idle: screensaver @5min, dpms off @30min (~/.config/hypr/hypridle.conf)
 
     -- tray / daemons  (ported from ~/.config/sway/autostart.sh)
     hl.exec_cmd("pactl set-sink-volume @DEFAULT_SINK@ 20%")   -- one-time level

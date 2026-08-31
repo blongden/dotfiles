@@ -49,7 +49,6 @@ blueman              # blueman-manager GUI for the waybar bluetooth module (--no
 pipewire-pulse       # provides pactl (volume keys, waybar)
 pulseaudio-utils     # pactl if not pulled by pipewire-pulse
 network-manager-gnome # nm-applet (tray)
-mate-power-manager   # power tray + battery
 policykit-1-gnome    # polkit auth agent
 
 # --- phone integration ---

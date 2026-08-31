@@ -16,7 +16,7 @@ nm-applet --indicator &
 # logind handles power/lid keys; waybar's battery module shows charge.
 dunst &
 kdeconnect-indicator &          # phone pairing: clipboard, notifications, file share
-~/.config/kdeconnect-autoopen.sh &   # auto-open files received via KDE Connect (HEIC->JPG)
+[ -x "$HOME/.config/kdeconnect-autoopen.sh" ] && "$HOME/.config/kdeconnect-autoopen.sh" &   # auto-open KDE Connect files (HEIC->JPG); ships in the `hypr` stow package
 udiskie --smart-tray --file-manager 'kitty --class yazi -e yazi' &   # auto-mount USB/SD; tray icon only when media present
 
 # Optional warm night tint (you didn't run redshift before, so off by default).
