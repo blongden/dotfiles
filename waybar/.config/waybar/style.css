@@ -89,13 +89,22 @@ tooltip label { color: @fg; }
 /* ── right ────────────────────────────────────────── */
 #cpu, #memory, #temperature, #disk, #network, #bluetooth,
 #pulseaudio, #backlight, #battery, #tray, #clock,
-#custom-updates, #custom-weather, #custom-tailscale {
+#custom-updates, #custom-weather, #custom-tailscale, #custom-claude {
     padding: 0 10px;
 }
 
 #custom-tailscale           { color: @green; }
 #custom-tailscale.exit-node { color: @yellow; }
 #custom-tailscale.offline   { color: @dim; }
+
+#custom-claude          { color: @orange; }
+#custom-claude.warn     { color: @yellow; }
+#custom-claude.critical {
+    color: @bg;
+    background: @red;
+}
+#custom-claude.stale,
+#custom-claude.error    { color: @dim; }
 
 #bluetooth              { color: @blue; }
 #bluetooth.connected    { color: @aqua; }

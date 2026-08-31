@@ -4,16 +4,17 @@
     "height": 28,
     "spacing": 0,
 
-    "modules-left": ["sway/workspaces", "sway/mode", "sway/scratchpad", "sway/window"],
+    "modules-left": ["hyprland/workspaces", "hyprland/submap", "hyprland/window"],
     "modules-center": [],
     "modules-right": ["custom/claude", "custom/updates", "cpu", "memory", "temperature", "disk", "network", "bluetooth", "custom/tailscale", "pulseaudio", "backlight", "battery", "custom/weather", "tray", "clock"],
 
-    "sway/workspaces": {
+    "hyprland/workspaces": {
         "disable-scroll": false,
-        "format": "{index}"
+        "format": "{id}",
+        "persistent-workspaces": { "*": 4 }
     },
 
-    "sway/mode": {
+    "hyprland/submap": {
         "format": "{}"
     },
 
@@ -24,7 +25,7 @@
         "tooltip-format": "{app}: {title}"
     },
 
-    "sway/window": {
+    "hyprland/window": {
         "format": "{title}",
         "max-length": 70,
         "icon": false,
