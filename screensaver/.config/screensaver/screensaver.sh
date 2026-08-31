@@ -41,7 +41,7 @@ case "${1:-}" in
     printf '\033[?25l'
     trap 'printf "\033[?25h\033[2J\033[H"' EXIT INT TERM
     while :; do
-        art=$(find "$art_dir" -type f -name '*.txt' | shuf -n1)
+        art=$(find -L "$art_dir" -type f -name '*.txt' | shuf -n1)   # -L: art files are stow symlinks
         [ -n "$art" ] || { sleep 5; continue; }
         eff=$(printf '%s\n' $effects | shuf -n1)
         clear
