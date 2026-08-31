@@ -16,8 +16,7 @@ libadwaita-1-dev     # build-only: ReGreet
 # --- compositor + core session ---
 sway
 swaybg               # wallpaper (output * bg)
-swayidle             # idle -> lock / dpms
-swaylock             # screen locker
+swayidle             # idle -> screensaver / dpms
 xwayland             # X11 client support
 autotiling           # dynamic split direction (python3-i3ipc dep)
 python3-i3ipc        # used by autotiling + ~/.config/sway/winswitch.sh

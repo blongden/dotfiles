@@ -13,12 +13,11 @@ set $term kitty
 set $browser chromium
 set $menu ~/.config/sway/wofi-toggle.sh --show drun
 set $runner ~/.config/sway/wofi-toggle.sh --show run
-set $locker ~/.config/sway/lock.sh
 set $shot ~/.config/sway/screenshot.sh
 set $herdr kitty --class herdr -e herdr
 set $files kitty --class mc -e mc --skin modarin256-defbg
 set $yazi kitty --class yazi -e yazi
-set $wallpaper ~/Pictures/Backdrops/1614877.jpg
+set $wallpaper ~/Pictures/Backdrops/fighter-aircraft-full-moon-outer-space-orange-teal-night-3840x2160-7120.jpg
 
 ### Appearance #############################################################
 font pango:URWGothic-Book 11
@@ -45,11 +44,9 @@ client.placeholder      #000000  #1d1f21  #c5c8c6  #000000   #1d1f21
 client.background       #1d1f21
 ### tinty:end
 
-# Wallpaper is managed by Azote (writes ~/.azotebg, which runs swaybg).
-# sway's built-in `output bg` is drawn internally and would cover swaybg, so
-# it's only a solid-colour base for the moment before ~/.azotebg runs.
-output * bg #1d1f21 solid_color
-exec_always --no-startup-id [ -x "$HOME/.azotebg" ] && "$HOME/.azotebg"
+# Wallpaper — sway-native output bg (Azote removed 2026-08-31; Hyprland uses
+# hyprpaper). No swaybg process needed; sway draws this internally.
+output * bg $wallpaper fill
 
 ### Input #################################################################
 input "type:keyboard" {
@@ -217,9 +214,8 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes, exit' 'swaymsg exit'
 
-set $mode_system (l)ock  (e)xit  (s)uspend  (h)ibernate  (r)eboot  (Shift+s)hutdown
+set $mode_system (e)xit  (s)uspend  (h)ibernate  (r)eboot  (Shift+s)hutdown
 mode "$mode_system" {
-    bindsym l exec $locker, mode "default"
     bindsym s exec systemctl suspend, mode "default"
     bindsym e exec swaymsg exit, mode "default"
     bindsym h exec systemctl hibernate, mode "default"
@@ -229,7 +225,6 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 bindsym $mod+0 mode "$mode_system"
-bindsym Ctrl+Delete exec $locker
 
 ### Resize mode ########################################################
 mode "resize" {
@@ -309,7 +304,7 @@ exec kanshi
 exec wl-paste --watch cliphist store
 exec ~/.config/sway/autostart.sh
 
-### Idle / lock ####################################################
+### Idle ###############################################################
 # xdg-desktop-portal and the systemd/dbus environment import are handled
 # by /etc/sway/config.d/50-systemd-user.conf (included below).
 # exec_always (not exec) so `swaymsg reload` re-applies timeout changes.
