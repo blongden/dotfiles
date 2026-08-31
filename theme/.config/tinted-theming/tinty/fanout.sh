@@ -67,6 +67,28 @@ EOF
 }
 [ -f "$CFG/sway/config" ] && sway_block | repl "$CFG/sway/config" '### tinty:start' '### tinty:end'
 
+# ---- hyprland : general.col.* + groupbar (Lua config) ------------------
+hypr_block() {
+    cat <<EOF
+hl.config({
+    general = {
+        col = {
+            active_border   = { colors = { "rgba(${BLUE}ee)", "rgba(${AQUA}ee)" }, angle = 45 },
+            inactive_border = "rgba(${LINE}aa)",
+        },
+    },
+    group = {
+        groupbar = {
+            col = { active = "rgba(${BLUE}ff)", inactive = "rgba(${BG2}ff)" },
+            text_color          = "rgb($FG)",
+            text_color_inactive = "rgb($DIM)",
+        },
+    },
+})
+EOF
+}
+[ -f "$CFG/hypr/hyprland.lua" ] && hypr_block | repl "$CFG/hypr/hyprland.lua" '-- tinty:start' '-- tinty:end'
+
 # ---- herdr : [theme.custom] tokens --------------------------------------
 herdr_block() {
     cat <<EOF
@@ -79,19 +101,6 @@ green         = "#$GREEN"
 EOF
 }
 [ -f "$CFG/herdr/config.toml" ] && herdr_block | repl "$CFG/herdr/config.toml" '# tinty:start' '# tinty:end'
-
-# ---- swaylock : key=color (no #, alpha suffixes kept) -------------------
-swaylock_block() {
-    cat <<EOF
-ring-color=$BG
-key-hl-color=$BLUE
-line-color=00000000
-inside-color=${BG}cc
-separator-color=00000000
-text-color=$FG
-EOF
-}
-[ -f "$CFG/swaylock/config" ] && swaylock_block | repl "$CFG/swaylock/config" '# tinty:start' '# tinty:end'
 
 # ---- dunst : section-keyed (no markers) --------------------------------
 dunst_rc="$CFG/dunst/dunstrc"
@@ -177,6 +186,7 @@ fi
 # ---- reloads -----------------------------------------------------------
 pkill -SIGUSR2 waybar        2>/dev/null || true
 swaymsg reload               >/dev/null 2>&1 || true
+hyprctl reload               >/dev/null 2>&1 || true
 dunstctl reload              2>/dev/null || true
 herdr server reload-config   >/dev/null 2>&1 || true
 # kitty / tmux / nvim each have their own [[items]] hook

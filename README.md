@@ -12,11 +12,12 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 | `zsh` `git` `tmux` `nvim` | `~/.zshrc`, `~/.zshenv`, `~/.gitconfig`, `~/.config/git/ignore`, `~/.tmux.conf`, `~/.config/nvim/init.vim` | `.zshenv` keeps tool history/state out of `$HOME` (XDG) |
 | `kitty` | `~/.config/kitty/kitty.conf` | Tomorrow Night theme appended |
 | `sway` | `~/.config/sway/` | config + `*.sh` helpers + `screensaver-art/` |
-| `waybar` `wofi` | `~/.config/{waybar,wofi}/` | Tomorrow Night, Iosevka Nerd Font; `rofimoji` (apt) drives wofi for the `$mod+.` emoji picker |
+| `hypr` | `~/.config/hypr/{hyprland.lua,hypridle.conf}`, `~/.config/kdeconnect-autoopen.sh` | Hyprland trial, side-by-side with sway. **Partial** — the Lua config also sources `keybinds.sh` / `startup-apps.sh` / `hyprpaper.conf` / `dictate*.sh`, not tracked yet. `hypridle`: tte screensaver @5min, DPMS off @30min. `kdeconnect-autoopen.sh` (launched from both hypr + sway autostart) opens files received via KDE Connect, converting HEIC→JPG with `heic2img` |
+| `waybar` `wofi` | `~/.config/{waybar,wofi}/` | Tomorrow Night, Iosevka Nerd Font; `rofimoji` (apt) drives wofi for the `$mod+.` emoji picker. waybar has a `custom/claude` module (session/weekly Claude Code quota from `api.anthropic.com/api/oauth/usage`) |
 | `dunst` | `~/.config/dunst/dunstrc` | Tomorrow Night; self-contained (dunst reads one config, no merge) |
-| `theme` | `~/.config/tinted-theming/tinty/` | tinty config + `fanout.sh`; one base16 palette → kitty, tmux, nvim, waybar, wofi, sway borders, herdr, dunst, swaylock. `tinty apply <scheme>` to switch. kitty/tmux/nvim via upstream templates + an `include`/`source`; the rest written by `fanout.sh` from tinty's `$TINTY_SCHEME_PALETTE_*` env vars |
+| `theme` | `~/.config/tinted-theming/tinty/` | tinty config + `fanout.sh`; one base16 palette → kitty, tmux, nvim, waybar, wofi, sway borders, herdr, dunst. `tinty apply <scheme>` to switch. kitty/tmux/nvim via upstream templates + an `include`/`source`; the rest written by `fanout.sh` from tinty's `$TINTY_SCHEME_PALETTE_*` env vars |
 | `kanshi` | `~/.config/kanshi/` | output profiles (docked = DP-2 4K@30) |
-| `swaylock` `gammastep` | `~/.config/{swaylock,gammastep}/` | gammastep off by default |
+| `gammastep` | `~/.config/gammastep/` | off by default |
 | `greetd` | `/etc/greetd/{config.toml,sway-config,regreet.toml,regreet.css}` + tmpfiles | **not stowed** (root-owned), install by hand (step 4). ReGreet (GTK4) hosted by a throwaway sway for GB keyboard + wallpaper; tuigreet command kept in config.toml's header as fallback |
 | `herdr` | `~/.config/herdr/config.toml` | multiplexer for coding agents; `--no-folding` (dir holds runtime state) |
 | `desktop` | `~/.config/mimeapps.list`, `~/.local/share/applications/*.desktop` | chromium as default browser; custom launchers (screenshot, sway-keybindings, yazi, mc, downloads); `code`/`discord`/`Claude` overrides add `--ozone-platform-hint=auto` for native Wayland; `--no-folding` |
@@ -31,7 +32,7 @@ sudo apt install --no-install-recommends $(grep -vE '^\s*#|^\s*$' packages.txt)
 # 2. dotfiles
 git clone git@github.com:blongden/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow zsh git tmux nvim kitty sway waybar wofi dunst theme kanshi swaylock gammastep
+stow zsh git tmux nvim kitty sway hypr waybar wofi dunst theme kanshi gammastep bin
 stow --no-folding herdr desktop
 
 # 3. by-hand pieces (not in apt)

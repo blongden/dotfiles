@@ -9,6 +9,11 @@ ts=$(date -u +'%Y%m%d-%H%M%SZ')
 
 # geometry of the currently focused window (for the "window" modes)
 focused_geom() {
+    if [ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+        hyprctl activewindow -j | \
+            jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"'
+        return
+    fi
     swaymsg -t get_tree | \
         python3 -c 'import json,sys
 def walk(n):

@@ -12,9 +12,11 @@ pactl set-sink-volume @DEFAULT_SINK@ 20%
 # tray / daemons
 /usr/libexec/polkit-mate-authentication-agent-1 &   # GUI password prompts for privileged actions
 nm-applet --indicator &
-mate-power-manager &
+# mate-power-manager removed: X11/MATE tool, GP-faults in libX11 under XWayland.
+# logind handles power/lid keys; waybar's battery module shows charge.
 dunst &
 kdeconnect-indicator &          # phone pairing: clipboard, notifications, file share
+~/.config/kdeconnect-autoopen.sh &   # auto-open files received via KDE Connect (HEIC->JPG)
 udiskie --smart-tray --file-manager 'kitty --class yazi -e yazi' &   # auto-mount USB/SD; tray icon only when media present
 
 # Optional warm night tint (you didn't run redshift before, so off by default).
