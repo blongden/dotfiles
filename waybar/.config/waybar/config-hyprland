@@ -75,7 +75,7 @@
     "custom/wattson": {
         "format": "{}",
         "return-type": "json",
-        "interval": 300,
+        "interval": 1800,
         "exec": "~/.config/waybar/scripts/wattson.sh",
         "on-click": "kitty --title 'wattson · energy' sh -c '~/.config/waybar/scripts/wattson.sh --report; echo; printf \"[press a key to close] \"; read x'; pkill -RTMIN+12 waybar",
         "on-click-right": "~/.config/waybar/scripts/wattson.sh --refresh; pkill -RTMIN+12 waybar",

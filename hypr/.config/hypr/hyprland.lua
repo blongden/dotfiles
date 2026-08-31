@@ -44,6 +44,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
     hl.exec_cmd("hyprpaper")                                             -- wallpaper (~/.config/hypr/hyprpaper.conf); replaced swaybg + Azote
     hl.exec_cmd("waybar -c ~/.config/waybar/config-hyprland")
+    hl.exec_cmd("~/.config/waybar/scripts/wattson-refresh.sh")   -- nudge custom/wattson a few sec past each :00/:30 Agile boundary
     hl.exec_cmd("dunst")
     hl.exec_cmd("wl-paste --type text  --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")

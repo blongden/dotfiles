@@ -1,9 +1,13 @@
 #!/bin/sh
 # waybar custom module: current Octopus Agile rate + solar generation today,
 # from Wattson's household-energy endpoint (~/Dev/wattson).
-#   (no arg)   waybar JSON {text,tooltip,class}; 5-min cache
+#   (no arg)   waybar JSON {text,tooltip,class}; cache valid until the next
+#              :00/:30 slot boundary (Agile rates change then)
 #   --refresh  force a fetch, rewrite cache, print JSON
 #   --report   force a fetch, print a human-readable breakdown (click popup)
+#
+# wattson-refresh.sh does a --refresh + `pkill -RTMIN+12 waybar` a few seconds
+# past each boundary; the waybar `interval` is only a slow fallback.
 #
 # Config (NOT tracked in dotfiles) — ~/.config/wattson/waybar.env, chmod 600:
 #   WATTSON_API=https://api.askwattson.uk
@@ -17,7 +21,6 @@
 
 cfg="${XDG_CONFIG_HOME:-$HOME/.config}/wattson/waybar.env"
 cache="${XDG_CACHE_HOME:-$HOME/.cache}/wattson-energy.json"
-ttl=300
 
 BOLT=$(printf '\357\203\247')      # U+F0E7
 SUN=$(printf '\357\206\205')       # U+F185
@@ -39,8 +42,11 @@ emit() { jq -cn --arg t "$1" --arg tt "$2" --arg c "$3" '{text:$t,tooltip:$tt,cl
 
 data=""
 if [ "$mode" = bar ] && [ -f "$cache" ]; then
-    age=$(( $(date +%s) - $(stat -c %Y "$cache" 2>/dev/null || echo 0) ))
-    [ "$age" -lt "$ttl" ] && data=$(cat "$cache")
+    mtime=$(stat -c %Y "$cache" 2>/dev/null || echo 0)
+    now=$(date +%s)
+    # cache is good until the first :00/:30 boundary at or after it was written
+    boundary=$(( mtime - (mtime % 1800) + 1800 ))
+    [ "$now" -lt "$boundary" ] && data=$(cat "$cache")
 fi
 
 stale=""
