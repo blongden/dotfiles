@@ -11,7 +11,8 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 |---|---|---|
 | `zsh` `git` `tmux` `nvim` | `~/.zshrc`, `~/.zshenv`, `~/.gitconfig`, `~/.config/git/ignore`, `~/.tmux.conf`, `~/.config/nvim/init.vim` | `.zshenv` keeps tool history/state out of `$HOME` (XDG) |
 | `kitty` | `~/.config/kitty/kitty.conf` | Tomorrow Night theme appended |
-| `sway` | `~/.config/sway/` | config + `*.sh` helpers + `screensaver-art/` |
+| `sway` | `~/.config/sway/` | config + `*.sh` helpers |
+| `screensaver` | `~/.config/screensaver/` | compositor-agnostic tte terminal screensaver (`screensaver.sh` + `art/*.txt`); called by `sway/idle.sh` and `hypr/hypridle.conf` at 5 min idle |
 | `hypr` | `~/.config/hypr/{hyprland.lua,hypridle.conf}`, `~/.config/kdeconnect-autoopen.sh` | Hyprland trial, side-by-side with sway. **Partial** — the Lua config also sources `keybinds.sh` / `startup-apps.sh` / `hyprpaper.conf` / `dictate*.sh`, not tracked yet. `hypridle`: tte screensaver @5min, DPMS off @30min. `kdeconnect-autoopen.sh` (launched from both hypr + sway autostart) opens files received via KDE Connect, converting HEIC→JPG with `heic2img` |
 | `waybar` `wofi` | `~/.config/{waybar,wofi}/` | Tomorrow Night, Iosevka Nerd Font; `rofimoji` (apt) drives wofi for the `$mod+.` emoji picker. waybar has a `custom/claude` module (session/weekly Claude Code quota from `api.anthropic.com/api/oauth/usage`) |
 | `dunst` | `~/.config/dunst/dunstrc` | Tomorrow Night; self-contained (dunst reads one config, no merge) |
@@ -32,7 +33,7 @@ sudo apt install --no-install-recommends $(grep -vE '^\s*#|^\s*$' packages.txt)
 # 2. dotfiles
 git clone git@github.com:blongden/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow zsh git tmux nvim kitty sway hypr waybar wofi dunst theme kanshi gammastep bin
+stow zsh git tmux nvim kitty sway screensaver hypr waybar wofi dunst theme kanshi gammastep bin
 stow --no-folding herdr desktop
 
 # 3. by-hand pieces (not in apt)

@@ -7,7 +7,7 @@ pkill -x swayidle 2>/dev/null
 sleep 0.3
 
 exec swayidle -w \
-    timeout 300  "$HOME/.config/sway/screensaver.sh start" \
-    resume       "$HOME/.config/sway/screensaver.sh stop" \
+    timeout 300  "$HOME/.config/screensaver/screensaver.sh start" \
+    resume       "$HOME/.config/screensaver/screensaver.sh stop" \
     timeout 900  'swaymsg "output * power off"' \
     resume       'swaymsg "output * power on"'

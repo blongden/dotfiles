@@ -1,0 +1,7 @@
+Art sources:
+  moon.txt            - widely-circulated ASCII moon (author unknown)
+  dragon.txt          - Joan Stark (jgs), via textfiles.com/art/dragon.txt
+  cpu.txt owls.txt    - textfiles.com/art/
+  ice-bbs.txt         - iCE BBS ad 1993, textfiles.com/art/152614.txt (cp437 -> utf8)
+  spiked.txt          - 'SPIKED!' game title, textfiles.com/art/13.asc (cp437 -> utf8)
+  buddy-*/debian-*/commodore-*  - generated with toilet/figlet

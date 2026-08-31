@@ -1,14 +1,17 @@
 #!/bin/sh
 # Terminal screensaver — a fullscreen kitty running terminaltexteffects (tte)
-# over BBS/Commodore-style ASCII art. Driven by swayidle:
-#   timeout 300 'screensaver.sh start'  resume 'screensaver.sh stop'
+# over BBS/Commodore-style ASCII art. Compositor-agnostic; driven by the idle
+# daemon of whichever session is running:
+#   sway:     ~/.config/sway/idle.sh   (swayidle)
+#   Hyprland: ~/.config/hypr/hypridle.conf
+# both call:  screensaver.sh start  (@5min)  /  screensaver.sh stop  (on resume)
 #
 # Install the animation engine once:
 #   sudo apt install pipx && pipx install terminaltexteffects
 #
-# Drop more art into ~/.config/sway/screensaver-art/ (plain .txt, no ANSI colour).
+# Drop more art into ~/.config/screensaver/art/ (plain .txt, no ANSI colour).
 
-art_dir="$HOME/.config/sway/screensaver-art"
+art_dir="$HOME/.config/screensaver/art"
 export PATH="$HOME/.local/bin:$PATH"
 
 # tte 0.15 effects that suit sparse BBS/Commodore art (verified names)
