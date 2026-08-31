@@ -18,6 +18,7 @@ dunst &
 kdeconnect-indicator &          # phone pairing: clipboard, notifications, file share
 [ -x "$HOME/.config/kdeconnect-autoopen.sh" ] && "$HOME/.config/kdeconnect-autoopen.sh" &   # auto-open KDE Connect files (HEIC->JPG); ships in the `hypr` stow package
 udiskie --smart-tray --file-manager 'kitty --class yazi -e yazi' &   # auto-mount USB/SD; tray icon only when media present
+protonmail-bridge --noninteractive &   # local IMAP :1143 / SMTP :1025 for Proton Mail (reuses stored session)
 ~/.config/waybar/scripts/wattson-refresh.sh &   # nudge custom/wattson ~30s past each :00/:30 Agile boundary
 
 # Optional warm night tint (you didn't run redshift before, so off by default).

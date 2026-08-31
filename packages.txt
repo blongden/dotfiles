@@ -54,6 +54,9 @@ policykit-1-gnome    # polkit auth agent
 # --- phone integration ---
 kdeconnect           # clipboard / notifications / file share with the phone (autostart.sh)
 
+# --- mail ---
+protonmail-bridge     # local IMAP/SMTP for Proton Mail (autostart.sh; re-login once via `protonmail-bridge --cli`)
+
 # --- files / images ---
 mc                   # midnight commander ($mod+Shift+m; twin-pane option)
 libheif-examples     # heif-convert  (HEIC -> JPG)

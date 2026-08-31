@@ -57,6 +57,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("kdeconnect-indicator")
     hl.exec_cmd("~/.config/kdeconnect-autoopen.sh")   -- auto-open files received via KDE Connect (HEIC->JPG)
     hl.exec_cmd("udiskie --smart-tray --file-manager 'kitty --class yazi -e yazi'")
+    hl.exec_cmd("protonmail-bridge --noninteractive")   -- local IMAP :1143 / SMTP :1025 for Proton Mail (reuses stored session)
 
     -- workspace apps
     hl.exec_cmd("kitty --class scratchpad")         -- -> special:magic (window rule)
