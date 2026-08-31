@@ -57,6 +57,10 @@ kdeconnect           # clipboard / notifications / file share with the phone (au
 # --- mail ---
 protonmail-bridge     # local IMAP/SMTP for Proton Mail (autostart.sh; re-login once via `protonmail-bridge --cli`)
 
+# --- media ---
+vlc                  # default video player (video/* in mimeapps.list)
+minidlna             # DLNA server for ~/Media -> LG C2 TV; /etc/minidlna.conf + `setfacl -m u:minidlna:x ~` (home is 700)
+
 # --- files / images ---
 mc                   # midnight commander ($mod+Shift+m; twin-pane option)
 libheif-examples     # heif-convert  (HEIC -> JPG)
