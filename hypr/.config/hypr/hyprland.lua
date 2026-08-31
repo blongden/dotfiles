@@ -249,7 +249,7 @@ hl.bind(mainMod .. " + SHIFT + period", hl.dsp.exec_cmd("rofimoji --selector wof
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))  -- not bound in stock hyprland.lua
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("cliphist list | wofi --dmenu | cliphist decode | wl-copy"))  -- clipboard history (was: pseudo)
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + slash", hl.dsp.exec_cmd("~/.config/hypr/keybinds.sh"))  -- keybinding cheatsheet
 
