@@ -5,6 +5,13 @@ $fg:   #c5c8c6;  $dim: #969896;
 $red:  #cc6666;  $orange: #de935f;  $yellow: #f0c674;
 $green:#b5bd68;  $aqua:   #8abeb7;  $blue:   #81a2be;  $purple: #b294bb;
 
+// RAG for the price strip — punchy, unambiguous traffic-light colours
+// (the muted Tomorrow Night green/yellow are near-indistinguishable at 6px).
+$rag-green:  #2ecc5e;   // vivid green, not olive
+$rag-amber:  #ff9f1c;   // true orange-amber, clearly not green
+$rag-red:    #ff3b30;   // strong red
+$rag-plunge: #21c7ff;   // bright cyan — negative price, stands well apart
+
 * { all: unset; font-family: "Iosevka Nerd Font", monospace; }
 
 .wattson {
@@ -20,10 +27,10 @@ $green:#b5bd68;  $aqua:   #8abeb7;  $blue:   #81a2be;  $purple: #b294bb;
   font-size: 34px;
   font-weight: 700;
   background: transparent;
-  &.c-green  { color: $green; }
-  &.c-amber  { color: $yellow; }
-  &.c-red    { color: $red; }
-  &.c-plunge { color: $blue; }
+  &.c-green  { color: $rag-green; }
+  &.c-amber  { color: $rag-amber; }
+  &.c-red    { color: $rag-red; }
+  &.c-plunge { color: $rag-plunge; }
 }
 .sub { color: $dim; font-size: 12px; }
 .dim { color: $line; }
@@ -39,11 +46,11 @@ $green:#b5bd68;  $aqua:   #8abeb7;  $blue:   #81a2be;  $purple: #b294bb;
   border-radius: 1px;
   background: $line;                     // unknown / missing slot
   // RAG vs the rolling 7-day average (.cell.c-* beats the base above)
-  &.c-green  { background: $green; }
-  &.c-amber  { background: $yellow; }
-  &.c-red    { background: $red; }
-  &.c-plunge { background: $blue; }
-  &.now { box-shadow: 0 0 0 2px $fg, 0 0 5px $fg; }
+  &.c-green  { background: $rag-green; }
+  &.c-amber  { background: $rag-amber; }
+  &.c-red    { background: $rag-red; }
+  &.c-plunge { background: $rag-plunge; }
+  &.now { box-shadow: 0 0 0 2px $fg, 0 0 6px $fg; }
 }
 .ticks label { color: $dim; font-size: 10px; }
 
