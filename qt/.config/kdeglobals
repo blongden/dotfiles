@@ -13,7 +13,7 @@ shadeSortColumn=true
 widgetStyle=Fusion
 
 [Icons]
-Theme=Adwaita
+Theme=breeze-dark
 
 [UiSettings]
 ColorScheme=TomorrowNight
