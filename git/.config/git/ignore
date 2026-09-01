@@ -1,1 +1,5 @@
 **/.claude/settings.local.json
+
+# XDG autostart — nothing processes it under sway/Hyprland (see buddy memory);
+# apps (1Password, …) recreate it. Never track it.
+**/.config/autostart/
