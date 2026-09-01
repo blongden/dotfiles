@@ -20,6 +20,9 @@ RED=$(hx 08); ORANGE=$(hx 09); YELLOW=$(hx 0A); GREEN=$(hx 0B); AQUA=$(hx 0C); B
 
 CFG=${XDG_CONFIG_HOME:-$HOME/.config}
 
+# "1d1f21" -> "29,31,33"  (KConfig wants decimal R,G,B triples)
+rgb() { printf '%d,%d,%d' "0x$(printf %s "$1" | cut -c1-2)" "0x$(printf %s "$1" | cut -c3-4)" "0x$(printf %s "$1" | cut -c5-6)"; }
+
 # ---- replace text between two marker lines (markers kept) -------------------
 # usage:  printf '%s\n' "...new body..." | repl <file> <start-regex> <end-regex>
 repl() {
@@ -172,6 +175,64 @@ EOF
 [ -f "$CFG/gtk-3.0/gtk.css" ] && gtk3_block | repl "$CFG/gtk-3.0/gtk.css" '/\* tinty:start \*/' '/\* tinty:end \*/'
 [ -f "$CFG/gtk-4.0/gtk.css" ] && gtk4_block | repl "$CFG/gtk-4.0/gtk.css" '/\* tinty:start \*/' '/\* tinty:end \*/'
 
+# ---- Qt / KDE Frameworks : kdeglobals colour groups ---------------------
+# KColorScheme apps (Dolphin, Ark, Okular, Gwenview, Kate) read this directly.
+# Plain-Qt apps (VLC) don't — they follow QT_QPA_PLATFORMTHEME=gtk3 and ride
+# the GTK3 block above instead.
+kde_block() {
+    _bg=$(rgb "$BG");   _bg2=$(rgb "$BG2");  _line=$(rgb "$LINE"); _dim=$(rgb "$DIM"); _fg=$(rgb "$FG")
+    _red=$(rgb "$RED"); _org=$(rgb "$ORANGE"); _ylw=$(rgb "$YELLOW"); _grn=$(rgb "$GREEN")
+    _blu=$(rgb "$BLUE"); _pur=$(rgb "$PURPLE")
+    _set() {   # $1 = section, $2 = BackgroundNormal, $3 = BackgroundAlternate, $4 = ForegroundNormal, $5 = ForegroundInactive
+        cat <<EOF
+[Colors:$1]
+BackgroundAlternate=$3
+BackgroundNormal=$2
+DecorationFocus=$_blu
+DecorationHover=$_blu
+ForegroundActive=$_ylw
+ForegroundInactive=$5
+ForegroundLink=$_blu
+ForegroundNegative=$_red
+ForegroundNeutral=$_org
+ForegroundNormal=$4
+ForegroundPositive=$_grn
+ForegroundVisited=$_pur
+
+EOF
+    }
+    cat <<EOF
+[ColorEffects:Disabled]
+Color=$_bg2
+ColorAmount=0
+ColorEffect=0
+ContrastAmount=0.65
+ContrastEffect=1
+IntensityAmount=0.1
+IntensityEffect=2
+
+[ColorEffects:Inactive]
+ChangeSelectionColor=true
+Color=$_bg2
+ColorAmount=0.025
+ColorEffect=2
+ContrastAmount=0.1
+ContrastEffect=2
+Enable=false
+IntensityAmount=0
+IntensityEffect=0
+
+EOF
+    _set Button       "$_bg2"  "$_line" "$_fg"  "$_dim"
+    _set Complementary "$_bg"  "$_line" "$_fg"  "$_dim"
+    _set Header       "$_bg2"  "$_bg2"  "$_fg"  "$_dim"
+    _set Selection    "$_blu"  "$_blu"  "$_bg"  "$_bg"
+    _set Tooltip      "$_bg2"  "$_line" "$_fg"  "$_dim"
+    _set View         "$_bg"   "$_bg2"  "$_fg"  "$_dim"
+    _set Window       "$_bg"   "$_bg2"  "$_fg"  "$_dim"
+}
+[ -f "$CFG/kdeglobals" ] && kde_block | repl "$CFG/kdeglobals" '# tinty:start' '# tinty:end'
+
 # ---- dunst : section-keyed (no markers) --------------------------------
 dunst_rc="$CFG/dunst/dunstrc"
 if [ -f "$dunst_rc" ]; then
@@ -266,6 +327,9 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark 2>/dev/null |
 if command -v dbus-send >/dev/null 2>&1; then
     dbus-send --session --type=signal /org/gtk/Settings \
         org.gtk.Settings.SettingsChanged string:"gtk-theme-name" 2>/dev/null || true
+    # KDE Frameworks apps: nudge them to re-read kdeglobals (arg 2 = PaletteChanged).
+    dbus-send --session --type=signal /KGlobalSettings \
+        org.kde.KGlobalSettings.notifyChange int32:2 int32:0 2>/dev/null || true
 fi
 
 echo "    ok  bg=#$BG fg=#$FG accent=#$YELLOW"

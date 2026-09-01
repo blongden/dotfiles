@@ -62,6 +62,9 @@ vlc                  # default video player (video/* in mimeapps.list)
 minidlna             # DLNA server for ~/Media -> LG C2 TV; /etc/minidlna.conf + `setfacl -m u:minidlna:x ~` (home is 700)
 
 # --- files / images ---
+dolphin              # KDE file manager; themed via `qt` stow pkg (kdeglobals)
+qt5-gtk-platformtheme # QT_QPA_PLATFORMTHEME=gtk3 -> plain-Qt apps (VLC) follow the GTK theme
+qt6-gtk-platformtheme # ditto for Qt6 apps
 mc                   # midnight commander ($mod+Shift+m; twin-pane option)
 libheif-examples     # heif-convert  (HEIC -> JPG)
 heif-gdk-pixbuf      # HEIC support for gdk-pixbuf apps (image viewers, file dialogs)
