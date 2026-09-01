@@ -22,6 +22,7 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 | `theme` | `~/.config/tinted-theming/tinty/` | tinty config + `fanout.sh`; one base16 palette → kitty, tmux, nvim, waybar, wofi, sway borders, herdr, dunst. `tinty apply <scheme>` to switch. kitty/tmux/nvim via upstream templates + an `include`/`source`; the rest written by `fanout.sh` from tinty's `$TINTY_SCHEME_PALETTE_*` env vars |
 | `kanshi` | `~/.config/kanshi/` | output profiles (docked = DP-2 4K@30) |
 | `gammastep` | `~/.config/gammastep/` | off by default |
+| `env` | `~/.config/environment.d/10-path.conf` | session-wide PATH — greeter execs the compositor with no shell rc, so `~/.local/bin` etc. would otherwise be missing |
 | `greetd` | `/etc/greetd/{config.toml,sway-config,regreet.toml,regreet.css}` + tmpfiles | **not stowed** (root-owned), install by hand (step 4). ReGreet (GTK4) hosted by a throwaway sway for GB keyboard + wallpaper; tuigreet command kept in config.toml's header as fallback |
 | `herdr` | `~/.config/herdr/config.toml` | multiplexer for coding agents; `--no-folding` (dir holds runtime state) |
 | `desktop` | `~/.config/mimeapps.list`, `~/.local/share/applications/*.desktop` | chromium as default browser; custom launchers (screenshot, sway-keybindings, yazi, mc, downloads); `code`/`discord`/`Claude` overrides add `--ozone-platform-hint=auto` for native Wayland; `--no-folding` |
@@ -36,7 +37,7 @@ sudo apt install --no-install-recommends $(grep -vE '^\s*#|^\s*$' packages.txt)
 # 2. dotfiles
 git clone git@github.com:blongden/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow zsh git tmux nvim kitty gtk qt sway screensaver hypr eww waybar wofi dunst theme kanshi gammastep bin
+stow zsh git tmux nvim kitty gtk qt sway screensaver hypr eww waybar wofi dunst theme kanshi gammastep env bin
 stow --no-folding herdr desktop
 
 # 3. by-hand pieces (not in apt)
