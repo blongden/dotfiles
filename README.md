@@ -11,7 +11,7 @@ Each top-level directory is a stow *package* whose contents mirror `$HOME`:
 |---|---|---|
 | `zsh` `git` `tmux` `nvim` | `~/.zshrc`, `~/.zshenv`, `~/.gitconfig`, `~/.config/git/ignore`, `~/.tmux.conf`, `~/.config/nvim/init.vim` | `.zshenv` keeps tool history/state out of `$HOME` (XDG) |
 | `kitty` | `~/.config/kitty/kitty.conf` | Tomorrow Night theme appended |
-| `gtk` | `~/.config/gtk-{3,4}.0/{settings.ini,gtk.css}` | GTK3 + GTK4/libadwaita: dark Adwaita base + a tinty-managed `-color` recolour block (`fanout.sh`). GTK3 live-reloads; GTK4 apps need a restart. |
+| `gtk` | `~/.config/gtk-{3,4}.0/{settings.ini,gtk.css}` | GTK3 + GTK4/libadwaita: dark Adwaita base + a tinty-managed `@define-color` recolour block (`fanout.sh`). GTK3 live-reloads; GTK4 apps need a restart. |
 | `sway` | `~/.config/sway/` | config + `*.sh` helpers |
 | `screensaver` | `~/.config/screensaver/` | compositor-agnostic tte terminal screensaver (`screensaver.sh` + `art/*.txt`); called by `sway/idle.sh` and `hypr/hypridle.conf` at 5 min idle |
 | `eww` | `~/.config/eww/` | GTK widgets alongside waybar. `wattson` window = Octopus Agile day curve + solar, toggled from the waybar `custom/wattson` module. Needs `eww` on PATH — built from git (`cargo install --git https://github.com/elkowar/eww eww`), symlinked into `~/.local/bin`. `eww daemon` autostarts from hypr/sway. |
