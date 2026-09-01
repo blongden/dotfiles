@@ -233,6 +233,25 @@ EOF
 }
 [ -f "$CFG/kdeglobals" ] && kde_block | repl "$CFG/kdeglobals" '# tinty:start' '# tinty:end'
 
+# ---- qt5ct : explicit Fusion palette for plain Qt5 apps (VLC) ----------
+# qgtk3 can't do dark (Qt 5.15 bug), so QT_QPA_PLATFORMTHEME=qt5ct + this.
+# Role order: WindowText Button Light Midlight Dark Mid Text BrightText
+# ButtonText Base Window Shadow Highlight HighlightedText Link LinkVisited
+# AlternateBase NoRole ToolTipBase ToolTipText
+qt5ct_block() {
+    b="#ff$BG"; b2="#ff$BG2"; ln="#ff$LINE"; dm="#ff$DIM"; fg="#ff$FG"
+    br="#ff$RED"; hl="#ff$BLUE"; lv="#ff$PURPLE"; sh="#ff000000"
+    _act="$fg, $b2, $ln, $b2, $sh, $ln, $fg, $br, $fg, $b, $b, $sh, $hl, $b, $hl, $lv, $b2, $b2, $b2, $fg"
+    _dis="$dm, $b2, $ln, $b2, $sh, $ln, $dm, $br, $dm, $b, $b, $sh, $ln, $dm, $hl, $lv, $b2, $b2, $b2, $dm"
+    cat <<EOF
+[ColorScheme]
+active_colors=$_act
+inactive_colors=$_act
+disabled_colors=$_dis
+EOF
+}
+[ -f "$CFG/qt5ct/colors/tomorrow-night.conf" ] && qt5ct_block | repl "$CFG/qt5ct/colors/tomorrow-night.conf" '# tinty:start' '# tinty:end'
+
 # ---- dunst : section-keyed (no markers) --------------------------------
 dunst_rc="$CFG/dunst/dunstrc"
 if [ -f "$dunst_rc" ]; then

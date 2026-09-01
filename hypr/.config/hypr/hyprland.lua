@@ -71,8 +71,8 @@ end)
 --------------------------------
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
--- non-KDE Qt apps (VLC) follow the GTK theme; Dolphin/KF6 read kdeglobals too
-hl.env("QT_QPA_PLATFORMTHEME", "gtk3")
+-- plain-Qt apps (VLC) get an explicit qt5ct palette; Dolphin/KF6 read kdeglobals too
+hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
 
 ---------------
 ----- INPUT ----
