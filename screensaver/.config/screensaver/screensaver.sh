@@ -21,10 +21,12 @@ export PATH="$HOME/.local/bin:$PATH"
 # die ~1s after every launch, and if it ignored the phantom the screensaver
 # could never be killed by a later real resume (no second event). Omarchy hit
 # the same wall ("screensaver resets idle timer" — its hypridle.conf). Fix:
-# hypridle's 300s listener has NO on-resume; the loop below polls the keyboard
-# itself (Omarchy's pattern — tte backgrounded, `read -t1` in 1s slices) and
-# exits on any key. KEYBOARD ONLY by choice (no mouse-move dismiss). An external
-# `stop`/pkill still works via the signal trap. History: memory/idle-screensaver.md.
+# hypridle's 300s listener has NO on-resume; the loop below polls stdin itself
+# (Omarchy's pattern — tte backgrounded, `read -t1` in 1s slices) and exits on
+# any key OR mouse motion (?1003h/?1006h reporting, re-armed each frame). A 3s
+# grace at launch swallows the phantom motion event kitty delivers when the
+# window maps. An external `stop`/pkill still works via the signal trap.
+# History: memory/idle-screensaver.md.
 # swayidle (sway session) is unaffected — it still calls `stop` on resume.
 
 # tte 0.15 effects that suit sparse BBS/Commodore art (verified names)
@@ -53,29 +55,46 @@ case "${1:-}" in
     tte_pid=""
     cleanup() {
         [ -n "$tte_pid" ] && kill "$tte_pid" 2>/dev/null
-        printf '\033[?25h\033[2J\033[H'   # cursor back, clear
+        printf '\033[?1003l\033[?1006l\033[?25h\033[2J\033[H'   # mouse off, cursor back, clear
     }
     trap cleanup EXIT
     trap 'cleanup; exit 0' INT TERM HUP QUIT   # external stop/pkill lands here
+
+    # Grace window: the fullscreen window's map makes Hyprland re-evaluate the
+    # pointer, and with mouse reporting on (below) kitty delivers that as a
+    # motion escape ~1s in — i.e. the same phantom that plagued the hypridle
+    # on-resume, now on our own stdin. Swallow any input for the first 3s so
+    # the phantom doesn't self-dismiss the screensaver the instant it appears.
+    started=$(date +%s)
+    grace=3
+
     while :; do
         art=$(find -L "$art_dir" -type f -name '*.txt' | shuf -n1)   # -L: art files are stow symlinks
         [ -n "$art" ] || { sleep 5; continue; }
         eff=$(printf '%s\n' $effects | shuf -n1)
         clear
-        printf '\033[?25l'   # (re-)hide cursor — tte may restore it on exit
+        # (re-)hide cursor + (re-)enable mouse-motion reporting (?1003 any-event,
+        # ?1006 SGR) — tte resets terminal modes when each run exits.
+        printf '\033[?25l\033[?1003h\033[?1006h'
         if command -v tte >/dev/null 2>&1; then
             tte --anchor-canvas c --anchor-text c "$eff" < "$art" 2>/dev/null &
             tte_pid=$!
-            # Poll the keyboard in 1s slices WHILE tte animates (Omarchy pattern):
-            # read never sits behind a foreground tte, so a keypress dismisses
-            # within ~1s at any point in the animation. Any key -> exit.
+            # Poll input in 1s slices WHILE tte animates (Omarchy pattern): read
+            # never sits behind a foreground tte, so a keypress or mouse wiggle
+            # dismisses within ~1s at any point. Any byte past the grace -> exit.
             while kill -0 "$tte_pid" 2>/dev/null; do
-                read -rsn1 -t 1 _ && exit 0
+                if read -rsn1 -t 1 _; then
+                    [ $(( $(date +%s) - started )) -lt "$grace" ] && continue
+                    exit 0
+                fi
             done
             tte_pid=""
         else
             cat "$art"
-            read -rsn1 -t 4 _ && exit 0
+            if read -rsn1 -t 4 _; then
+                [ $(( $(date +%s) - started )) -lt "$grace" ] && continue
+                exit 0
+            fi
         fi
     done
     ;;
