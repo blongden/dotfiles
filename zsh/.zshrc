@@ -88,6 +88,9 @@ alias mud="docker start bold_galileo;cd $HOME/Dev/muddev;source evenv/bin/activa
 # buddy = this machine's control repo (memory + rebuild plan); dotfiles in scope too
 buddy() { cd "$HOME/Dev/buddy" && claude --add-dir "$HOME/dotfiles" "$@"; }
 
+# homelab = home network / Home Assistant / IoT decloud control repo
+homelab() { cd "$HOME/Dev/homelab" && claude "$@"; }
+
 # amiga cross compiler
 export VBCC=/opt/vbcc
 export PATH="$VBCC/bin:$PATH"
