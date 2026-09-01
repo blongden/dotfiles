@@ -16,13 +16,6 @@ $green:#b5bd68;  $aqua:   #8abeb7;  $blue:   #81a2be;  $purple: #b294bb;
   font-size: 13px;
 }
 
-// RAG vs 7-day average (+ a distinct "plunge" for sub-zero)
-@mixin rag($c) { background: $c; &.rate, .rate & { } }
-.c-green  { background: $green; }
-.c-amber  { background: $yellow; }
-.c-red    { background: $red; }
-.c-plunge { background: $blue; }
-
 .headline .rate {
   font-size: 34px;
   font-weight: 700;
@@ -44,7 +37,12 @@ $green:#b5bd68;  $aqua:   #8abeb7;  $blue:   #81a2be;  $purple: #b294bb;
   min-width: 6px;
   min-height: 26px;
   border-radius: 1px;
-  background: $line;                 // unknown / missing slot
+  background: $line;                     // unknown / missing slot
+  // RAG vs the rolling 7-day average (.cell.c-* beats the base above)
+  &.c-green  { background: $green; }
+  &.c-amber  { background: $yellow; }
+  &.c-red    { background: $red; }
+  &.c-plunge { background: $blue; }
   &.now { box-shadow: 0 0 0 2px $fg, 0 0 5px $fg; }
 }
 .ticks label { color: $dim; font-size: 10px; }
