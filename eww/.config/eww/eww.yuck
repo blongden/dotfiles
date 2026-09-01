@@ -1,29 +1,32 @@
 ;; eww — desktop widgets. Bar stays waybar; this adds rich popovers.
-;; wattson: Octopus Agile day curve + solar. Toggled from the waybar
-;; custom/wattson module (on-click -> `eww open --toggle wattson`).
+;; wattson: today's Octopus Agile prices (since local midnight) as 48
+;; RAG-coloured cells vs the rolling 7-day import average, + solar/grid.
+;; Toggled from the waybar custom/wattson module (`eww open --toggle wattson`).
 
 (defpoll wattson :interval "60s"
-  :initial '{"rate":0,"next":0,"avg":0,"eff":0,"wk_avg":0,"band":"ok","solar_kwh":0,"solar_w":0,"imported":0,"exported":0,"updated":"—","slots":[]}'
-  `~/.config/waybar/scripts/wattson.sh --data 2>/dev/null || echo '{"rate":0,"next":0,"avg":0,"eff":0,"wk_avg":0,"band":"ok","solar_kwh":0,"solar_w":0,"imported":0,"exported":0,"updated":"?","slots":[]}'`)
+  :initial '{"rate":0,"next":0,"avg":0,"eff":0,"wk_avg":0,"band":"amber","solar_kwh":0,"solar_w":0,"imported":0,"exported":0,"updated":"—","slots":[]}'
+  `~/.config/waybar/scripts/wattson.sh --data 2>/dev/null || echo '{"rate":0,"next":0,"avg":0,"eff":0,"wk_avg":0,"band":"amber","solar_kwh":0,"solar_w":0,"imported":0,"exported":0,"updated":"?","slots":[]}'`)
 
-(defwidget agile-bar [slot]
-  (box :class "bar b-${slot.band} ${slot.now ? "now" : ""}"
-       :vexpand true :valign "end"
-       :tooltip "${slot.hh}  ${round(slot.p, 1)}p"
-       :style "min-height: ${round(slot.h * 92 + 3, 0)}px"))
+(defwidget agile-cell [slot]
+  (box :class "cell c-${slot.band} ${slot.now ? "now" : ""}"
+       :tooltip "${slot.hh}   ${round(slot.p, 1)}p/kWh"))
 
 (defwidget wattson-panel []
   (box :class "wattson" :orientation "v" :space-evenly false :spacing 12
     (box :class "headline" :space-evenly false :spacing 14
-      (label :class "rate b-${wattson.band}" :text "${round(wattson.rate, 1)}p")
+      (label :class "rate c-${wattson.band}" :text "${round(wattson.rate, 1)}p")
       (box :orientation "v" :space-evenly false :halign "start" :class "sub"
         (label :halign "start" :text "next  ${round(wattson.next, 1)}p")
         (label :halign "start" :text "today avg  ${round(wattson.avg, 1)}p")
-        (label :halign "start" :class "dim" :text "wk import  ${round(wattson.wk_avg, 1)}p")))
+        (label :halign "start" :class "dim" :text "7-day import avg  ${round(wattson.wk_avg, 1)}p")))
 
-    (box :class "chart" :space-evenly true :spacing 1 :height 108
-      (for s in {wattson.slots}
-        (agile-bar :slot s)))
+    (box :orientation "v" :space-evenly false :spacing 3
+      (box :class "chart" :space-evenly true :spacing 2
+        (for s in {wattson.slots}
+          (agile-cell :slot s)))
+      (box :class "ticks" :space-evenly true
+        (label :text "00") (label :text "06") (label :text "12")
+        (label :text "18") (label :text "24")))
 
     (box :class "grid" :space-evenly true
       (box :orientation "v" (label :class "k" :text "solar today") (label :text "${round(wattson.solar_kwh, 1)} kWh"))
@@ -35,7 +38,7 @@
 
 (defwindow wattson
   :monitor 0
-  :geometry (geometry :x "8px" :y "6px" :anchor "top right" :width "400px")
+  :geometry (geometry :x "8px" :y "6px" :anchor "top right" :width "420px")
   :stacking "overlay"
   :focusable false
   (wattson-panel))

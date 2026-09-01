@@ -56,8 +56,13 @@ if [ -z "$data" ]; then
         [ "$mode" = report ] && { echo "WATTSON_TOKEN / WATTSON_HOUSEHOLD not set in $cfg"; exit 0; }
         emit "$BOLT ?" "wattson: token/household not set in $cfg" "error"; exit 0
     fi
-    resp=$(curl -sS --max-time 15 -w '\n%{http_code}' \
+    # from local midnight -> next local midnight: makes .tariff_slots cover the
+    # whole of today (the endpoint extends the tariff window when from >= today).
+    qs_from=$(date -d 'today 00:00'    +%Y-%m-%dT%H:%M:%S%:z)
+    qs_to=$(date   -d 'tomorrow 00:00' +%Y-%m-%dT%H:%M:%S%:z)
+    resp=$(curl -sS --max-time 15 -w '\n%{http_code}' -G \
         "$WATTSON_API/households/$WATTSON_HOUSEHOLD/energy" \
+        --data-urlencode "from=$qs_from" --data-urlencode "to=$qs_to" \
         -H "Authorization: Bearer $WATTSON_TOKEN" 2>/dev/null)
     code=$(printf '%s\n' "$resp" | tail -n1)
     body=$(printf '%s\n' "$resp" | sed '$d')
@@ -87,30 +92,35 @@ exp=$(get '.totals.exported_kwh')
 f1() { awk -v x="${1:-0}" 'BEGIN{printf "%.1f", x}'; }
 
 if [ "$mode" = data ]; then
-    # reshape the cached /energy response for eww: scalars + a 48-point series
-    # with per-slot bar height (0..1), colour band, and a "now" flag.
-    printf '%s' "$data" | jq -c '
-      def band($p): if $p<0 then "neg" elif $p<10 then "cheap"
-                    elif $p<25 then "ok" elif $p<35 then "high" else "peak" end;
-      (now|floor) as $nowsec
-      | ([.tariff_slots[]? | {t:.slot_time, p:(.price_p|tonumber)}]) as $s
-      | ($s | map(.p)) as $ps
-      | (($ps|min) // 0) as $lo | (($ps|max) // 1) as $hi
+    # reshape the cached /energy response for the eww widget: scalars + today's
+    # 48 half-hour slots (local midnight -> 23:30), each RAG-coloured vs the
+    # rolling 7-day import average.
+    mid=$(date -d 'today 00:00' +%s)
+    printf '%s' "$data" | jq -c --argjson mid "$mid" '
+      def band($p; $a):
+          if   $p < 0        then "plunge"
+          elif ($a <= 0)     then "amber"
+          elif $p <= $a*0.7  then "green"
+          elif $p <= $a*1.15 then "amber"
+          else                    "red" end;
+      (.price.week_avg_import_p // .price.average_p // 0) as $wk
+      | (now|floor) as $nowsec
       | {
           rate:  (.price.current_p // 0), next: (.price.next_p // 0),
           avg:   (.price.average_p // 0),  eff: (.price.import_p_per_kwh // 0),
-          wk_avg:(.price.week_avg_import_p // 0),
-          band:  band(.price.current_p // 0),
-          solar_kwh:(.totals.solar_kwh // 0), solar_w:(.current.solar_w // 0),
+          wk_avg: $wk,
+          band:  band(.price.current_p // 0; $wk),
+          solar_kwh:(.totals.solar_kwh // 0), solar_w:((.current.solar_w // 0)|round),
           imported:(.totals.imported_kwh // 0), exported:(.totals.exported_kwh // 0),
-          updated:(now|strftime("%H:%M")),
-          slots: [ $s[] |
-            (.t | fromdateiso8601) as $ts
-            | { hh:(.t[11:16]),
+          updated:(now|strflocaltime("%H:%M")),
+          slots: ([ .tariff_slots[]?
+            | { t:(.slot_time|fromdateiso8601), p:(.price_p|tonumber) }
+            | select(.t >= $mid and .t < $mid + 86400)
+            | { hh:(.t|strflocaltime("%H:%M")),
                 p:(.p*10|round/10),
-                band:band(.p),
-                h:(if $hi>$lo then ((.p-$lo)/($hi-$lo)) else 0.5 end),
-                now:($nowsec>=$ts and $nowsec<$ts+1800) } ]
+                band:band(.p; $wk),
+                now:($nowsec >= .t and $nowsec < .t + 1800) } ]
+            | sort_by(.hh))
         }'
     exit 0
 fi
