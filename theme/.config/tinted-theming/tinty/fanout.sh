@@ -102,6 +102,76 @@ EOF
 }
 [ -f "$CFG/herdr/config.toml" ] && herdr_block | repl "$CFG/herdr/config.toml" '# tinty:start' '# tinty:end'
 
+# ---- GTK3 + GTK4/libadwaita : @define-color in ~/.config/gtk-{3,4}.0/gtk.css
+gtk3_block() {
+    cat <<EOF
+@define-color theme_bg_color          #$BG;
+@define-color theme_fg_color          #$FG;
+@define-color theme_base_color        #$BG;
+@define-color theme_text_color        #$FG;
+@define-color theme_selected_bg_color #$BLUE;
+@define-color theme_selected_fg_color #$BG;
+@define-color insensitive_bg_color    #$BG2;
+@define-color insensitive_fg_color    #$DIM;
+@define-color insensitive_base_color  #$BG;
+@define-color borders                 #$LINE;
+@define-color unfocused_borders       #$LINE;
+@define-color warning_color           #$YELLOW;
+@define-color error_color             #$RED;
+@define-color success_color           #$GREEN;
+@define-color wm_bg                   #$BG;
+@define-color menu_color              #$BG2;
+@define-color popover_bg_color        #$BG2;
+@define-color content_view_bg         #$BG;
+@define-color tooltip_text            #$FG;
+@define-color tooltip_border          #$LINE;
+EOF
+}
+gtk4_block() {
+    cat <<EOF
+@define-color window_bg_color     #$BG;
+@define-color window_fg_color     #$FG;
+@define-color view_bg_color       #$BG;
+@define-color view_fg_color       #$FG;
+@define-color headerbar_bg_color  #$BG2;
+@define-color headerbar_fg_color  #$FG;
+@define-color headerbar_border_color #$LINE;
+@define-color headerbar_backdrop_color #$BG;
+@define-color headerbar_shade_color rgba(0,0,0,0.36);
+@define-color sidebar_bg_color    #$BG2;
+@define-color sidebar_fg_color    #$FG;
+@define-color sidebar_backdrop_color #$BG;
+@define-color sidebar_shade_color rgba(0,0,0,0.36);
+@define-color card_bg_color       #$BG2;
+@define-color card_fg_color       #$FG;
+@define-color card_shade_color    rgba(0,0,0,0.36);
+@define-color dialog_bg_color     #$BG2;
+@define-color dialog_fg_color     #$FG;
+@define-color popover_bg_color    #$BG2;
+@define-color popover_fg_color    #$FG;
+@define-color thumbnail_bg_color  #$BG2;
+@define-color thumbnail_fg_color  #$FG;
+@define-color borders             #$LINE;
+@define-color accent_bg_color     #$BLUE;
+@define-color accent_fg_color     #$BG;
+@define-color accent_color        #$BLUE;
+@define-color destructive_bg_color #$RED;
+@define-color destructive_fg_color #$BG;
+@define-color destructive_color   #$RED;
+@define-color success_bg_color    #$GREEN;
+@define-color success_fg_color    #$BG;
+@define-color success_color       #$GREEN;
+@define-color warning_bg_color    #$YELLOW;
+@define-color warning_fg_color    #$BG;
+@define-color warning_color       #$YELLOW;
+@define-color error_bg_color      #$RED;
+@define-color error_fg_color      #$BG;
+@define-color error_color         #$RED;
+EOF
+}
+[ -f "$CFG/gtk-3.0/gtk.css" ] && gtk3_block | repl "$CFG/gtk-3.0/gtk.css" '/\* tinty:start \*/' '/\* tinty:end \*/'
+[ -f "$CFG/gtk-4.0/gtk.css" ] && gtk4_block | repl "$CFG/gtk-4.0/gtk.css" '/\* tinty:start \*/' '/\* tinty:end \*/'
+
 # ---- dunst : section-keyed (no markers) --------------------------------
 dunst_rc="$CFG/dunst/dunstrc"
 if [ -f "$dunst_rc" ]; then
@@ -189,6 +259,13 @@ swaymsg reload               >/dev/null 2>&1 || true
 hyprctl reload               >/dev/null 2>&1 || true
 dunstctl reload              2>/dev/null || true
 herdr server reload-config   >/dev/null 2>&1 || true
-# kitty / tmux / nvim each have their own [[items]] hook
+# kitty / tmux / nvim each have their own [[items]] hook.
+# GTK: a settings poke makes GTK3 apps re-read gtk.css live; GTK4/libadwaita
+# apps only pick up the new colours on restart.
+gsettings set org.gnome.desktop.interface color-scheme prefer-dark 2>/dev/null || true
+if command -v dbus-send >/dev/null 2>&1; then
+    dbus-send --session --type=signal /org/gtk/Settings \
+        org.gtk.Settings.SettingsChanged string:"gtk-theme-name" 2>/dev/null || true
+fi
 
 echo "    ok  bg=#$BG fg=#$FG accent=#$YELLOW"

@@ -1,0 +1,27 @@
+/* GTK3 colour overrides — recolour Adwaita-dark from the active base16 palette.
+ * The block between the tinty markers is rewritten by
+ * ~/.config/tinted-theming/tinty/fanout.sh on every `tinty apply`.
+ * Seed values = base16 "Tomorrow Night". GTK3 apps mostly live-reload this. */
+
+/* tinty:start */
+@define-color theme_bg_color          #1d1f21;
+@define-color theme_fg_color          #c5c8c6;
+@define-color theme_base_color        #1d1f21;
+@define-color theme_text_color        #c5c8c6;
+@define-color theme_selected_bg_color #81a2be;
+@define-color theme_selected_fg_color #1d1f21;
+@define-color insensitive_bg_color    #282a2e;
+@define-color insensitive_fg_color    #969896;
+@define-color insensitive_base_color  #1d1f21;
+@define-color borders                 #373b41;
+@define-color unfocused_borders       #373b41;
+@define-color warning_color           #f0c674;
+@define-color error_color             #cc6666;
+@define-color success_color           #b5bd68;
+@define-color wm_bg                   #1d1f21;
+@define-color menu_color              #282a2e;
+@define-color popover_bg_color        #282a2e;
+@define-color content_view_bg         #1d1f21;
+@define-color tooltip_text            #c5c8c6;
+@define-color tooltip_border          #373b41;
+/* tinty:end */
