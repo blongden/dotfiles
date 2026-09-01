@@ -85,6 +85,9 @@ alias ssh='kitten ssh'
 
 alias mud="docker start bold_galileo;cd $HOME/Dev/muddev;source evenv/bin/activate;cd aman"
 
+# buddy = this machine's control repo (memory + rebuild plan); dotfiles in scope too
+buddy() { cd "$HOME/Dev/buddy" && claude --add-dir "$HOME/dotfiles" "$@"; }
+
 # amiga cross compiler
 export VBCC=/opt/vbcc
 export PATH="$VBCC/bin:$PATH"
