@@ -15,7 +15,7 @@ DEFAULT_USER="ben.longden"
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
 
-plugins=(git python pyenv golang)
+plugins=(git python golang)
 
 source $ZSH/oh-my-zsh.sh
 

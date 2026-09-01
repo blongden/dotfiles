@@ -41,7 +41,7 @@ local menu        = "wofi --show drun"            -- stock: hyprlauncher (not in
 ----- AUTOSTART ----
 -------------------
 hl.on("hyprland.start", function()
-    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP GNOME_KEYRING_CONTROL SSH_AUTH_SOCK")  -- keyring vars: pam_gnome_keyring (greetd) starts+unlocks the daemon; propagate its socket to dbus/systemd activation
     hl.exec_cmd("hyprpaper")                                             -- wallpaper (~/.config/hypr/hyprpaper.conf); replaced swaybg + Azote
     hl.exec_cmd("waybar -c ~/.config/waybar/config-hyprland")
     hl.exec_cmd("~/.config/waybar/scripts/wattson-refresh.sh")   -- nudge custom/wattson ~30s past each :00/:30 Agile boundary
