@@ -63,6 +63,7 @@ minidlna             # DLNA server for ~/Media -> LG C2 TV; /etc/minidlna.conf +
 
 # --- files / images ---
 dolphin              # KDE file manager; themed via `qt` stow pkg (kdeglobals)
+breeze-icon-theme    # breeze-dark icons for Qt/KF6 apps (libkf6breezeicons6 is a doc-only stub)
 qt5-gtk-platformtheme # QT_QPA_PLATFORMTHEME=gtk3 -> plain-Qt apps (VLC) follow the GTK theme
 qt6-gtk-platformtheme # ditto for Qt6 apps
 mc                   # midnight commander ($mod+Shift+m; twin-pane option)
