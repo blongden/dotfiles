@@ -14,12 +14,13 @@
 art_dir="$HOME/.config/screensaver/art"
 export PATH="$HOME/.local/bin:$PATH"
 
-# Debounce: launching the fullscreen kitty makes the compositor emit a pointer
-# event (follow_mouse), which the idle daemon reads as "activity" and instantly
-# fires `on-resume` -> stop, killing the screensaver ~1s after it appears. So
-# `stop` ignores a resume that lands within GRACE seconds of a `start`.
-stamp="${XDG_RUNTIME_DIR:-/tmp}/screensaver.started"
-grace=2   # the spurious resume lands <1s after start; a returning human takes longer
+# NB there used to be a time-based debounce here: launching the fullscreen kitty
+# warped the pointer, hypridle read that as activity and fired `on-resume` ~1s
+# in, so `stop` ignored any resume within 2s of a `start`. Side effect: if you
+# came back during that first idle cycle, hypridle had already spent its one
+# on-resume and your input wouldn't dismiss the screensaver until the next
+# 5 min timeout. Fixed at the source instead — `cursor { no_warps = true }` in
+# hyprland.lua kills the spurious warp, so `stop` can just kill unconditionally.
 
 # tte 0.15 effects that suit sparse BBS/Commodore art (verified names)
 effects="beams binarypath blackhole burn decrypt errorcorrect expand \
@@ -28,7 +29,6 @@ scattered slice slide swarm synthgrid unstable vhstape wipe"
 
 case "${1:-}" in
   start)
-    : > "$stamp"                                              # (re)arm the debounce
     pgrep -f 'kitty --class screensaver' >/dev/null 2>&1 && exit 0
     # Background it and return immediately. swayidle runs with -w (wait for
     # command to finish), so a foreground kitty here blocks swayidle's event
@@ -64,11 +64,6 @@ case "${1:-}" in
     ;;
 
   stop)
-    if [ -f "$stamp" ]; then
-        age=$(( $(date +%s) - $(stat -c %Y "$stamp" 2>/dev/null || echo 0) ))
-        [ "$age" -lt "$grace" ] && exit 0    # spurious resume right after start — ignore
-    fi
-    rm -f "$stamp"
     pkill -f 'kitty --class screensaver' >/dev/null 2>&1 || true
     ;;
 

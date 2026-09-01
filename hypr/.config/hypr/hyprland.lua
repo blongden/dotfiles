@@ -215,6 +215,16 @@ hl.config({
     },
 })
 
+hl.config({
+    cursor = {
+        -- Don't warp the pointer on focus changes / new windows. The terminal
+        -- screensaver (fullscreen kitty, launched by hypridle at 5 min) used to
+        -- trigger a warp -> hypridle read it as activity -> fired on-resume and
+        -- half-killed the screensaver ~1s in. See memory/idle-screensaver.md.
+        no_warps = true,
+    },
+})
+
 -----------------
 -----  THEME  ----  base16 palette, fanned out by tinty
 -----------------
