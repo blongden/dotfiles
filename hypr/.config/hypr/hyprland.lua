@@ -257,6 +257,7 @@ hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("cliphist list | wofi --dmenu | cliphist decode | wl-copy"))  -- clipboard history (was: pseudo)
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + slash", hl.dsp.exec_cmd("~/.config/hypr/keybinds.sh"))  -- keybinding cheatsheet
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))  -- lock now (routes to hyprlock via hypridle lock_cmd)
 
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
