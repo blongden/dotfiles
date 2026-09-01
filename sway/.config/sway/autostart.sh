@@ -20,6 +20,7 @@ kdeconnect-indicator &          # phone pairing: clipboard, notifications, file 
 udiskie --smart-tray --file-manager 'kitty --class yazi -e yazi' &   # auto-mount USB/SD; tray icon only when media present
 protonmail-bridge --noninteractive &   # local IMAP :1143 / SMTP :1025 for Proton Mail (reuses stored session)
 ~/.config/waybar/scripts/wattson-refresh.sh &   # nudge custom/wattson ~30s past each :00/:30 Agile boundary
+command -v eww >/dev/null 2>&1 && eww daemon &   # widget daemon (wattson popover)
 
 # Optional warm night tint (you didn't run redshift before, so off by default).
 # Enable by editing ~/.config/gammastep/config.ini and uncommenting:

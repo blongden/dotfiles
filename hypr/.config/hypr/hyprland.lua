@@ -45,6 +45,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("hyprpaper")                                             -- wallpaper (~/.config/hypr/hyprpaper.conf); replaced swaybg + Azote
     hl.exec_cmd("waybar -c ~/.config/waybar/config-hyprland")
     hl.exec_cmd("~/.config/waybar/scripts/wattson-refresh.sh")   -- nudge custom/wattson ~30s past each :00/:30 Agile boundary
+    hl.exec_cmd("command -v eww >/dev/null && eww daemon")   -- widget daemon (wattson popover; opened from the waybar module)
     hl.exec_cmd("dunst")
     hl.exec_cmd("wl-paste --type text  --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")

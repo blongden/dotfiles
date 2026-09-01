@@ -1,0 +1,41 @@
+;; eww — desktop widgets. Bar stays waybar; this adds rich popovers.
+;; wattson: Octopus Agile day curve + solar. Toggled from the waybar
+;; custom/wattson module (on-click -> `eww open --toggle wattson`).
+
+(defpoll wattson :interval "60s"
+  :initial '{"rate":0,"next":0,"avg":0,"eff":0,"wk_avg":0,"band":"ok","solar_kwh":0,"solar_w":0,"imported":0,"exported":0,"updated":"—","slots":[]}'
+  `~/.config/waybar/scripts/wattson.sh --data 2>/dev/null || echo '{"rate":0,"next":0,"avg":0,"eff":0,"wk_avg":0,"band":"ok","solar_kwh":0,"solar_w":0,"imported":0,"exported":0,"updated":"?","slots":[]}'`)
+
+(defwidget agile-bar [slot]
+  (box :class "bar b-${slot.band} ${slot.now ? "now" : ""}"
+       :vexpand true :valign "end"
+       :tooltip "${slot.hh}  ${round(slot.p, 1)}p"
+       :style "min-height: ${round(slot.h * 92 + 3, 0)}px"))
+
+(defwidget wattson-panel []
+  (box :class "wattson" :orientation "v" :space-evenly false :spacing 12
+    (box :class "headline" :space-evenly false :spacing 14
+      (label :class "rate b-${wattson.band}" :text "${round(wattson.rate, 1)}p")
+      (box :orientation "v" :space-evenly false :halign "start" :class "sub"
+        (label :halign "start" :text "next  ${round(wattson.next, 1)}p")
+        (label :halign "start" :text "today avg  ${round(wattson.avg, 1)}p")
+        (label :halign "start" :class "dim" :text "wk import  ${round(wattson.wk_avg, 1)}p")))
+
+    (box :class "chart" :space-evenly true :spacing 1 :height 108
+      (for s in {wattson.slots}
+        (agile-bar :slot s)))
+
+    (box :class "grid" :space-evenly true
+      (box :orientation "v" (label :class "k" :text "solar today") (label :text "${round(wattson.solar_kwh, 1)} kWh"))
+      (box :orientation "v" (label :class "k" :text "solar now")   (label :text "${wattson.solar_w} W"))
+      (box :orientation "v" (label :class "k" :text "import")      (label :text "${round(wattson.imported, 1)} kWh"))
+      (box :orientation "v" (label :class "k" :text "export")      (label :text "${round(wattson.exported, 1)} kWh")))
+
+    (label :class "foot" :halign "end" :text "updated ${wattson.updated}")))
+
+(defwindow wattson
+  :monitor 0
+  :geometry (geometry :x "8px" :y "6px" :anchor "top right" :width "400px")
+  :stacking "overlay"
+  :focusable false
+  (wattson-panel))

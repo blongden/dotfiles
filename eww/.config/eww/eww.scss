@@ -1,0 +1,55 @@
+// Tomorrow Night (matches waybar / wofi). A tinty target can rewrite this
+// block later; hardcoded for now.
+$bg:   #1d1f21;  $bg2: #282a2e;  $line: #373b41;
+$fg:   #c5c8c6;  $dim: #969896;
+$red:  #cc6666;  $orange: #de935f;  $yellow: #f0c674;
+$green:#b5bd68;  $aqua:   #8abeb7;  $blue:   #81a2be;  $purple: #b294bb;
+
+* { all: unset; font-family: "Iosevka Nerd Font", monospace; }
+
+.wattson {
+  background: $bg;
+  border: 1px solid $line;
+  border-radius: 8px;
+  padding: 16px 18px;
+  color: $fg;
+  font-size: 13px;
+}
+
+.headline .rate {
+  font-size: 34px;
+  font-weight: 700;
+  &.b-neg   { color: $purple; }
+  &.b-cheap { color: $green; }
+  &.b-ok    { color: $aqua; }
+  &.b-high  { color: $yellow; }
+  &.b-peak  { color: $red; }
+}
+.sub { color: $dim; font-size: 12px; }
+.dim { color: $line; }
+
+.chart {
+  padding: 4px 2px 0 2px;
+  border-bottom: 1px solid $line;
+}
+.bar {
+  min-width: 5px;
+  border-radius: 1px 1px 0 0;
+  background: $line;
+  &.b-neg   { background: $purple; }
+  &.b-cheap { background: $green; }
+  &.b-ok    { background: $aqua; }
+  &.b-high  { background: $yellow; }
+  &.b-peak  { background: $red; }
+  &.now {
+    background: $fg;
+    border-top: 3px solid $orange;
+    box-shadow: 0 0 4px $orange;
+  }
+}
+
+.grid {
+  .k { color: $dim; font-size: 11px; }
+  font-size: 13px;
+}
+.foot { color: $line; font-size: 11px; }

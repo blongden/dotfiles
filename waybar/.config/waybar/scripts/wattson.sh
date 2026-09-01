@@ -28,6 +28,7 @@ SUN=$(printf '\357\206\205')       # U+F185
 case "${1:-}" in
     --report|report)   mode=report ;;
     --refresh|refresh) mode=refresh ;;
+    --data|data)       mode=data ;;    # compact JSON for the eww widget
     *)                 mode=bar ;;
 esac
 
@@ -84,6 +85,35 @@ exp=$(get '.totals.exported_kwh')
 [ -n "$solar_kwh" ] || solar_kwh=0
 
 f1() { awk -v x="${1:-0}" 'BEGIN{printf "%.1f", x}'; }
+
+if [ "$mode" = data ]; then
+    # reshape the cached /energy response for eww: scalars + a 48-point series
+    # with per-slot bar height (0..1), colour band, and a "now" flag.
+    printf '%s' "$data" | jq -c '
+      def band($p): if $p<0 then "neg" elif $p<10 then "cheap"
+                    elif $p<25 then "ok" elif $p<35 then "high" else "peak" end;
+      (now|floor) as $nowsec
+      | ([.tariff_slots[]? | {t:.slot_time, p:(.price_p|tonumber)}]) as $s
+      | ($s | map(.p)) as $ps
+      | (($ps|min) // 0) as $lo | (($ps|max) // 1) as $hi
+      | {
+          rate:  (.price.current_p // 0), next: (.price.next_p // 0),
+          avg:   (.price.average_p // 0),  eff: (.price.import_p_per_kwh // 0),
+          wk_avg:(.price.week_avg_import_p // 0),
+          band:  band(.price.current_p // 0),
+          solar_kwh:(.totals.solar_kwh // 0), solar_w:(.current.solar_w // 0),
+          imported:(.totals.imported_kwh // 0), exported:(.totals.exported_kwh // 0),
+          updated:(now|strftime("%H:%M")),
+          slots: [ $s[] |
+            (.t | fromdateiso8601) as $ts
+            | { hh:(.t[11:16]),
+                p:(.p*10|round/10),
+                band:band(.p),
+                h:(if $hi>$lo then ((.p-$lo)/($hi-$lo)) else 0.5 end),
+                now:($nowsec>=$ts and $nowsec<$ts+1800) } ]
+        }'
+    exit 0
+fi
 
 if [ "$mode" = report ]; then
     printf 'Wattson \342\200\224 energy%s\n\n' "$stale"
