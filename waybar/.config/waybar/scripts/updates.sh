@@ -1,8 +1,10 @@
 #!/bin/sh
 # waybar custom module: count pending apt upgrades.
-# Reads the current package lists only — the system apt-daily.timer refreshes
-# them in the background, so this needs no root. Right-click the module to run
-# a real `apt update && apt full-upgrade`.
+# Reads the current package lists only (no root). apt-daily.timer refreshes them
+# in the background — but only because /etc/apt/apt.conf.d/02periodic sets
+# APT::Periodic::Update-Package-Lists "1" (+ a drop-in dropping the unit's
+# ConditionACPower so it also runs on battery). See buddy memory/system-
+# maintenance.md. Right-click the module to run a real `apt update && full-upgrade`.
 #
 #  = Debian swirl (nf-linux-debian, needs a Nerd Font).
 
