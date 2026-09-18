@@ -34,6 +34,31 @@ effects="beams binarypath blackhole burn decrypt errorcorrect expand \
 laseretch matrix middleout orbittingvolley pour print rain randomsequence \
 scattered slice slide swarm synthgrid unstable vhstape wipe"
 
+# One instance per connected output, not just the focused one — otherwise
+# the monitor you're not looking at just sits there undimmed. Placement is
+# done by focusing the target output before spawning kitty (new windows land
+# on the currently-active workspace/monitor); each compositor has its own
+# IPC for both listing outputs and focusing one.
+list_outputs() {
+    if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+        hyprctl monitors -j | jq -r '.[].name'
+    else
+        swaymsg -t get_outputs -r | jq -r '.[] | select(.active) | .name'
+    fi
+}
+focus_output() {
+    if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+        # No working focusmonitor under the Lua config (hl.dsp.focus takes a
+        # direction table, not a monitor selector — silently no-ops on one).
+        # Focus the monitor's own active workspace instead, same trick
+        # startup-apps.sh uses to place per-app windows.
+        ws=$(hyprctl monitors -j | jq -r --arg m "$1" '.[] | select(.name==$m) | .activeWorkspace.id')
+        [ -n "$ws" ] && hyprctl dispatch "hl.dsp.focus({ workspace = $ws })" >/dev/null 2>&1
+    else
+        swaymsg focus output "$1" >/dev/null 2>&1
+    fi
+}
+
 case "${1:-}" in
   start)
     pgrep -f 'kitty --class screensaver' >/dev/null 2>&1 && exit 0
@@ -41,14 +66,33 @@ case "${1:-}" in
     # command to finish), so a foreground kitty here blocks swayidle's event
     # loop — the `resume` handler (screensaver.sh stop) can then never fire and
     # the screensaver has to be closed by hand.
-    kitty --class screensaver \
-        -o background='#000000' \
-        -o foreground='#33ff66' \
-        -o cursor_blink_interval=0 \
-        -o enable_audio_bell=no \
-        -o confirm_os_window_close=0 \
-        -o window_padding_width=24 \
-        "$0" loop &
+    client_count() {
+        if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+            hyprctl clients -j | jq '[.[] | select(.class=="screensaver")] | length'
+        else
+            swaymsg -t get_tree -r | jq '[.. | objects | select(.app_id? == "screensaver")] | length'
+        fi
+    }
+    for mon in $(list_outputs); do
+        focus_output "$mon"
+        before=$(client_count)
+        kitty --class screensaver \
+            -o background='#000000' \
+            -o foreground='#33ff66' \
+            -o cursor_blink_interval=0 \
+            -o enable_audio_bell=no \
+            -o confirm_os_window_close=0 \
+            -o window_padding_width=24 \
+            "$0" loop &
+        # Don't move focus to the next monitor until this one's window has
+        # actually mapped — kitty startup is slow enough that the next
+        # focus_output can otherwise land before this window appears, and it
+        # then opens on the wrong (currently-focused) monitor instead.
+        for _ in $(seq 1 30); do
+            [ "$(client_count)" -gt "$before" ] && break
+            sleep 0.1
+        done
+    done
     ;;
 
   loop)
@@ -85,6 +129,7 @@ case "${1:-}" in
             while kill -0 "$tte_pid" 2>/dev/null; do
                 if read -rsn1 -t 1 _; then
                     [ $(( $(date +%s) - started )) -lt "$grace" ] && continue
+                    pkill -f 'kitty --class screensaver' 2>/dev/null
                     exit 0
                 fi
             done
@@ -93,6 +138,7 @@ case "${1:-}" in
             cat "$art"
             if read -rsn1 -t 4 _; then
                 [ $(( $(date +%s) - started )) -lt "$grace" ] && continue
+                pkill -f 'kitty --class screensaver' 2>/dev/null
                 exit 0
             fi
         fi
