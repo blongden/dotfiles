@@ -32,11 +32,11 @@ hl.monitor({ output = "DP-2",  mode = "3840x2160@30", position = "-3840x-1080", 
 -- 4K@30 here too: `i915_dp_max_lane_count` on this port is 2 (HBR2, 540000),
 -- not 4 — this XPS 13 7390's USB-C controller only wires 2 DP lanes to the
 -- port, so the dock isn't the bottleneck, the laptop's port is. 4K@30 made
--- cursor motion visibly jerky vs eDP-1's 60Hz, so run it at 2560x1440@60
--- instead (scale 1, no scaling) — sharper would need 4K, smooth needs 60Hz,
--- can't have both on this link. Logical size is the same 2560x1440 either
--- way, so the position (-2560x-360, left of eDP-1, bottoms aligned: eDP-1
--- bottom = 1080, DP-1 bottom = -360 + 1440 = 1080) doesn't change.
+-- cursor motion visibly jerky vs eDP-1's 60Hz; tried 1920x1080@60 (exact 2x
+-- downscale, should've been sharper) but Ben preferred 2560x1440@60 despite
+-- the slight blur from its non-integer 1.5x scale factor — went back to it.
+-- Position -2560x-360 puts it left of eDP-1, bottoms aligned (eDP-1 bottom
+-- = 1080, DP-1 bottom = -360 + 1440 = 1080).
 hl.monitor({ output = "DP-1",  mode = "2560x1440@60",  position = "-2560x-360",  scale = 1 })
 hl.monitor({ output = "",      mode = "preferred",    position = "auto",        scale = "auto" }) -- any other output
 
