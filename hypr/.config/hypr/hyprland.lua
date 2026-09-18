@@ -28,12 +28,16 @@
 hl.monitor({ output = "eDP-1", mode = "1920x1080",    position = "0x0",         scale = 1 })
 hl.monitor({ output = "DP-2",  mode = "3840x2160@30", position = "-3840x-1080", scale = 1 })
 -- Dell U2723QE plugged in directly (not via the dock) shows up as DP-1, not
--- DP-2 — same physical monitor, different port/EDID name. Scale 1.5 (not
--- DP-2's 1) because this is a bare DP-1.4 link, no 2-lane cap, and 1.5 is
--- what Hyprland's own "auto" picked for this panel's DPI. Logical size at
--- 1.5x is 2560x1440, so -2560x-360 puts it to the left with bottoms aligned
--- (eDP-1 bottom = 1080, DP-1 bottom = -360 + 1440 = 1080).
-hl.monitor({ output = "DP-1",  mode = "3840x2160@30", position = "-2560x-360",  scale = 1.5 })
+-- DP-2 — same physical monitor, different port/EDID name. It's capped at
+-- 4K@30 here too: `i915_dp_max_lane_count` on this port is 2 (HBR2, 540000),
+-- not 4 — this XPS 13 7390's USB-C controller only wires 2 DP lanes to the
+-- port, so the dock isn't the bottleneck, the laptop's port is. 4K@30 made
+-- cursor motion visibly jerky vs eDP-1's 60Hz, so run it at 2560x1440@60
+-- instead (scale 1, no scaling) — sharper would need 4K, smooth needs 60Hz,
+-- can't have both on this link. Logical size is the same 2560x1440 either
+-- way, so the position (-2560x-360, left of eDP-1, bottoms aligned: eDP-1
+-- bottom = 1080, DP-1 bottom = -360 + 1440 = 1080) doesn't change.
+hl.monitor({ output = "DP-1",  mode = "2560x1440@60",  position = "-2560x-360",  scale = 1 })
 hl.monitor({ output = "",      mode = "preferred",    position = "auto",        scale = "auto" }) -- any other output
 
 ---------------------
