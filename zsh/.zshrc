@@ -56,8 +56,6 @@ alias df='df -h'
 alias du='du -d 1 -h'
 alias cleandl='find . -mtime +30 -exec rm -rf "{}" \;'
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 function maybe_create_env {
   EXE='python3'
