@@ -1,54 +1,45 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=/usr/local/bin/:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+# --- plain zsh (replaced oh-my-zsh 2026-10-08) -----------------------------
+# HISTFILE / ZSH_COMPDUMP are set in ~/.zshenv.
+HISTSIZE=50000
+SAVEHIST=10000
+setopt extended_history hist_expire_dups_first hist_ignore_dups \
+       hist_ignore_space hist_verify share_history
+setopt auto_cd auto_pushd pushd_ignore_dups pushd_minus
+setopt always_to_end complete_in_word interactive_comments long_list_jobs \
+       prompt_subst no_flow_control
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="gianu"
-ZSH_THEME="robbyrussell"
+# completion: menu select, case-sensitive
+autoload -Uz compinit && compinit -d "$ZSH_COMPDUMP"
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
-DEFAULT_USER="ben.longden"
+# emacs keys; up/down search history by the typed prefix
+bindkey -e
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search  '^[OA' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search '^[OB' down-line-or-beginning-search
+bindkey '^[[1;5C' forward-word  '^[[1;5D' backward-word
+bindkey '^[[H' beginning-of-line '^[[F' end-of-line '^[[3~' delete-char
 
-# Uncomment the following line to use case-sensitive completion.
-CASE_SENSITIVE="true"
+# prompt: ➜  dir git:(branch) ✗   (robbyrussell look, via vcs_info)
+autoload -Uz vcs_info
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' unstagedstr ' %F{yellow}✗'
+zstyle ':vcs_info:git:*' stagedstr ' %F{yellow}✗'
+zstyle ':vcs_info:git:*' formats ' %F{blue}git:(%F{red}%b%F{blue})%u%c%f'
+zstyle ':vcs_info:git:*' actionformats ' %F{blue}git:(%F{red}%b|%a%F{blue})%u%c%f'
+precmd() { vcs_info }
+PROMPT='%(?:%F{green}%B➜%b:%F{red}%B➜%b) %F{cyan}%c%f${vcs_info_msg_0_} '
 
-plugins=(git python golang)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# eval "$(docker-machine env dinghy)"
+alias ls='ls --color=tty'
+alias l='ls -lah' la='ls -lAh' ll='ls -lh'
+alias ...='../..' ....='../../..'
+alias grep='grep --color=auto'
 
 alias ip='curl canhazip.com'
 alias mc='mc --skin modarin256-defbg'
