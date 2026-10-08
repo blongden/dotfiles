@@ -69,7 +69,7 @@ alias pyt="pip install --upgrade pip&&pip install pytest&&pip freeze > requireme
 
 export PATH="${GOPATH:-$HOME/go}/bin:/usr/local/sbin:$PATH"
 
-alias zzz='echo mem | sudo tee /sys/power/state'
+alias zzz='systemctl suspend'
 alias ssh='kitten ssh'
 
 alias mud="docker start bold_galileo;cd $HOME/Dev/muddev;source evenv/bin/activate;cd aman"
