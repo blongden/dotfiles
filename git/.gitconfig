@@ -27,3 +27,6 @@
         clean = git-lfs clean %f
         smudge = git-lfs smudge %f
         required = true
+[credential "https://gitlab.com"]
+	helper = 
+	helper = !/usr/bin/glab auth git-credential
