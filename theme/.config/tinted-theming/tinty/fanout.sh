@@ -18,6 +18,9 @@ hx() { eval "printf '%s%s%s' \"\$TINTY_SCHEME_PALETTE_BASE${1}_HEX_R\" \"\$TINTY
 BG=$(hx 00); BG2=$(hx 01); LINE=$(hx 02); DIM=$(hx 03); FG=$(hx 05)
 RED=$(hx 08); ORANGE=$(hx 09); YELLOW=$(hx 0A); GREEN=$(hx 0B); AQUA=$(hx 0C); BLUE=$(hx 0D); PURPLE=$(hx 0E)
 
+# run by hand (no tinty env) → empty palette would blank every marker block
+[ ${#BG} -eq 6 ] || { echo "    abort: no palette in env — run via 'tinty apply <scheme>'"; exit 1; }
+
 CFG=${XDG_CONFIG_HOME:-$HOME/.config}
 
 # "1d1f21" -> "29,31,33"  (KConfig wants decimal R,G,B triples)
