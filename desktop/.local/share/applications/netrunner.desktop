@@ -1,0 +1,13 @@
+[Desktop Entry]
+# NetRunner BBS client — install lives outside apt in ~/.local/opt/netrunner,
+# launched via the ~/.local/bin/netrunner wrapper (cd + LD_LIBRARY_PATH).
+# Icon is the bundled .icn (a 128x128 BMP; gdk-pixbuf sniffs it fine).
+Type=Application
+Name=NetRunner
+GenericName=BBS Terminal
+Comment=Telnet BBS client with Zmodem (Mystic BBS)
+Icon=/home/ben/.local/opt/netrunner/netrunner.icn
+Exec=netrunner
+Terminal=false
+Categories=Network;TerminalEmulator;
+Keywords=bbs;telnet;zmodem;ansi;mystic;
