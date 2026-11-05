@@ -384,6 +384,8 @@ for _, c in ipairs(floatClasses) do
 end
 hl.window_rule({ match = { title = "^(alsamixer)$" },     float = true })
 hl.window_rule({ match = { title = "^(File Transfer.*)$" }, float = true })
+-- FS-UAE: an Amiga screen, so a floating 4:3 window rather than a whole tile
+hl.window_rule({ match = { class = "^(fs-uae)$" }, float = true, size = "800 600", center = true })
 
 hl.bind("SUPER + minus", hl.dsp.workspace.toggle_special("magic"))
 
