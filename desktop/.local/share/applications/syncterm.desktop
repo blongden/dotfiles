@@ -1,0 +1,13 @@
+[Desktop Entry]
+# SyncTERM 1.9 BBS client — built from the upstream source tarball (not in
+# apt). Binary at ~/.local/bin/syncterm, SVG icons in ~/.local/share/icons.
+# Based on upstream's syncterm.desktop.
+Type=Application
+Name=SyncTERM
+GenericName=BBS Terminal
+Comment=ANSI-BBS terminal (telnet/SSH/rlogin, Zmodem)
+Icon=syncterm
+Exec=syncterm %u
+Terminal=false
+Categories=Network;TerminalEmulator;Dialup;
+Keywords=bbs;telnet;ssh;zmodem;ansi;synchronet;
