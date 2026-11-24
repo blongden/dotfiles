@@ -2,12 +2,14 @@
 # Overrides Debian's /usr/share/applications/fs-uae.desktop, which ships
 # NoDisplay=true (it expects FS-UAE Launcher, not packaged in Debian).
 # Same entry, just visible in the Mod+D (wofi drun) menu.
+# prlimit: session soft RLIMIT_CORE is 0, so lift it so systemd-coredump
+# keeps a core + backtrace if FS-UAE crashes (coredumpctl list fs-uae).
 Type=Application
 Name=FS-UAE
 GenericName=Amiga Emulator
 Comment=FS-UAE Amiga Emulator
 TryExec=fs-uae
-Exec=fs-uae %f
+Exec=prlimit --core=unlimited fs-uae %f
 Icon=fs-uae
 StartupNotify=true
 Terminal=false
