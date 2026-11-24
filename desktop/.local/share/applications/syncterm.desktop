@@ -1,5 +1,5 @@
 [Desktop Entry]
-# SyncTERM 1.9 BBS client — built from the upstream source tarball (not in
+# SyncTERM BBS client (1.10b dev, built from Synchronet git master; not in
 # apt). Binary at ~/.local/bin/syncterm, SVG icons in ~/.local/share/icons.
 # Based on upstream's syncterm.desktop.
 Type=Application

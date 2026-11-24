@@ -1,0 +1,16 @@
+[Desktop Entry]
+# Overrides Debian's /usr/share/applications/fs-uae.desktop, which ships
+# NoDisplay=true (it expects FS-UAE Launcher, not packaged in Debian).
+# Same entry, just visible in the Mod+D (wofi drun) menu.
+Type=Application
+Name=FS-UAE
+GenericName=Amiga Emulator
+Comment=FS-UAE Amiga Emulator
+TryExec=fs-uae
+Exec=fs-uae %f
+Icon=fs-uae
+StartupNotify=true
+Terminal=false
+Categories=System;Emulator;
+Keywords=amiga;uae;emulator;
+MimeType=application/x-adf
