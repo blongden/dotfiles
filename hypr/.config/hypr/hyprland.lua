@@ -386,6 +386,10 @@ hl.window_rule({ match = { title = "^(alsamixer)$" },     float = true })
 hl.window_rule({ match = { title = "^(File Transfer.*)$" }, float = true })
 -- FS-UAE: an Amiga screen, so a floating 4:3 window rather than a whole tile
 hl.window_rule({ match = { class = "^(fs-uae)$" }, float = true, size = "800 600", center = true })
+-- ...on its own named workspace (opens there and switches to it). SUPER+A jumps
+-- to it; SUPER+1..0 (also bound inside the amiga submap) jump back.
+hl.window_rule({ name = "ws-amiga", match = { class = "^(fs-uae)$" }, workspace = "name:amiga" })
+hl.bind("SUPER + A", hl.dsp.focus({ workspace = "name:amiga" }))
 
 hl.bind("SUPER + minus", hl.dsp.workspace.toggle_special("magic"))
 
@@ -445,8 +449,13 @@ end)
 -- When FS-UAE is the last window on its workspace, closing it focuses nothing,
 -- so window.active never fires with a new window and the submap stuck (all
 -- binds dead → reboot). Reset explicitly when an fs-uae window goes away.
+-- Only when no *other* fs-uae window has focus: SDL can throw away a startup
+-- window after the real one is focused, and resetting then would drop the submap.
 for _, ev in ipairs({ "window.close", "window.destroy" }) do
     hl.on(ev, function(window)
-        if window and window.class == "fs-uae" then amiga_reset() end
+        if not (window and window.class == "fs-uae") then return end
+        local a = hl.get_active_window()
+        if a and a.class == "fs-uae" and a.address ~= window.address then return end
+        amiga_reset()
     end)
 end

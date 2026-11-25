@@ -10,7 +10,7 @@
 
     "hyprland/workspaces": {
         "disable-scroll": false,
-        "format": "{id}",
+        "format": "{name}",  // {id} would show named workspaces (amiga) as negative ids
         "persistent-workspaces": { "*": 4 }
     },
 
