@@ -409,3 +409,20 @@ hl.bind("CTRL + SUPER + SHIFT + Print", hl.dsp.exec_cmd(shot .. " full-edit"))
 -- Push-to-talk dictation (pw-record + whisper.cpp + wtype; no sway deps).
 -- Press to start recording, press again to transcribe + type into focused window.
 hl.bind("SUPER + grave", hl.dsp.exec_cmd("~/.config/hypr/dictate-groq.sh"))  -- Groq whisper-large-v3-turbo (cleanup off; DICTATE_CLEANUP=1 to enable)
+
+-- FS-UAE: Left/Right Amiga are the Super keys, so Amiga+M hit SUPER+M (logout)
+-- and other Amiga shortcuts hit compositor binds. While an fs-uae window has focus,
+-- switch to an "amiga" submap with no binds so every key reaches the emulator.
+-- (Pattern from the wiki's nested-Hyprland snippet.) Escape hatch: CTRL+SHIFT+Escape.
+hl.define_submap("amiga", function()
+    hl.bind("catchall", hl.dsp.no_op(), { non_consuming = true })
+    hl.bind("CTRL + SHIFT + Escape", hl.dsp.submap("reset"))  -- get desktop binds back while FS-UAE is focused
+end)
+
+hl.on("window.active", function(window)
+    if window and window.class == "fs-uae" then
+        hl.dispatch(hl.dsp.submap("amiga"))
+    elseif hl.get_current_submap() == "amiga" then
+        hl.dispatch(hl.dsp.submap("reset"))
+    end
+end)
