@@ -414,15 +414,39 @@ hl.bind("SUPER + grave", hl.dsp.exec_cmd("~/.config/hypr/dictate-groq.sh"))  -- 
 -- and other Amiga shortcuts hit compositor binds. While an fs-uae window has focus,
 -- switch to an "amiga" submap with no binds so every key reaches the emulator.
 -- (Pattern from the wiki's nested-Hyprland snippet.) Escape hatch: CTRL+SHIFT+Escape.
+-- Exceptions: SUPER+1..0 still switch workspace (reset the submap first, so
+-- landing on an empty workspace can't leave us stuck in it).
 hl.define_submap("amiga", function()
     hl.bind("catchall", hl.dsp.no_op(), { non_consuming = true })
     hl.bind("CTRL + SHIFT + Escape", hl.dsp.submap("reset"))  -- get desktop binds back while FS-UAE is focused
+    for i = 1, 10 do
+        local key = i % 10
+        hl.bind(mainMod .. " + " .. key, function()
+            hl.dispatch(hl.dsp.submap("reset"))
+            hl.dispatch(hl.dsp.focus({ workspace = i }))
+        end)
+    end
 end)
+
+local function amiga_reset()
+    if hl.get_current_submap() == "amiga" then
+        hl.dispatch(hl.dsp.submap("reset"))
+    end
+end
 
 hl.on("window.active", function(window)
     if window and window.class == "fs-uae" then
         hl.dispatch(hl.dsp.submap("amiga"))
-    elseif hl.get_current_submap() == "amiga" then
-        hl.dispatch(hl.dsp.submap("reset"))
+    else
+        amiga_reset()
     end
 end)
+
+-- When FS-UAE is the last window on its workspace, closing it focuses nothing,
+-- so window.active never fires with a new window and the submap stuck (all
+-- binds dead → reboot). Reset explicitly when an fs-uae window goes away.
+for _, ev in ipairs({ "window.close", "window.destroy" }) do
+    hl.on(ev, function(window)
+        if window and window.class == "fs-uae" then amiga_reset() end
+    end)
+end
