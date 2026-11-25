@@ -1,0 +1,14 @@
+[Desktop Entry]
+# Second FS-UAE entry: boots the AmigaOS 3.2 config (Configurations/AmigaOS32.fs-uae)
+# instead of Default.fs-uae (3.1). Same prlimit core-dump lift as fs-uae.desktop.
+Type=Application
+Name=FS-UAE (AmigaOS 3.2)
+GenericName=Amiga Emulator
+Comment=FS-UAE with the AmigaOS 3.2 configuration
+TryExec=fs-uae
+Exec=sh -c "exec prlimit --core=unlimited fs-uae \\"\\$HOME/Documents/FS-UAE/Configurations/AmigaOS32.fs-uae\\""
+Icon=fs-uae
+StartupNotify=true
+Terminal=false
+Categories=System;Emulator;
+Keywords=amiga;uae;emulator;
