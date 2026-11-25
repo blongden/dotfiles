@@ -5,7 +5,7 @@
 # prlimit: session soft RLIMIT_CORE is 0, so lift it so systemd-coredump
 # keeps a core + backtrace if FS-UAE crashes (coredumpctl list fs-uae).
 Type=Application
-Name=FS-UAE
+Name=FS-UAE (AmigaOS 3.1)
 GenericName=Amiga Emulator
 Comment=FS-UAE Amiga Emulator
 TryExec=fs-uae
